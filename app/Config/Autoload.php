@@ -41,6 +41,9 @@ class Autoload extends AutoloadConfig
      */
     public $psr4 = [
         APP_NAMESPACE => APPPATH,
+        APP_NAMESPACE => APPPATH,
+        'App'         => APPPATH,
+        'Michalsn\Uuid' => APPPATH . 'ThirdParty/codeigniter4-uuid/src',
     ];
 
     /**
