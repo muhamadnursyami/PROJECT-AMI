@@ -34,6 +34,14 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        // Setelah membuat file filter pada masing masing role, di folder Filters
+        // kemudian kita perlu menginisialisasi file filter tersebut kedalam Config/Filter
+        // Agar digunakan, dan cara penulisanya yaitu namaFilterBebas => pathFileFilterPadaFolderFilters:: class
+        // Seperti dibawah ini
+        'pimpinanFilter' => \App\Filters\PimpinanFilter::class,
+        'auditorFilter' => \App\Filters\AuditorFilter::class,
+        'auditiFilter' => \App\Filters\AuditFilter::class,
+        'adminFilter' => \App\Filters\AdminFilter::class,
     ];
 
     /**
