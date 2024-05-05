@@ -1,60 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Register</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="<?= base_url('assets/images/logo-title.png') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/css/backend-plugin.min.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/css/backend.css?v=1.0.0') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/vendor/remixicon/fonts/remixicon.css') ?>" />
+
+    <link rel="stylesheet" href="<?= base_url('assets/vendor/tui-calendar/tui-calendar/dist/tui-calendar.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/vendor/tui-calendar/tui-date-picker/dist/tui-date-picker.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css') ?>" />
 </head>
 
-<body>
+<body class=" ">
 
-    <div class="container mt-4">
-        <div class="row">
-            <h1>Register User</h1>
-            <?php if (session('validation')) : ?>
-                <div class="alert alert-danger alert-dismissible">
-                    <ul>
-                        <?php foreach (session('validation')->getErrors() as $error) : ?>
-                            <li><?= esc($error) ?></li>
-                        <?php endforeach ?>
-                    </ul>
-                </div>
-            <?php endif ?>
-            <form action="/register/save" method="post">
-                <?= csrf_field(); ?>
-                <div class="row mb-3">
-                    <label for="name" class="col-sm-2 col-form-label">name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" name="name" value="<?= old('name') ?>" autofocus required>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="email" class="col-sm-2 col-form-label">email</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" name="email" value="<?= old('email') ?>" required>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="password" class="col-sm-2 col-form-label">password</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="password" name="password" value="<?= old('password') ?>" required>
-                    </div>
-                </div>
-                <select class="form-select row mb-3" aria-label="Default select example" name="role" required>
-                    <option value="">Pilih Role</option>
-                    <option value="auditi">auditi</option>  
-                    <option value="auditor">auditor</option>
-                    <option value="pimpinan">pimpinan</option>
-                </select>
-                <button type="submit" class="btn btn-primary"> Tambah Data</button>
-            </form>
-            <a href="/" class="mt-5">Login?</a>
+    <div id="loading">
+        <div id="loading-center">
+            <div class="loader"></div>
         </div>
     </div>
+    <div class="wrapper">
+        <section class="login-content">
+            <div class="container">
+                <div class="row align-items-center justify-content-center height-self-center">
+                    <div class="col-lg-5">
+                        <div class="card auth-card">
+                            <div class="card-body p-0">
+                                <div class=" align-items-center auth-content">
+                                    <div class="col-lg-12 bg-primary content-left">
+                                        <div class="p-3">
+                                            <h2 class="mb-2 text-white">Sign Up</h2>
+                                            <p>Create your account.</p>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                                            <form action="<?= base_url('register/save') ?>" method="POST">
+                                                <?= csrf_field(); ?>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="floating-label form-group">
+                                                            <input class="floating-input form-control" type="text" placeholder=" " name="name" value="<?= old('name') ?>" autofocus required />
+                                                            <label>Nama</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="floating-label form-group">
+                                                            <input class="floating-input form-control" type="email" placeholder=" " name="email" value="<?= old('email') ?>" required />
+                                                            <label>Email</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="floating-label form-group">
+                                                            <input class="floating-input form-control" type="password" placeholder=" " name="password" value="<?= old('password') ?>" required />
+                                                            <label>Password</label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <select class="form-control mb-3" name="role" required>
+                                                                <option value="">Pilih Role</option>
+                                                                <option value="admin">Auditi</option>
+                                                                <option value="admin">Admin</option>
+                                                                <option value="auditor">Auditor</option>
+                                                                <option value="pimpinan">Pimpinan</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 text-center">
+                                                        <button type=" submit" class="btn btn-white w-100">
+                                                            <small>
+
+                                                                Submit
+                                                            </small>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-12 text-center">
+                                                        <small>
+                                                            <p class="mt-3">
+                                                                Already have an Account?&nbsp;
+                                                                <a href="<?= base_url('/') ?>" class="text-white text-underline">Sign In</a>
+                                                            </p>
+                                                        </small>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Backend Bundle JavaScript -->
+    <script src="<?= base_url('assets/js/backend-bundle.min.js') ?>"></script>
+
+    <!-- Table Treeview JavaScript -->
+    <script src="<?= base_url('assets/js/table-treeview.js') ?>"></script>
+
+    <!-- Chart Custom JavaScript -->
+    <script src="<?= base_url('assets/js/customizer.js') ?>"></script>
+
+    <!-- Chart Custom JavaScript -->
+    <script async src="<?= base_url('assets/js/chart-custom.js') ?>"></script>
+    <!-- Chart Custom JavaScript -->
+    <script async src="<?= base_url('assets/js/slider.js') ?>"></script>
+
+    <!-- app JavaScript -->
+    <script src="<?= base_url('assets/js/app.js') ?>"></script>
+
+    <script src="<?= base_url('assets/vendor/moment.min.js') ?>"></script>
 </body>
 
 </html>

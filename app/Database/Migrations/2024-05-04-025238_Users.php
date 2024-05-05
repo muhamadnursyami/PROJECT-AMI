@@ -18,7 +18,7 @@ class User extends Migration
             'name' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                
+
             ],
             'password' => [
                 'type' => 'VARCHAR',
@@ -34,9 +34,10 @@ class User extends Migration
             ]
         ]);
 
+        // Primary Key nya adalah Id
         $this->forge->addKey('id', true);
+        // Nama tabelnya adalah users
         $this->forge->createTable('users');
-
     }
 
     public function down()

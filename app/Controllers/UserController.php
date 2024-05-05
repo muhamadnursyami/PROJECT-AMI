@@ -16,16 +16,17 @@ class UserController extends BaseController
         $this->userModel = new UserModel();
     }
 
-    // menampilkan view login
-    public function login()
-    {
-        return view('login');
-    }
 
     // menampilkan view register
     public function register()
     {
-
+        // Logic pengecekan jika user sudah login berdasarkan role, maka user tidak bisa mengakses halaman login
+        if (session()->get('logged_in')) {
+            $role = session()->get('role_id');
+            if (in_array($role, ['admin', 'pimpinan', 'auditor', 'audit'])) {
+                return redirect()->to("/{$role}/dashboard");
+            }
+        }
         return view('register');
     }
 
@@ -86,57 +87,13 @@ class UserController extends BaseController
 
         // cek berhasil register
         if ($isSave) {
-            session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
+            session()->setFlashdata('pesan', 'Berhasil membuat akun, silahkan login !');
+            session()->setFlashdata('alert_type', 'success');
             return redirect()->to('/');
         } else {
-            session()->setFlashdata('email', 'Data Gagal ditambahkan');
+            session()->setFlashdata('email', 'Gagal membuat akun!');
+            session()->setFlashdata('alert_type', 'danger');
             return redirect()->to('/');
         }
-    }
-
-
-    // post login controller
-    public function postLogin()
-    {
-
-        // validasi login
-        if (!$this->validate([
-            'email' => [
-                'rules' => 'required|valid_email',
-                'errors' => [
-                    'required' => '{field} harus diisi.',
-                    'valid_email' => 'pada kolom "Email", format harus berupa email',
-                ],
-            ],
-            'password' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} harus diisi'
-                ],
-            ]
-
-        ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->back()->withInput()->with('validation', $validation);
-        }
-
-        // jika email ditemukan, maka akan return usernya
-        $user = $this->userModel->where(['email' => $this->request->getVar('email')])->first();
-
-        // jika email tidak ditemukan
-        if (!$user) {
-            session()->setFlashdata('email', 'Email atau password salah!');
-            return redirect()->to('/');
-        }
-
-        // jika password salah
-        if (!password_verify($this->request->getVar('password'), $user['password'])) {
-            session()->setFlashdata('email', 'Email atau password salah!');
-            return redirect()->to('/');
-        }
-
-        // // jika login berhasil
-        return "Login Berhasil nama anda " . $user['name'] . " sebagai " .  $user['role'];
-
     }
 }
