@@ -49,11 +49,11 @@
 
 
 
-                                            <form method="POST" action="<?= base_url('login') ?>">
+                                            <form method="POST" action="<?= base_url('/') ?>">
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="floating-label form-group">
-                                                            <input class="floating-input form-control <?= ($validation->hasError('email')) ? 'is-invalid' : '' ?>" type="email" name="email" placeholder=" ">
+                                                            <input class="floating-input form-control <?= ($validation->hasError('email')) ? 'is-invalid' : '' ?>" type="email" name="email" value="<?= old('email'); ?>" placeholder=" ">
                                                             <label>Email</label>
                                                             <div class="invalid-feedback">
 

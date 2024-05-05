@@ -8,9 +8,9 @@ use CodeIgniter\Router\RouteCollection;
 
 
 $routes->get('/', 'Login::index');
+$routes->post('/', 'Login::login_action');
 $routes->get('/register', 'UserController::register');
 $routes->post('register/save', 'UserController::saveRegister');
-$routes->post('login', 'Login::login_action');
 $routes->get('logout', 'Login::logout');
 // Tambakan ['filter' => 'pimpinanFilter'] untuk memberikan filter routing / url hanya bisa diakses
 // oleh role yang sama sesuai ketentuan yang telah di buat Folder Filters/xxxxFilter

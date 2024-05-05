@@ -28,15 +28,28 @@ class Login extends BaseController
     {
         // membuat rules untuk validation
         $rules = [
-            'email' => 'required',
+            'email' => 'required|valid_email',
             'password' => 'required'
         ];
+        
         // Memngecek rules apakah sudah mengikuti aturan
         if (!$this->validate($rules)) {
+            $email = $this->request->getVar('email');
+            $password = $this->request->getVar('password');
+            
+            
+            // cek email atau password jika string kosong atau null
+            if($email == "" || $email == null || $password == "" || $password == null){
+                session()->setFlashdata('pesan', 'Email atau Password masih kosong');
+                session()->setFlashdata('alert_type', 'danger');
+                return redirect()->to('/')->withInput();
+            }
+            
             // ambil dari variable data diatas ambil keynya itu validator
             $data['validation'] = $this->validator;
 
             return view('login', $data);
+
         } else {
             // menginisialisasi session
             $session = session();
@@ -92,14 +105,14 @@ class Login extends BaseController
                             return redirect()->to('/');
                     }
                 } else {
-                    $session->setFlashdata('pesan', 'Password anda salah');
+                    $session->setFlashdata('pesan', 'Email atau password anda salah');
                     session()->setFlashdata('alert_type', 'danger');
-                    return redirect()->to('/');
+                    return redirect()->to('/')->withInput();
                 }
             } else {
-                $session->setFlashdata('pesan', 'Email anda salah');
+                $session->setFlashdata('pesan', 'Email atau password anda salah');
                 session()->setFlashdata('alert_type', 'danger');
-                return redirect()->to('/');
+                return redirect()->to('/')->withInput();
             }
         }
     }
