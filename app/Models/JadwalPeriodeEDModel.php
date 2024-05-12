@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class JadwalPeriodeEDModel extends Model
 {
 
-    protected $table            = 'users';
+    protected $table            = 'jadwal_periode_ed';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -15,11 +15,9 @@ class UserModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         "uuid",
-        "email",
-        "nidn",
-        "name",
-        "password",
-        "role",
+        "tanggal_mulai",
+        "tanggal_selesai",
+        "deskripsi",
 
     ];
 
@@ -52,4 +50,14 @@ class UserModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public  function getJadwalPeriodeED($uuid = false)
+    {
+        if ($uuid == false) {
+            return $this->findAll();
+        }
+
+        return $this->where('uuid', $uuid)->first();
+    }
 }

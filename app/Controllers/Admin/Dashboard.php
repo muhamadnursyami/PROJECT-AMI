@@ -13,7 +13,8 @@ class Dashboard extends BaseController
         // contoh nya title sesuai halaman yang ditampilkan , jadi kita bisa kirim lewat sini
         // dan dikirkan melalui parameter ke 2 pada function view(..., $data);
         $data = [
-            'title' => 'Dashboard'
+            'title' => 'Dashboard',
+            'currentPage' => 'dashboard'
         ];
         return view('admin/dashboard', $data);
     }
