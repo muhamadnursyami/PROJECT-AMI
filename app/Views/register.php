@@ -37,7 +37,15 @@
                                         <div class="p-3">
                                             <h2 class="mb-2 text-white">Sign Up</h2>
                                             <p>Create your account.</p>
-
+                                            <?php if (session('validation')) { ?>
+                                                <div class="alert bg-danger" role="alert">
+                                                    <ul>
+                                                        <?php foreach (session('validation') as $error) : ?>
+                                                            <li><?= esc($error) ?></li>
+                                                        <?php endforeach ?>
+                                                    </ul>
+                                                </div>
+                                            <?php } ?>
                                             <form action="<?= base_url('register/save') ?>" method="POST">
                                                 <?= csrf_field(); ?>
                                                 <div class="row">

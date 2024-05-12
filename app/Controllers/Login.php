@@ -28,11 +28,23 @@ class Login extends BaseController
     {
         // membuat rules untuk validation
         $rules = [
-            'email' => 'required',
+            'email' => 'required|valid_email',
             'password' => 'required'
         ];
+
         // Memngecek rules apakah sudah mengikuti aturan
         if (!$this->validate($rules)) {
+            $email = $this->request->getVar('email');
+            $password = $this->request->getVar('password');
+
+
+            // cek email atau password jika string kosong atau null
+            if ($email == "" || $email == null || $password == "" || $password == null) {
+                session()->setFlashdata('pesan', 'Email atau Password masih kosong');
+                session()->setFlashdata('alert_type', 'danger');
+                return redirect()->to('/')->withInput();
+            }
+
             // ambil dari variable data diatas ambil keynya itu validator
             $data['validation'] = $this->validator;
 
@@ -57,9 +69,20 @@ class Login extends BaseController
                 // ambil password dari database yang kita paramter nya itu kita ambil dari email yang
                 // sudah kita cek, dan kita ambil data passwordnya
                 $password_db = $cekEmail['password'];
+                // $hash = password_hash($password, PASSWORD_BCRYPT);
+                // if (password_verify($password, $password_db)) {
+                //     echo 'Password is valid!';
+                // } else {
+                //     echo 'Invalid password.';
+                //     echo 'Hashed password: ' . $hash;
+                //     echo 'Password from DB: ' . $password_db;
+                // }
+                // dd($password_db, $password);
                 // kita cek menggunakan function password_verify yang parameter 1 itu adalah
                 // password yang user inputkan dan parameter kedua itu password dari db
                 $cekPassword = password_verify($password, $password_db);
+
+                // dd($cekPassword);
                 if ($cekPassword) {
 
                     //  variabel  $session_data, digunakan untuk menampung semua data yang ingin
@@ -94,12 +117,12 @@ class Login extends BaseController
                 } else {
                     $session->setFlashdata('pesan', 'Password anda salah');
                     session()->setFlashdata('alert_type', 'danger');
-                    return redirect()->to('/');
+                    return redirect()->to('/')->withInput();
                 }
             } else {
-                $session->setFlashdata('pesan', 'Email anda salah');
+                $session->setFlashdata('pesan', ' Email anda salah');
                 session()->setFlashdata('alert_type', 'danger');
-                return redirect()->to('/');
+                return redirect()->to('/')->withInput();
             }
         }
     }

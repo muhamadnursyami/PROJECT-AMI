@@ -52,7 +52,7 @@ class UserController extends BaseController
                 'rules' => 'required|valid_email|is_unique[users.email]',
                 'errors' => [
                     'required' => '{field} harus diisi',
-                    'valid_email' => 'format harus berupa email',
+                    'valid_email' => 'format email salah!',
                     'is_unique' => '{field} sudah terdaftar'
                 ]
             ],
@@ -70,7 +70,7 @@ class UserController extends BaseController
             ]
         ])) {
             $validation = \Config\Services::validation();
-            return redirect()->back()->withInput()->with('validation', $validation);
+            return redirect()->back()->withInput()->with('validation', $validation->getErrors());
         }
 
         // hash password menggunakan bcrypt
@@ -78,7 +78,7 @@ class UserController extends BaseController
 
         // save password
         $isSave = $this->userModel->save([
-            'id' => $uuid4String,
+            'uuid' => $uuid4String,
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
             'password' => $password,
