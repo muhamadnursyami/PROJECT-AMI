@@ -19,3 +19,6 @@ $routes->get('pimpinan/dashboard', 'Pimpinan\Dashboard::index', ['filter' => 'pi
 $routes->get('auditor/dashboard', 'Auditor\Dashboard::index', ['filter' => 'auditorFilter']);
 $routes->get('auditi/dashboard', 'Auditi\Dashboard::index', ['filter' => 'auditiFilter']);
 $routes->get('admin/dashboard', 'Admin\Dashboard::index', ['filter' => 'adminFilter']);
+
+// FITUR ROLE ADMIN 
+$routes->get('admin/jadwal-periode', 'Admin\JadwalED::index');
