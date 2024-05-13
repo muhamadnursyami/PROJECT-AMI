@@ -78,7 +78,7 @@ class UserController extends BaseController
 
         // save password
         $isSave = $this->userModel->save([
-            'id' => $uuid4String,
+            'uuid' => $uuid4String,
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
             'password' => $password,

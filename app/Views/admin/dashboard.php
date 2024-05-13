@@ -1,6 +1,7 @@
 <?= $this->extend('admin/layout') ?>
 
 <?= $this->section('content') ?>
+<h4 class="mb-5">Selamat Datang di Dashboard Admin</h4>
 <div class="row">
     <div class="col-md-6 col-lg-3">
         <div class="card card-block card-stretch card-height">

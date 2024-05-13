@@ -21,17 +21,21 @@ class Users extends Migration
                 'constraint' => 40,
                 'unique' => true,
             ],
+            'email' => [
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+            ],
             'nidn' => [
                 'type' => 'VARCHAR',
                 'constraint' => 10,
             ],
-            'nama' => [
+            'name' => [
                 'type' => 'VARCHAR',
                 'constraint' => 50,
             ],
             'password' => [
                 'type' => 'VARCHAR',
-                'constraint' => 30,
+                'constraint' => '255',
             ],
             'role' => [
                 'type' => 'ENUM',

@@ -19,3 +19,11 @@ $routes->get('pimpinan/dashboard', 'Pimpinan\Dashboard::index', ['filter' => 'pi
 $routes->get('auditor/dashboard', 'Auditor\Dashboard::index', ['filter' => 'auditorFilter']);
 $routes->get('auditi/dashboard', 'Auditi\Dashboard::index', ['filter' => 'auditiFilter']);
 $routes->get('admin/dashboard', 'Admin\Dashboard::index', ['filter' => 'adminFilter']);
+
+// FITUR ROLE ADMIN 
+$routes->get('admin/jadwal-periode', 'Admin\JadwalED::index');
+$routes->get('admin/jadwal-periode/create', 'Admin\JadwalED::create');
+$routes->post('admin/jadwal-periode/save', 'Admin\JadwalED::save');
+$routes->post('admin/jadwal-periode/update/(:num)', 'Admin\JadwalED::update/$1');
+$routes->get('admin/jadwal-periode/edit/(:segment)', 'Admin\JadwalED::edit/$1');
+$routes->delete('admin/jadwal-periode/(:num)', 'Admin\JadwalED::delete/$1');
