@@ -46,11 +46,11 @@
                                     <td class="text-center"><?= $jadwalED['deskripsi'] ?></td>
                                     <td class="text-center">
                                         <div class="flex align-items-center list-user-action">
-                                            <a href="/admin/jadwal-periode/edit/<?= $jadwalED['uuid'] ?>" class="btn btn-sm btn-primary"><i class="ri-pencil-line mr-0"></i></a>
+                                            <a href="/admin/jadwal-periode/edit/<?= $jadwalED['uuid'] ?>" class="btn btn-sm btn-primary"><i class="ri-pencil-line mr-0">Edit</i></a>
                                             <form action="/admin/jadwal-periode/<?= $jadwalED['id'] ?>" method="POST" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="_method" value="DELETE">
-                                                <button class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="ri-delete-bin-line mr-0"></i></button>
+                                                <button class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="ri-delete-bin-line mr-0">Hapus</i></button>
                                             </form>
                                             <!-- <a class="btn btn-sm bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="#"></a> -->
                                         </div>

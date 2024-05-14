@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class FormEd extends Migration
+class JadwalEd extends Migration
 {
     public function up()
     {
@@ -47,13 +47,11 @@ class FormEd extends Migration
         $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('id_jadwal_periode_ed', 'jadwal_periode_ed', 'id', 'CASCADE', 'CASCADE', 'fk_formED_jadwalPeriodeED');
         $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE', 'fk_formED_usersAuditor');
-        $this->forge->createTable('form_ed');
-
-
+        $this->forge->createTable('jadwal_ed');
     }
 
     public function down()
     {
-        $this->forge->dropTable('form_ed');
+        $this->forge->dropTable('jadwal_ed');
     }
 }

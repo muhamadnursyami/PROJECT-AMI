@@ -27,3 +27,6 @@ $routes->post('admin/jadwal-periode/save', 'Admin\JadwalED::save');
 $routes->post('admin/jadwal-periode/update/(:num)', 'Admin\JadwalED::update/$1');
 $routes->get('admin/jadwal-periode/edit/(:segment)', 'Admin\JadwalED::edit/$1');
 $routes->delete('admin/jadwal-periode/(:num)', 'Admin\JadwalED::delete/$1');
+// kelola kriteria admin
+$routes->get('admin/kriteria-ed', 'Admin\KriteriaED::create');
+$routes->post('admin/kriteria-ed', 'Admin\KriteriaED::save');
