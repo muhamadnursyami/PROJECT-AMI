@@ -17,17 +17,32 @@ class KriteriaED extends BaseController
 
     public function create()
     {
+        $form = $this->formEd->select('indikator')->findAll();
+ 
+        $form_filter = array_filter($form, function ($item) {
+            return strlen($item['indikator']) > 12;
+        });
+
+        $indikator = [];
+        foreach ($form_filter as $item) {
+            $indikator[] = $item['indikator'];
+        }
+
+        $form_ed = array_unique($indikator);
+
         $data = [
             'title' => 'Tambah Kriteria ED',
             'currentPage' => 'kriteria-ed',
+            'form_ed' => $form_ed,
         ];
 
         return view('admin/kriteriaED/create', $data);
     }
 
-    public function save(){
+    public function save()
+    {
 
-        if(!$this->validate([
+        if (!$this->validate([
             'indikator' => [
                 'rules' => 'required',
                 'errors' => [
@@ -53,15 +68,15 @@ class KriteriaED extends BaseController
                 ],
             ],
 
-            
-        ])){
+
+        ])) {
             $validation = \Config\Services::validation();
             return redirect()->back()->withInput()->with('validation', $validation);
         }
 
         // uuid
         $uuid = service('uuid')->uuid4()->toString();
-        
+
         $isSave = $this->formEd->save([
             'uuid' => $uuid,
             'indikator' => $this->request->getPost('indikator'),
@@ -71,12 +86,10 @@ class KriteriaED extends BaseController
 
         ]);
 
-        if($isSave){
+        if ($isSave) {
             return redirect()->back()->with('sukses', 'Berhasil menambah ED');
-        }else {
+        } else {
             return redirect()->back()->with('gagal', 'Gagal menambah ED');
         }
-        
-        
     }
 }

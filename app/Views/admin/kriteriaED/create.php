@@ -34,18 +34,9 @@
                             <div class="col-12 col-lg-6">
                                 <select class="form-control mb-3" name="indikator" required>
                                     <option value="">Pilih Indikator</option>
-                                    <option value="A. Kondisi Eksternal">A. Kondisi Eksternal </option>
-                                    <option value="B. Profil Unit Pengelola Program Studi">B. Profil Unit Pengelola Program Studi</option>
-                                    <option value="C.1. Visi Misi Tujuan Sasaran">C.1. Visi Misi Tujuan Sasaran</option>
-                                    <option value="C.2. Tata Pamong, Tata Kelola dan Kerjasama">C.2. Tata Pamong, Tata Kelola dan Kerjasama</option>
-                                    <option value="C.3. Mahasiswa">C.3. Mahasiswa</option>
-                                    <option value="C.4. Sumber Daya Manusia ">C.4. Sumber Daya Manusia </option>
-                                    <option value="C.5. Keuangan, Sarana dan Prasarana">C.5. Keuangan, Sarana dan Prasarana</option>
-                                    <option value="C.6. Pendidikan">C.6. Pendidikan</option>
-                                    <option value="C.7. Penelitian">C.7. Penelitian</option>
-                                    <option value="C.8 Pengabdian Kepada Masyarakat">C.8 Pengabdian Kepada Masyarakat</option>
-                                    <option value="C.9. Luaran dan Capaian Tridharma">C.9. Luaran dan Capaian Tridharma</option>
-                                    <option value="D. Analisis dan Penetapan Program Pengembangan">D. Analisis dan Penetapan Program Pengembangan</option>
+                                    <?php foreach ($form_ed as $key) { ?>    
+                                        <option value="<?= $key; ?>"><?= $key; ?></option>
+                                    <?php } ?>
                                 </select>
                                 <small class="form-text text-muted">Ingin menambah indikator? <a href="admin/kriteria-ed/indikator/tambah">klik disini</a>.</small>
                             </div>

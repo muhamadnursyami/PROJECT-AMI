@@ -34,3 +34,4 @@ $routes->post('admin/kriteria-ed', 'Admin\KriteriaED::save');
 
 // FITUR ROLE AUDITI
 $routes->get('auditi/form-ed', 'Auditi\FormEDController::create');
+$routes->post('auditi/form-ed', 'Auditi\FormEDController::save');

@@ -6,19 +6,10 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
-                        <h4 class="card-title">FORM pengisian kriteria ED</h4>
+                        <h4 class="card-title">Form Evaluasi Diri</h4>
                     </div>
                 </div>
                 <div class="card-body">
-                    <?php if (session('validation')) { ?>
-                        <div class="alert bg-danger" role="alert">
-                            <ul>
-                                <?php foreach (session('validation')->getErrors() as $error) : ?>
-                                    <li><?= esc($error) ?></li>
-                                <?php endforeach ?>
-                            </ul>
-                        </div>
-                    <?php } ?>
                     <?php if (!empty(session()->getFlashdata('sukses'))) : ?>
                         <div class="alert bg-success" role="alert">
 
@@ -28,43 +19,157 @@
                             </button>
                         </div>
                     <?php endif ?>
-                    <form action="/admin/kriteria-ed" method="POST">
+                    <h4>Progress Form Evaluasi Diri</h4>
+                    <?php if (!empty(session()->getFlashdata('persentase'))) { ?>
+                        <div class="progress mt-3 mb-4">
+                            <div class="progress-bar" role="progressbar" style="width: <?= session()->getFlashdata('persentase') ?>%;" aria-valuenow="<?= session()->getFlashdata('persentase') ?>" aria-valuemin="0" aria-valuemax="100"><?= session()->getFlashdata('persentase') ?>%</div>
+                        </div>
+                    <?php } else { ?>
+                        <div class="progress mt-3 mb-4">
+                            <div class="progress-bar" role="progressbar" style="width: <?= $persentase ?>%;" aria-valuenow="<?= $persentase ?>" aria-valuemin="0" aria-valuemax="100"><?= $persentase ?>%</div>
+                        </div>
+                    <?php } ?>
+                    <form action="/auditi/form-ed" method="POST">
                         <?= csrf_field() ?>
                         <div class="row mb-5 text-start">
-                            <div class="col-12 col-lg-6">
-                                <select class="form-control mb-3" name="indikator" required>
-                                    <option value="">Pilih Indikator</option>
-                                    <option value="A. Kondisi Eksternal">A. Kondisi Eksternal </option>
-                                    <option value="B. Profil Unit Pengelola Program Studi">B. Profil Unit Pengelola Program Studi</option>
-                                    <option value="C.1. Visi Misi Tujuan Sasaran">C.1. Visi Misi Tujuan Sasaran</option>
-                                    <option value="C.2. Tata Pamong, Tata Kelola dan Kerjasama">C.2. Tata Pamong, Tata Kelola dan Kerjasama</option>
-                                    <option value="C.3. Mahasiswa">C.3. Mahasiswa</option>
-                                    <option value="C.4. Sumber Daya Manusia ">C.4. Sumber Daya Manusia </option>
-                                    <option value="C.5. Keuangan, Sarana dan Prasarana">C.5. Keuangan, Sarana dan Prasarana</option>
-                                    <option value="C.6. Pendidikan">C.6. Pendidikan</option>
-                                    <option value="C.7. Penelitian">C.7. Penelitian</option>
-                                    <option value="C.8 Pengabdian Kepada Masyarakat">C.8 Pengabdian Kepada Masyarakat</option>
-                                    <option value="C.9. Luaran dan Capaian Tridharma">C.9. Luaran dan Capaian Tridharma</option>
-                                    <option value="D. Analisis dan Penetapan Program Pengembangan">D. Analisis dan Penetapan Program Pengembangan</option>
-                                </select>
-                                <small class="form-text text-muted">Ingin menambah indikator? <a href="admin/kriteria-ed/indikator/tambah">klik disini</a>.</small>
-                            </div>
-                            <div class="col-12 col-lg-6 mt-auto">
-                                <label for="standar" class="h6">Standar</label>
-                                <input type="text" class="form-control" id="standar" name="standar" value="<?= old('standar'); ?>">
-                            </div>
-                            <div class="col-12 mt-3">
-                                <label for="kriteria" class="h6"> Kriteria :</label>
-                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"></textarea>
-                            </div>
-                            <div class="col-12 mt-3">
-                                <label for="prodi" class="h6">Prodi</label>
-                                <input type="text" class="form-control" id="prodi" name="prodi" value="<?= old('prodi'); ?>">
-                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Indikator</th>
+                                        <th scope="col">Standar</th>
+                                        <th scope="col">Kriteria</th>
+                                        <th scope="col">Capaian</th>
+                                        <th scope="col">Sebutan</th>
+                                        <th scope="col">Isi Kriteria</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $no = 1; ?>
+                                    <?php for ($i = 0; $i < count($form_ed); $i++) { ?>
+                                        <?php if (is_null($form_ed[$i]['kriteria']) || $form_ed[$i]['kriteria'] == "") { ?>
+
+
+                                            <td scope="row">#</td>
+                                            <td colspan="5"><?= $form_ed[$i]['indikator']; ?></td>
+
+                                        <?php continue;
+                                        } ?>
+                                        <tr>
+                                            <td scope="row"><?= $no; ?></td>
+                                            <td><?= $form_ed[$i]['indikator']; ?></td>
+                                            <td><?= $form_ed[$i]['standar']; ?></td>
+                                            <td><?= $form_ed[$i]['kriteria']; ?></td>
+                                            <td><?= $form_ed[$i]['capaian']; ?></td>
+                                            <?php if ($form_ed[$i]['capaian'] == 0) { ?>
+                                                <td>Sangat Kurang</td>
+                                            <?php } else if ($form_ed[$i]['capaian'] == 1) { ?>
+                                                <td>Kurang</td>
+                                            <?php } else if ($form_ed[$i]['capaian'] == 2) { ?>
+                                                <td>Cukup</td>
+                                            <?php } else if ($form_ed[$i]['capaian'] == 3) { ?>
+                                                <td>Baik</td>
+                                            <?php } else if ($form_ed[$i]['capaian'] == 4) { ?>
+                                                <td>Sangat Baik</td>
+                                            <?php } ?>
+                                            <td>
+                                                <?php if ($form_ed[$i]['capaian'] == 1) { ?>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1" checked="checked">
+                                                        <label class="form-check-label">1</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2">
+                                                        <label class="form-check-label">2</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3">
+                                                        <label class="form-check-label">3</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4">
+                                                        <label class="form-check-label">4</label>
+                                                    </div>
+                                                <?php } else if ($form_ed[$i]['capaian'] == 2) { ?>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1">
+                                                        <label class="form-check-label">1</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2" checked="checked">
+                                                        <label class="form-check-label">2</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3">
+                                                        <label class="form-check-label">3</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4">
+                                                        <label class="form-check-label">4</label>
+                                                    </div>
+                                                <?php } else if ($form_ed[$i]['capaian'] == 3) { ?>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1">
+                                                        <label class="form-check-label">1</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2">
+                                                        <label class="form-check-label">2</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3" checked="checked">
+                                                        <label class="form-check-label">3</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4">
+                                                        <label class="form-check-label">4</label>
+                                                    </div>
+                                                <?php } else if ($form_ed[$i]['capaian'] == 4) { ?>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1">
+                                                        <label class="form-check-label">1</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2">
+                                                        <label class="form-check-label">2</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3">
+                                                        <label class="form-check-label">3</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4" checked="checked">
+                                                        <label class="form-check-label">4</label>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1">
+                                                        <label class="form-check-label">1</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2">
+                                                        <label class="form-check-label">2</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3">
+                                                        <label class="form-check-label">3</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4">
+                                                        <label class="form-check-label">4</label>
+                                                    </div>
+                                                <?php } ?>
+
+                                            </td>
+                                        </tr>
+                                        <?php $no++; ?>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary mr-3">Tambah Jadwal</button>
-                            <a href="/admin/jadwal-periode" class="btn bg-danger">Cancel</a>
+                            <button type="submit" class="btn btn-primary mr-3">Simpan</button>
+                            <a href="/auditi/dashboard" class="btn bg-danger">Cancel</a>
                         </div>
                     </form>
                 </div>
