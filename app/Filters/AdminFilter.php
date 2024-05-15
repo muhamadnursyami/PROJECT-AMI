@@ -21,9 +21,8 @@ class AdminFilter implements FilterInterface
         // jika session yang di ambil itu, namanya adalah role_id, yang role_id itu tidak
         // sama dengan admin maka tampilkan setFlasdata dan akan diarahakan ke halaman / atau login
         if (session()->get('role_id') != 'admin') {
-            session()->setFlashdata('pesan', 'Anda belum Login !');
-            session()->setFlashdata('alert_type', 'danger');session()->setFlashdata('alert_type', 'danger');
-            return redirect()->to('/');
+            $role = session()->get('role_id');
+            return redirect()->to("$role/dashboard");
         }
     }
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

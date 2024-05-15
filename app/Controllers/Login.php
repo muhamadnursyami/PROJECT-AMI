@@ -3,24 +3,22 @@
 namespace App\Controllers;
 
 use App\Database\Migrations\User;
+use App\Helpers\LoginHelpers;
 use App\Models\UserModel;
 
 class Login extends BaseController
 {
     public function index()
     {
+        if(session()->get('logged_in')){
+            $role = session()->get('role_id');
+            return redirect()->to("$role/dashboard");
+        }
         // menjalankan validation 
         $data = [
             'validation' => \Config\Services::validation()
         ];
 
-        // Logic pengecekan jika user sudah login berdasarkan role, maka user tidak bisa mengakses halaman login
-        if (session()->get('logged_in')) {
-            $role = session()->get('role_id');
-            if (in_array($role, ['admin', 'pimpinan', 'auditor', 'audit'])) {
-                return redirect()->to("/{$role}/dashboard");
-            }
-        }
         return view('login', $data);
     }
 
@@ -91,6 +89,7 @@ class Login extends BaseController
                         'logged_in' => TRUE,
                         'role_id' => $cekEmail['role'],
                         'name' => $cekEmail['name'],
+                        'uuid' => $cekEmail['uuid'],
                     ];
 
                     // masukan/tambah data  $session_data kedalam session aslinya 

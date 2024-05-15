@@ -15,10 +15,10 @@ $routes->get('logout', 'Login::logout');
 // Tambakan ['filter' => 'pimpinanFilter'] untuk memberikan filter routing / url hanya bisa diakses
 // oleh role yang sama sesuai ketentuan yang telah di buat Folder Filters/xxxxFilter
 
-$routes->get('pimpinan/dashboard', 'Pimpinan\Dashboard::index', ['filter' => 'pimpinanFilter']);
-$routes->get('auditor/dashboard', 'Auditor\Dashboard::index', ['filter' => 'auditorFilter']);
-$routes->get('auditi/dashboard', 'Auditi\Dashboard::index', ['filter' => 'auditiFilter']);
-$routes->get('admin/dashboard', 'Admin\Dashboard::index', ['filter' => 'adminFilter']);
+$routes->get('pimpinan/dashboard', 'Pimpinan\Dashboard::index');
+$routes->get('auditor/dashboard', 'Auditor\Dashboard::index');
+$routes->get('auditi/dashboard', 'Auditi\Dashboard::index');
+$routes->get('admin/dashboard', 'Admin\Dashboard::index');
 
 // FITUR ROLE ADMIN 
 $routes->get('admin/jadwal-periode', 'Admin\JadwalED::index');
@@ -30,3 +30,7 @@ $routes->delete('admin/jadwal-periode/(:num)', 'Admin\JadwalED::delete/$1');
 // kelola kriteria admin
 $routes->get('admin/kriteria-ed', 'Admin\KriteriaED::create');
 $routes->post('admin/kriteria-ed', 'Admin\KriteriaED::save');
+
+
+// FITUR ROLE AUDITI
+$routes->get('auditi/form-ed', 'Auditi\FormEDController::create');

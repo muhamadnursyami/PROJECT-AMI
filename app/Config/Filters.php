@@ -38,10 +38,10 @@ class Filters extends BaseFilters
         // kemudian kita perlu menginisialisasi file filter tersebut kedalam Config/Filter
         // Agar digunakan, dan cara penulisanya yaitu namaFilterBebas => pathFileFilterPadaFolderFilters:: class
         // Seperti dibawah ini
-        'pimpinanFilter' => \App\Filters\PimpinanFilter::class,
-        'auditorFilter' => \App\Filters\AuditorFilter::class,
-        'auditiFilter' => \App\Filters\AuditFilter::class,
-        'adminFilter' => \App\Filters\AdminFilter::class,
+        'isAdmin' => \App\Filters\AdminFilter::class,
+        'isAuditi' => \App\Filters\AuditFilter::class,
+        'isAuditor' => \App\Filters\AuditorFilter::class,
+        'isPimpinan' => \App\Filters\PimpinanFilter::class,
     ];
 
     /**
@@ -111,5 +111,36 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        'isAdmin' => ['before' => 
+            [
+                'admin/dashboard',
+                'admin/kriteria-ed',
+                'admin/jadwal-periode',
+                'admin/jadwal-periode/create',
+                'admin/jadwal-periode/update/(:num)',
+                'admin/jadwal-periode/edit/(:segment)',
+                'admin/jadwal-periode/(:num)',
+                'admin/kriteria-ed',
+                
+            ]
+        ],
+        'isAuditi' => ['before' => 
+            [
+                'auditi/dashboard',
+                'auditi/form-ed',
+            ]
+        
+        ],
+        'isAuditor' => [ 'before' => 
+            [
+                'auditor/dashboard',
+            ]
+        ],
+        'isPimpinan' => [ 'before' => 
+            [
+                'pimpinan/dashboard'
+            ]
+        ] 
+    ];
 }
