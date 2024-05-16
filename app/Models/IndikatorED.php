@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class FormEDModel extends Model
+class IndikatorED extends Model
 {
-    protected $table            = 'form_ed';
+    protected $table            = 'indikator_ed';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -14,12 +14,7 @@ class FormEDModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'uuid',
-        'id_indikator',
-        'standar',
-        'kriteria',
-        'capaian',
-        'program_studi'
-
+        'indikator',
     ];
 
     protected bool $allowEmptyInserts = false;

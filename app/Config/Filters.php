@@ -114,32 +114,24 @@ class Filters extends BaseFilters
     public array $filters = [
         'isAdmin' => ['before' => 
             [
-                'admin/dashboard',
-                'admin/kriteria-ed',
-                'admin/jadwal-periode',
-                'admin/jadwal-periode/create',
-                'admin/jadwal-periode/update/(:num)',
-                'admin/jadwal-periode/edit/(:segment)',
-                'admin/jadwal-periode/(:num)',
-                'admin/kriteria-ed',
+                'admin/*',
                 
             ]
         ],
         'isAuditi' => ['before' => 
             [
-                'auditi/dashboard',
-                'auditi/form-ed',
+                'auditi/*',
             ]
         
         ],
         'isAuditor' => [ 'before' => 
             [
-                'auditor/dashboard',
+                'auditor/*',
             ]
         ],
         'isPimpinan' => [ 'before' => 
             [
-                'pimpinan/dashboard'
+                'pimpinan/*'
             ]
         ] 
     ];

@@ -114,12 +114,12 @@ class Login extends BaseController
                             return redirect()->to('/');
                     }
                 } else {
-                    $session->setFlashdata('pesan', 'Password anda salah');
+                    $session->setFlashdata('pesan', 'Email atau password anda salah');
                     session()->setFlashdata('alert_type', 'danger');
                     return redirect()->to('/')->withInput();
                 }
             } else {
-                $session->setFlashdata('pesan', ' Email anda salah');
+                $session->setFlashdata('pesan', 'Email atau password anda salah');
                 session()->setFlashdata('alert_type', 'danger');
                 return redirect()->to('/')->withInput();
             }

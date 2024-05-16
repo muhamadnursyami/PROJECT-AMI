@@ -35,10 +35,10 @@
                                 <select class="form-control mb-3" name="indikator" required>
                                     <option value="">Pilih Indikator</option>
                                     <?php foreach ($form_ed as $key) { ?>    
-                                        <option value="<?= $key; ?>"><?= $key; ?></option>
+                                        <option value="<?= $key['id']; ?>"><?= $key['indikator']; ?></option>
                                     <?php } ?>
                                 </select>
-                                <small class="form-text text-muted">Ingin menambah indikator? <a href="admin/kriteria-ed/indikator/tambah">klik disini</a>.</small>
+                                <small class="form-text text-muted">Ingin menambah indikator? <a href="/admin/kriteria-ed/indikator">klik disini</a>.</small>
                             </div>
                             <div class="col-12 col-lg-6 mt-auto">
                                 <label for="standar" class="h6">Standar</label>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-12 mt-3">
                                 <label for="kriteria" class="h6"> Kriteria :</label>
-                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"></textarea>
+                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= old('kriteria'); ?></textarea>
                             </div>
                             <div class="col-12 mt-3">
                                 <label for="prodi" class="h6">Prodi</label>
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary mr-3">Tambah Jadwal</button>
+                            <button type="submit" class="btn btn-primary mr-3">Tambah Kriteria</button>
                             <a href="/admin/jadwal-periode" class="btn bg-danger">Cancel</a>
                         </div>
                     </form>

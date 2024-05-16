@@ -30,7 +30,12 @@ $routes->delete('admin/jadwal-periode/(:num)', 'Admin\JadwalED::delete/$1');
 // kelola kriteria admin
 $routes->get('admin/kriteria-ed', 'Admin\KriteriaED::create');
 $routes->post('admin/kriteria-ed', 'Admin\KriteriaED::save');
-
+$routes->get('admin/kriteria-ed/indikator', 'Admin\KriteriaED::indikator');
+$routes->get('admin/kriteria-ed/indikator/tambah', 'Admin\KriteriaED::indikatorCreate');
+$routes->post('admin/kriteria-ed/indikator/tambah', 'Admin\KriteriaED::indikatorCreatePost');
+$routes->get('admin/kriteria-ed/ubah/(:segment)', 'Admin\KriteriaED::indikatorUbah/$1');
+$routes->post('admin/kriteria-ed/ubah/(:segment)', 'Admin\KriteriaED::indikatorUbahPost/$1');
+$routes->post('admin/kriteria-ed/hapus/(:segment)', 'Admin\KriteriaED::indikatorDelete/$1');
 
 // FITUR ROLE AUDITI
 $routes->get('auditi/form-ed', 'Auditi\FormEDController::create');
