@@ -19,7 +19,7 @@
                             </button>
                         </div>
                     <?php endif ?>
-                    <h4>Progress Form Evaluasi Diri</h4>
+                    <h4>Progress Form Evaluasi Diri <?= $prodi ?></h4>
                     <?php if (!empty(session()->getFlashdata('persentase'))) { ?>
                         <div class="progress mt-3 mb-4">
                             <div class="progress-bar" role="progressbar" style="width: <?= session()->getFlashdata('persentase') ?>%;" aria-valuenow="<?= session()->getFlashdata('persentase') ?>" aria-valuemin="0" aria-valuemax="100"><?= session()->getFlashdata('persentase') ?>%</div>

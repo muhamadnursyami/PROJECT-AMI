@@ -25,6 +25,11 @@ class FormED extends Migration
                 'constriant' => 11,
                 'unsigned' => true,  
             ],
+            'id_prodi' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
+            ],
             'standar' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
@@ -56,6 +61,7 @@ class FormED extends Migration
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('id_indikator', 'indikator_ed', 'id', 'CASCADE', 'CASCADE', 'fk_formed_indikatored');
+        $this->forge->addForeignKey('id_prodi', 'prodi', 'id', 'CASCADE', 'CASCADE', 'fk_formed_prodi');
         $this->forge->createTable('form_ed');
     }
 

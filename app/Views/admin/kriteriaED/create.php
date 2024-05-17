@@ -34,7 +34,7 @@
                             <div class="col-12 col-lg-6">
                                 <select class="form-control mb-3" name="indikator" required>
                                     <option value="">Pilih Indikator</option>
-                                    <?php foreach ($form_ed as $key) { ?>    
+                                    <?php foreach ($form_ed as $key) { ?>
                                         <option value="<?= $key['id']; ?>"><?= $key['indikator']; ?></option>
                                     <?php } ?>
                                 </select>
@@ -49,8 +49,12 @@
                                 <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= old('kriteria'); ?></textarea>
                             </div>
                             <div class="col-12 mt-3">
-                                <label for="prodi" class="h6">Prodi</label>
-                                <input type="text" class="form-control" id="prodi" name="prodi" value="<?= old('prodi'); ?>">
+                                <select class="form-control mb-3" name="prodi" required>
+                                    <option value="">Pilih Prodi</option>
+                                    <?php foreach ($prodi as $key) { ?>
+                                        <option value="<?= $key['id']; ?>"><?= $key['nama']; ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row justify-content-center">

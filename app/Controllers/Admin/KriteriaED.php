@@ -5,6 +5,8 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\FormEDModel;
 use App\Models\IndikatorED;
+use App\Models\ProdiModel;
+use App\Models\UserModel;
 use CodeIgniter\Database\Seeder;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -13,11 +15,15 @@ class KriteriaED extends BaseController
 
     private $formEd;
     private $indikatorEd;
+    private $prodi;
+    private $users;
 
     public function __construct()
     {
         $this->formEd = new FormEDModel();
         $this->indikatorEd = new IndikatorED();
+        $this->prodi = new ProdiModel();
+        $this->users = new UserModel();
     }
 
     public function create()
@@ -25,6 +31,7 @@ class KriteriaED extends BaseController
         // $form = $this->formEd->select('indikator')->findAll();
 
         $form_ed = $this->indikatorEd->orderBy('indikator', 'ASC')->findAll();
+        $prodi = $this->prodi->findAll();
 
         // $form_filter = array_filter($form, function ($item) {
         //     return strlen($item['indikator']) > 12;
@@ -41,6 +48,7 @@ class KriteriaED extends BaseController
             'title' => 'Tambah Kriteria ED',
             'currentPage' => 'kriteria-ed',
             'form_ed' => $form_ed,
+            'prodi' => $prodi,
         ];
 
         return view('admin/kriteriaED/create', $data);
@@ -85,6 +93,7 @@ class KriteriaED extends BaseController
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
             "id_indikator" => $this->request->getVar('indikator'),
+            "id_prodi" => $this->request->getVar('prodi'),
             "standar" => $this->request->getVar('standar'),
             "kriteria" => $this->request->getVar('kriteria'),
         ];

@@ -37,6 +37,11 @@ class Users extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '255',
             ],
+            'prodi' => [
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'null' => true,
+            ],
             'role' => [
                 'type' => 'ENUM',
                 'constraint' => ['auditor', 'auditi', 'pimpinan', 'admin'],

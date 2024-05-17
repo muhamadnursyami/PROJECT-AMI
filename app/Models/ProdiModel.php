@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class FormEDModel extends Model
+class ProdiModel extends Model
 {
-    protected $table            = 'form_ed';
+    protected $table            = 'prodi';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -14,13 +14,8 @@ class FormEDModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'uuid',
-        'id_indikator',
-        'id_prodi',
-        'standar',
-        'kriteria',
-        'capaian',
-        'program_studi'
-
+        'nama',
+        'fakultas',
     ];
 
     protected bool $allowEmptyInserts = false;

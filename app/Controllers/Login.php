@@ -10,7 +10,7 @@ class Login extends BaseController
 {
     public function index()
     {
-        if(session()->get('logged_in')){
+        if (session()->get('logged_in')) {
             $role = session()->get('role_id');
             return redirect()->to("$role/dashboard");
         }
@@ -85,25 +85,48 @@ class Login extends BaseController
 
                     //  variabel  $session_data, digunakan untuk menampung semua data yang ingin
                     // disimpan.
-                    $session_data = [
-                        'logged_in' => TRUE,
-                        'role_id' => $cekEmail['role'],
-                        'name' => $cekEmail['name'],
-                        'uuid' => $cekEmail['uuid'],
-                    ];
-
-                    // masukan/tambah data  $session_data kedalam session aslinya 
-                    $session->set($session_data);
                     // pengecekan role, jika sesuai dengan ketentuan akan di arahakan/didrect kedalam 
                     // routing tertentu 
                     switch ($cekEmail['role']) {
                         case 'admin':
+                            $session_data = [
+                                'logged_in' => TRUE,
+                                'role_id' => $cekEmail['role'],
+                                'name' => $cekEmail['name'],
+                                'uuid' => $cekEmail['uuid'],
+                            ];
+
+                            $session->set($session_data);
                             return redirect()->to('admin/dashboard');
                         case 'auditor':
+                            $session_data = [
+                                'logged_in' => TRUE,
+                                'role_id' => $cekEmail['role'],
+                                'name' => $cekEmail['name'],
+                                'uuid' => $cekEmail['uuid'],
+                                'prodi' => $cekEmail['prodi'],
+                            ];
+
+                            $session->set($session_data);
                             return redirect()->to('auditor/dashboard');
                         case 'auditi':
+                            $session_data = [
+                                'logged_in' => TRUE,
+                                'role_id' => $cekEmail['role'],
+                                'name' => $cekEmail['name'],
+                                'uuid' => $cekEmail['uuid'],
+                                'prodi' => $cekEmail['prodi'],
+                            ];
+                            $session->set($session_data);
                             return redirect()->to('auditi/dashboard');
                         case 'pimpinan':
+                            $session_data = [
+                                'logged_in' => TRUE,
+                                'role_id' => $cekEmail['role'],
+                                'name' => $cekEmail['name'],
+                                'uuid' => $cekEmail['uuid'],
+                            ];
+                            $session->set($session_data);
                             return redirect()->to('pimpinan/dashboard');
                         default:
                             // menambahkan session dengan mengguakan function setFlashdata
