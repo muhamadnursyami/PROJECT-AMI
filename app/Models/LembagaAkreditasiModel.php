@@ -4,23 +4,20 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class FormEDModel extends Model
+class LembagaAkreditasiModel extends Model
 {
-    protected $table            = 'form_ed';
+    protected $table            = 'lembaga_akreditasi';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
+        'id_user',
+        'id_lembaga_akreditasi',
         'uuid',
-        'id_indikator',
-        'id_prodi',
-        'standar',
-        'kriteria',
-        'capaian',
-        'program_studi'
-
+        'keterangan',
+        'bobot'
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -30,7 +27,7 @@ class FormEDModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';

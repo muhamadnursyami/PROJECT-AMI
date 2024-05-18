@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class IndikatorED extends Model
+class KriteriaProdiModel extends Model
 {
-    protected $table            = 'indikator_ed';
+    protected $table            = 'kriteria_prodi';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -14,7 +14,11 @@ class IndikatorED extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'uuid',
-        'indikator',
+        'id_kriteria',
+        'id_prodi',
+        'score',
+        'catatan',
+        'aktif',
     ];
 
     protected bool $allowEmptyInserts = false;

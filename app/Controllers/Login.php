@@ -91,6 +91,7 @@ class Login extends BaseController
                         case 'admin':
                             $session_data = [
                                 'logged_in' => TRUE,
+                                'id' => $cekEmail['id'],
                                 'role_id' => $cekEmail['role'],
                                 'name' => $cekEmail['name'],
                                 'uuid' => $cekEmail['uuid'],
@@ -101,10 +102,10 @@ class Login extends BaseController
                         case 'auditor':
                             $session_data = [
                                 'logged_in' => TRUE,
+                                'id' => $cekEmail['id'],
                                 'role_id' => $cekEmail['role'],
                                 'name' => $cekEmail['name'],
                                 'uuid' => $cekEmail['uuid'],
-                                'prodi' => $cekEmail['prodi'],
                             ];
 
                             $session->set($session_data);
@@ -112,16 +113,17 @@ class Login extends BaseController
                         case 'auditi':
                             $session_data = [
                                 'logged_in' => TRUE,
+                                'id' => $cekEmail['id'],
                                 'role_id' => $cekEmail['role'],
                                 'name' => $cekEmail['name'],
                                 'uuid' => $cekEmail['uuid'],
-                                'prodi' => $cekEmail['prodi'],
                             ];
                             $session->set($session_data);
                             return redirect()->to('auditi/dashboard');
                         case 'pimpinan':
                             $session_data = [
                                 'logged_in' => TRUE,
+                                'id' => $cekEmail['id'],
                                 'role_id' => $cekEmail['role'],
                                 'name' => $cekEmail['name'],
                                 'uuid' => $cekEmail['uuid'],

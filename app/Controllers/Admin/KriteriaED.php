@@ -3,87 +3,100 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\FormEDModel;
-use App\Models\IndikatorED;
-use App\Models\ProdiModel;
+use App\Models\KriteriaModel;
+use App\Models\KriteriaProdiModel;
+use App\Models\LembagaAkreditasiModel;
+use App\Models\PerubahanKriteriaModel;
 use App\Models\UserModel;
-use CodeIgniter\Database\Seeder;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class KriteriaED extends BaseController
 {
 
-    private $formEd;
-    private $indikatorEd;
-    private $prodi;
     private $users;
+    private $kriteria;
+    private $kriteriaProdi;
+    private $lembaga_akreditasi;
+    private $perubahanKriteria;
 
     public function __construct()
     {
-        $this->formEd = new FormEDModel();
-        $this->indikatorEd = new IndikatorED();
-        $this->prodi = new ProdiModel();
+
         $this->users = new UserModel();
+        $this->kriteria = new KriteriaModel();
+        $this->kriteriaProdi = new KriteriaProdiModel();
+        $this->lembaga_akreditasi = new LembagaAkreditasiModel();
+        $this->perubahanKriteria = new PerubahanKriteriaModel();
+
     }
 
+    // kriteria
+    // method crud (create (get & post), read, update(get & post), delete)
+
+    // read criteria
+    public function index(){
+
+        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,lembaga_akreditasi.nama as lembaga_akreditasi, users.name, keterangan as kriteria, bobot, users.id_prodi')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('users', 'users.id = kriteria.id_user')->findAll();
+
+        $data = [
+            'title' => 'Kelola kriteria ED',
+            'currentPage' => 'kriteria-ed',
+            'kriteria' => $kriteria
+        ];
+
+        return view('admin/kriteriaED/kriteria', $data);
+
+    }
+
+
+    // create kriteria
     public function create()
     {
-        // $form = $this->formEd->select('indikator')->findAll();
 
-        $form_ed = $this->indikatorEd->orderBy('indikator', 'ASC')->findAll();
-        $prodi = $this->prodi->findAll();
-
-        // $form_filter = array_filter($form, function ($item) {
-        //     return strlen($item['indikator']) > 12;
-        // });
-
-        // $indikator = [];
-        // foreach ($form_filter as $item) {
-        //     $indikator[] = $item['indikator'];
-        // }
-
-        // $form_ed = array_unique($indikator);
+        $users = $this->users->select('id, email, name')->where('role', 'auditi')->findAll();
+        $lembaga_akreditasi = $this->lembaga_akreditasi->findAll();
+        
 
         $data = [
             'title' => 'Tambah Kriteria ED',
             'currentPage' => 'kriteria-ed',
-            'form_ed' => $form_ed,
-            'prodi' => $prodi,
+            'lembaga_akreditasi' => $lembaga_akreditasi,
+            'users' => $users,
         ];
 
         return view('admin/kriteriaED/create', $data);
     }
 
+    // create kriteria post
     public function save()
     {
 
-
         if (!$this->validate([
-            'indikator' => [
+            'lembaga_akreditasi' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
                 ]
             ],
-            'standar' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} Harus diisi'
-                ],
-            ],
-            'kriteria' => [
+            'id_auditi' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
                 ]
             ],
-            'prodi' => [
+            'keterangan' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
                 ],
             ],
-
+            'bobot' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} Harus diisi',
+                    'numeric' => '{field} Harus berupa angka'
+                ]
+            ],
 
         ])) {
             $validation = \Config\Services::validation();
@@ -92,99 +105,129 @@ class KriteriaED extends BaseController
 
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
-            "id_indikator" => $this->request->getVar('indikator'),
-            "id_prodi" => $this->request->getVar('prodi'),
-            "standar" => $this->request->getVar('standar'),
-            "kriteria" => $this->request->getVar('kriteria'),
+            'id_user' => $this->request->getPost('id_auditi'),
+            'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
+            "keterangan" => $this->request->getPost('keterangan'),
+            'bobot' => $this->request->getPost('bobot'),
         ];
         
 
-        $this->formEd->insert($data);
+        $this->kriteria->insert($data);
 
-        return redirect()->back()->with('sukses', 'Berhasil menambah ED');
-    }
+        $dat = $this->kriteria->where("uuid", $data['uuid'])->first();
+        $dat2 = $this->users->where("id", $data["id_user"])->first();
 
-
-    // indikator
-    public function indikator()
-    {
-
-        $data = [
-            'title' => 'Kelola Indikator ED',
-            'currentPage' => 'kriteria-ed',
-            'indikator' => $this->indikatorEd->orderBy('indikator', 'ASC')->findAll(),
+        // input ke kriteria prodi
+        $data_kriteriaProdi = [
+            'uuid' => service('uuid')->uuid4()->toString(),
+            'id_kriteria' => $dat['id'],
+            'id_prodi' => $dat2['id_prodi'],
         ];
 
-        return view('admin/kriteriaED/createindikator', $data);
-    }
+        $this->kriteriaProdi->insert($data_kriteriaProdi);
 
-    // indikator tambah
-    public function indikatorCreate()
-    {
-
-        $data = [
-            'title' => 'Tambah Indikator ED',
-            'currentPage' => 'kriteria-ed',
+        // input ke perubahan kriteria
+        $data_perubahanKriteria = [
+            'id_kriteria' => $dat['id'],
+            'uuid' => service('uuid')->uuid4()->toString(),
         ];
 
-        return view('admin/kriteriaED/indikatortambah', $data);
+        $this->perubahanKriteria->insert($data_perubahanKriteria);
+
+        return redirect()->to('/admin/kriteria-ed')->with('sukses', 'Berhasil menambah ED');
     }
 
-    // indikator tambah post
-    public function indikatorCreatePost()
+    // update kriteria
+    public function update($uuid)
     {
 
-
-        $uuid = service('uuid')->uuid4()->toString();
-        $isSave = $this->indikatorEd->save([
-            'uuid' => $uuid,
-            'indikator' => $this->request->getPost('indikator'),
-        ]);
-
-        if ($isSave) {
-            return redirect()->to('/admin/kriteria-ed/indikator')->with('sukses', 'Berhasil menambah indikator ED');
-        } else {
-            return redirect()->back()->with('gagal', 'Gagal menambah indikator ED');
-        }
-    }
-
-    // indikator ubah
-    public function indikatorUbah($uuid)
-    {
-
-        $indikator = $this->indikatorEd->select('indikator')->where('uuid', $uuid)->first();
+        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,lembaga_akreditasi.nama as lembaga_akreditasi, lembaga_akreditasi.id as id_lembaga_akreditasi ,users.name, users.id as id_user, keterangan as kriteria, bobot, users.id_prodi')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('users', 'users.id = kriteria.id_user')->where('kriteria.uuid', $uuid)->first();
+        $users = $this->users->select('id, email, name')->where('role', 'auditi')->findAll();
+        $lembaga_akreditasi = $this->lembaga_akreditasi->findAll();
 
         $data = [
             'title' => 'Tambah Indikator ED',
             'currentPage' => 'kriteria-ed',
-            'indikator' => $indikator,
+            'kriteria' => $kriteria,
+            'users' => $users,
+            'lembaga_akreditasi' => $lembaga_akreditasi,
             'uuid' => $uuid,
         ];
 
-        return view('admin/kriteriaED/indikatorubah', $data);
+        return view('admin/kriteriaED/update', $data);
     }
 
-    // indikator ubah post
-    public function indikatorUbahPost($uuid)
-    {
+    // update kriteria post
+    public function updatePost($uuid)
+    {   
 
-        // coba update datanya
-        $isSave = $this->indikatorEd->set('indikator', $this->request->getPost('indikator'))->where('uuid', $uuid)->update();
+        if (!$this->validate([
+            'lembaga_akreditasi' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ]
+            ],
+            'id_auditi' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ]
+            ],
+            'keterangan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ],
+            ],
+            'bobot' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} Harus diisi',
+                    'numeric' => '{field} Harus berupa angka'
+                ]
+            ],
 
-        if ($isSave) {
-            return redirect()->to('/admin/kriteria-ed/indikator')->with('sukses', 'Berhasil mengubah indikator ED');
-        } else {
-            return redirect()->back()->with('gagal', 'Gagal menambah indikator ED');
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->back()->withInput()->with('validation', $validation);
         }
+
+        $data = [
+            'id_user' => $this->request->getPost('id_auditi'),
+            'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
+            "keterangan" => $this->request->getPost('keterangan'),
+            'bobot' => $this->request->getPost('bobot'),
+        ];
+        
+
+        $this->kriteria->set($data)->where('uuid', $uuid)->update();
+        
+        $ambilKriteria = $this->kriteria->where('uuid', $uuid)->first();
+        $ambilUser = $this->users->where('id', $data['id_user'])->first();
+
+        // update juga data prodi di kriteria prodi semisalnya data di kriteria keubah auditinya, karna auditi beda prodi
+        $dataKriteriaProdi = [
+            'id_prodi' => $ambilUser['id_prodi'],
+        ];
+
+        $this->kriteriaProdi->set($dataKriteriaProdi)->where('id_kriteria', $ambilKriteria['id'])->update();
+
+        return redirect()->to('/admin/kriteria-ed')->with('sukses', 'Berhasil mengubah ED');
     }
 
-    // indikator post hapus
-    public function indikatorDelete($uuid)
+    // Delete kriteria
+    public function delete($uuid)
     {
-        $isDelete = $this->indikatorEd->where('uuid', $uuid)->delete();
+
+        $ambilKriteria = $this->kriteria->where('uuid', $uuid)->first();
+
+        // hapus di kriteria dan kriteria prodi
+        $this->kriteriaProdi->where('id_kriteria', $ambilKriteria['id'])->delete();
+        $isDelete = $this->kriteria->where('uuid', $uuid)->delete();
 
         if ($isDelete) {
-            return redirect()->to('/admin/kriteria-ed/indikator')->with('sukses', 'Berhasil menghapus indikator ED');
+            return redirect()->to('/admin/kriteria-ed')->with('sukses', 'Berhasil menghapus ED');
         } else {
             return redirect()->back()->with('gagal', 'Gagal menambah indikator ED');
         }

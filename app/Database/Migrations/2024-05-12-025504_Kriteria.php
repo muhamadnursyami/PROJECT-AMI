@@ -16,7 +16,7 @@ class Kriteria extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'id_user' => [
+            'id_user' => [ // id user ke auditi
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
@@ -31,6 +31,10 @@ class Kriteria extends Migration
                 'constraint' => 40,
                 'unique' => true,
             ],
+            // 'standar' => [
+            //     'type' => 'VARCHAR',
+            //     'constraint' => 255,
+            // ],
             'keterangan' => [
                 'type' => 'TEXT',
                 'null' => true,

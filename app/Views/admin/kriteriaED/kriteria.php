@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
-                        <h4 class="card-title">FORM Kelola indikator ED</h4>
+                        <h4 class="card-title">Kelola kriteria ED</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -28,52 +28,49 @@
                             </button>
                         </div>
                     <?php endif ?>
-                    <div class="row mb-5 text-start">
-                        <a href="/admin/kriteria-ed/indikator/tambah" class="btn btn-primary mr-3">Tambah Indikator</a>
-                        <a href="/admin/kriteria-ed" class="btn bg-danger">Kembali</a>
-
-                        <table class="table table-bordered">
+                    <a href="/admin/kriteria-ed/tambah" class="btn btn-primary mb-3">Tambah Kriteria</a>
+                    <div class="table-responsive">
+                        <table id="datatable" class="table data-table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">indikator</th>
-                                    <th scope="col">aksi</th>
+                                    <th scope="col">Lembaga Akreditasi</th>
+                                    <th scope="col">Kriteria</th>
+                                    <th scope="col">bobot</th>
+                                    <th scope="col">Auditi</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1; ?>
-                                <?php foreach ($indikator as $key) { ?>
-
+                                <?php foreach ($kriteria as $key => $value) { ?>
                                     <tr>
-                                        <th scope="row"><?= $no ?></th>
-                                        <td><?= $key['indikator']; ?></td>
+                                        <th scope="row"><?= $no; ?></th>
+                                        <td><?= $value['lembaga_akreditasi']; ?></td>
+                                        <td><?= $value['kriteria']; ?></td>
+                                        <td><?= $value['bobot']; ?></td>
+                                        <td><?= $value['name']; ?></td>
                                         <td>
-                                            <a href="ubah/<?= $key['uuid'] ?>" class="btn btn-primary">Ubah</a>
-
-                                            <form action="/admin/kriteria-ed/hapus/<?= $key['uuid'] ?>" method="post">
-                                                <?= csrf_field() ?>
-                                                <button type="submit" class="btn btn-danger d-inline" onclick="return confirm('apakah yakin?');">Hapus</button>
+                                            <a href="/admin/kriteria-ed/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>
+                                            <form action="/admin/kriteria-ed/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                             </form>
-
                                         </td>
                                     </tr>
-
                                 <?php $no++;
                                 } ?>
+
                             </tbody>
                         </table>
 
                     </div>
-                    <div class="row justify-content-center">
-                    </div>
                 </div>
+
+
             </div>
 
-
         </div>
-
     </div>
-</div>
 
 
-<?= $this->endSection() ?>
+    <?= $this->endSection() ?>

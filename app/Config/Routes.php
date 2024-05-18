@@ -28,15 +28,15 @@ $routes->post('admin/jadwal-periode/update/(:num)', 'Admin\JadwalED::update/$1')
 $routes->get('admin/jadwal-periode/edit/(:segment)', 'Admin\JadwalED::edit/$1');
 $routes->delete('admin/jadwal-periode/(:num)', 'Admin\JadwalED::delete/$1');
 // kelola kriteria admin
-$routes->get('admin/kriteria-ed', 'Admin\KriteriaED::create');
-$routes->post('admin/kriteria-ed', 'Admin\KriteriaED::save');
-$routes->get('admin/kriteria-ed/indikator', 'Admin\KriteriaED::indikator');
-$routes->get('admin/kriteria-ed/indikator/tambah', 'Admin\KriteriaED::indikatorCreate');
-$routes->post('admin/kriteria-ed/indikator/tambah', 'Admin\KriteriaED::indikatorCreatePost');
-$routes->get('admin/kriteria-ed/ubah/(:segment)', 'Admin\KriteriaED::indikatorUbah/$1');
-$routes->post('admin/kriteria-ed/ubah/(:segment)', 'Admin\KriteriaED::indikatorUbahPost/$1');
-$routes->post('admin/kriteria-ed/hapus/(:segment)', 'Admin\KriteriaED::indikatorDelete/$1');
+$routes->get('admin/kriteria-ed', 'Admin\KriteriaED::index');
+$routes->get('admin/kriteria-ed/tambah', 'Admin\KriteriaED::create');
+$routes->post('admin/kriteria-ed/tambah', 'Admin\KriteriaED::save');
+$routes->get('admin/kriteria-ed/ubah/(:segment)', 'Admin\KriteriaED::update/$1');
+$routes->post('admin/kriteria-ed/ubah/(:segment)', 'Admin\KriteriaED::updatePost/$1');
+$routes->post('admin/kriteria-ed/hapus/(:segment)', 'Admin\KriteriaED::delete/$1');
 
 // FITUR ROLE AUDITI
 $routes->get('auditi/form-ed', 'Auditi\FormEDController::create');
 $routes->post('auditi/form-ed', 'Auditi\FormEDController::save');
+$routes->get('auditi/form-ed/ubah', 'Auditi\FormEDController::ubah');
+$routes->post('auditi/form-ed/ubah', 'Auditi\FormEDController::ubahPost');

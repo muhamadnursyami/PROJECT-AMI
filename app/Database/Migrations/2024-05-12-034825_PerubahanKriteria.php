@@ -22,6 +22,7 @@ class PerubahanKriteria extends Migration
             ],
             'score_sebelum' => [
                 'type' => 'FLOAT',
+                'null' => true,
             ],
             'catatan_sebelum' => [
                 'type' => 'TEXT',
@@ -29,6 +30,7 @@ class PerubahanKriteria extends Migration
             ],
             'score_setelah' => [
                 'type' => 'FLOAT',
+                'null' => true,
             ],
             'catatan_setelah' => [
                 'type' => 'TEXT',

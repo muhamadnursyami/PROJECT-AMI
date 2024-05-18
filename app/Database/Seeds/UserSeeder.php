@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'email' => 'auditi@gmail.com',
             'password' => password_hash('123', PASSWORD_BCRYPT),
             'role' => 'auditi',
-            'prodi' => "Teknik Informatika"
+            'id_prodi' => 1,
         ]);
         
 

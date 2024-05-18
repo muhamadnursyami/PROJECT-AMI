@@ -21,6 +21,11 @@ class Users extends Migration
                 'constraint' => 40,
                 'unique' => true,
             ],
+            'id_prodi' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true,
+            ],
             'email' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
@@ -36,11 +41,6 @@ class Users extends Migration
             'password' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-            ],
-            'prodi' => [
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'null' => true,
             ],
             'role' => [
                 'type' => 'ENUM',
