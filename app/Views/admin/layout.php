@@ -45,31 +45,26 @@
                     <ul id="iq-sidebar-toggle" class="iq-menu">
                         <li <?= ($currentPage == 'dashboard') ? 'class="active"' : ''; ?>>
                             <a href="/admin/dashboard" class="svg-icon">
-
                                 <small class="ml-4">Dashboard</small>
                             </a>
                         </li>
                         <li <?= ($currentPage == 'jadwalPeriode') ? 'class="active"' : ''; ?>>
                             <a href="/admin/jadwal-periode" class="svg-icon">
-
                                 <small class="ml-4">Jadwal Periode ED</small>
                             </a>
                         </li>
                         <li <?= ($currentPage == 'kriteria-ed') ? 'class="active"' : ''; ?>>
                             <a href="/admin/kriteria-ed" class="svg-icon">
-
                                 <small class="ml-4">Form kriteria ED</small>
                             </a>
                         </li>
                         <li <?= ($currentPage == 'lihat-kriteria-ed') ? 'class="active"' : ''; ?>>
                             <a href="/admin/kriteria-ed/view" class="svg-icon">
-
                                 <small class="ml-4">Lihat Progress ED</small>
                             </a>
                         </li>
                         <li <?= ($currentPage == 'jadwalAMI') ? 'class="active"' : ''; ?>>
                             <a href="/admin/jadwal-ami" class="svg-icon">
-
                                 <small class="ml-4">Jadwal AMI</small>
                             </a>
                         </li>

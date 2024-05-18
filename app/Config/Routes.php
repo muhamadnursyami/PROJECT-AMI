@@ -41,6 +41,11 @@ $routes->get('admin/kriteria-ed/view/(:segment)', 'Admin\ViewEDController::view/
 
 // jadwal AMI
 $routes->get('admin/jadwal-ami', 'Admin\JadwalAMI::index');
+$routes->get('admin/jadwal-ami/create', 'Admin\JadwalAMI::create');
+$routes->post('admin/jadwal-ami/save', 'Admin\JadwalAMI::save');
+$routes->post('admin/jadwal-ami/update/(:num)', 'Admin\JadwalAMI::update/$1');
+$routes->get('admin/jadwal-ami/edit/(:segment)', 'Admin\JadwalAMI::edit/$1');
+$routes->delete('admin/jadwal-ami/(:num)', 'Admin\JadwalAMI::delete/$1');
 
 
 

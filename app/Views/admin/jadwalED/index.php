@@ -46,13 +46,12 @@
                                     <td class="text-center"><?= $jadwalED['deskripsi'] ?></td>
                                     <td class="text-center">
                                         <div class="flex align-items-center list-user-action">
-                                            <a href="/admin/jadwal-periode/edit/<?= $jadwalED['uuid'] ?>" class="btn btn-sm btn-primary"><i class="ri-pencil-line mr-0">Edit</i></a>
+                                            <a href="/admin/jadwal-periode/edit/<?= $jadwalED['uuid'] ?>" class="btn btn-sm btn-primary">Edit</a>
                                             <form action="/admin/jadwal-periode/<?= $jadwalED['id'] ?>" method="POST" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="_method" value="DELETE">
-                                                <button class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="ri-delete-bin-line mr-0">Hapus</i></button>
+                                                <button class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</button>
                                             </form>
-                                            <!-- <a class="btn btn-sm bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="#"></a> -->
                                         </div>
                                     </td>
                                 </tr>
@@ -60,76 +59,11 @@
                         <?php endforeach ?>
                     </table>
                 </div>
-                <!-- <div class="row justify-content-between mt-3">
-                    <div id="user-list-page-info" class="col-md-6">
-                        <span>Showing 1 to 5 of 5 entries</span>
-                    </div>
-                    <div class="col-md-6">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div> -->
+
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- MODAL EDIT  -->
-<!-- <div class="modal fade bd-example-modal-lg" role="dialog" aria-modal="true" id="new-update-modal">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-block text-center pb-3 border-bttom">
-                <h3 class="modal-title" id="exampleModalCenterTitle03">UPDATE Pengisian Jadwal Pelaksanaan Evaluasi Diri</h3>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-group mb-3">
-                            <label for="exampleInputText004" class="h5">Tanggal Mulai</label>
-                            <input type="date" class="form-control" id="exampleInputText004" value="">
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="form-group mb-3">
-                            <label for="exampleInputText004" class="h5">Tanggal Selesai</label>
-                            <input type="date" class="form-control" id="exampleInputText004" value="">
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="form-group mb-3">
-                            <label for="exampleInputText40" class="h5">Deskripsi</label>
-                            <textarea class="form-control" id="exampleInputText40" rows="2" placeholder="Tulisakan Deskripsi"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="d-flex flex-wrap align-items-ceter justify-content-center mt-4">
-                            <div class="btn btn-primary mr-3" data-dismiss="modal">
-                                Save
-                            </div>
-                            <div class="btn btn-primary" data-dismiss="modal">Cancel</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 <?= $this->endSection() ?>
