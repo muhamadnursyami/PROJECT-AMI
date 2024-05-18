@@ -39,6 +39,13 @@ $routes->post('admin/kriteria-ed/hapus/(:segment)', 'Admin\KriteriaED::delete/$1
 $routes->get('admin/kriteria-ed/view', 'Admin\ViewEDController::index');
 $routes->get('admin/kriteria-ed/view/(:segment)', 'Admin\ViewEDController::view/$1');
 
+// jadwal AMI
+$routes->get('admin/jadwal-ami', 'Admin\JadwalAMI::index');
+
+
+
+
+
 // FITUR ROLE AUDITI
 // isi form ed
 $routes->get('auditi/form-ed', 'Auditi\FormEDController::create');

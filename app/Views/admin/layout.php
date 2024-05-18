@@ -67,6 +67,12 @@
                                 <small class="ml-4">Lihat Progress ED</small>
                             </a>
                         </li>
+                        <li <?= ($currentPage == 'jadwalAMI') ? 'class="active"' : ''; ?>>
+                            <a href="/admin/jadwal-ami" class="svg-icon">
+
+                                <small class="ml-4">Jadwal AMI</small>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div class="pt-5 pb-2"></div>
