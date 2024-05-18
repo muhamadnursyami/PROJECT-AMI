@@ -19,9 +19,8 @@ class PimpinanFilter implements FilterInterface
 
 
         if (session()->get('role_id') != 'pimpinan') {
-            session()->setFlashdata('pesan', 'Anda belum Login !');
-            session()->setFlashdata('alert_type', 'danger');
-            return redirect()->to('/');
+            $role = session()->get('role_id');
+            return redirect()->to("$role/dashboard");
         }
     }
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

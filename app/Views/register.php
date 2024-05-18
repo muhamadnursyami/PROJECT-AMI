@@ -73,7 +73,7 @@
                                                         <div class="form-group">
                                                             <select class="form-control mb-3" name="role" required>
                                                                 <option value="">Pilih Role</option>
-                                                                <option value="admin">Auditi</option>
+                                                                <option value="auditi">Auditi</option>
                                                                 <option value="admin">Admin</option>
                                                                 <option value="auditor">Auditor</option>
                                                                 <option value="pimpinan">Pimpinan</option>
@@ -83,7 +83,6 @@
                                                     <div class="col-12 text-center">
                                                         <button type=" submit" class="btn btn-white w-100">
                                                             <small>
-
                                                                 Submit
                                                             </small>
                                                         </button>

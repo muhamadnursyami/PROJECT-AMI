@@ -3,24 +3,22 @@
 namespace App\Controllers;
 
 use App\Database\Migrations\User;
+use App\Helpers\LoginHelpers;
 use App\Models\UserModel;
 
 class Login extends BaseController
 {
     public function index()
     {
+        if (session()->get('logged_in')) {
+            $role = session()->get('role_id');
+            return redirect()->to("$role/dashboard");
+        }
         // menjalankan validation 
         $data = [
             'validation' => \Config\Services::validation()
         ];
 
-        // Logic pengecekan jika user sudah login berdasarkan role, maka user tidak bisa mengakses halaman login
-        if (session()->get('logged_in')) {
-            $role = session()->get('role_id');
-            if (in_array($role, ['admin', 'pimpinan', 'auditor', 'audit'])) {
-                return redirect()->to("/{$role}/dashboard");
-            }
-        }
         return view('login', $data);
     }
 
@@ -87,24 +85,50 @@ class Login extends BaseController
 
                     //  variabel  $session_data, digunakan untuk menampung semua data yang ingin
                     // disimpan.
-                    $session_data = [
-                        'logged_in' => TRUE,
-                        'role_id' => $cekEmail['role'],
-                        'name' => $cekEmail['name'],
-                    ];
-
-                    // masukan/tambah data  $session_data kedalam session aslinya 
-                    $session->set($session_data);
                     // pengecekan role, jika sesuai dengan ketentuan akan di arahakan/didrect kedalam 
                     // routing tertentu 
                     switch ($cekEmail['role']) {
                         case 'admin':
+                            $session_data = [
+                                'logged_in' => TRUE,
+                                'id' => $cekEmail['id'],
+                                'role_id' => $cekEmail['role'],
+                                'name' => $cekEmail['name'],
+                                'uuid' => $cekEmail['uuid'],
+                            ];
+
+                            $session->set($session_data);
                             return redirect()->to('admin/dashboard');
                         case 'auditor':
+                            $session_data = [
+                                'logged_in' => TRUE,
+                                'id' => $cekEmail['id'],
+                                'role_id' => $cekEmail['role'],
+                                'name' => $cekEmail['name'],
+                                'uuid' => $cekEmail['uuid'],
+                            ];
+
+                            $session->set($session_data);
                             return redirect()->to('auditor/dashboard');
                         case 'auditi':
+                            $session_data = [
+                                'logged_in' => TRUE,
+                                'id' => $cekEmail['id'],
+                                'role_id' => $cekEmail['role'],
+                                'name' => $cekEmail['name'],
+                                'uuid' => $cekEmail['uuid'],
+                            ];
+                            $session->set($session_data);
                             return redirect()->to('auditi/dashboard');
                         case 'pimpinan':
+                            $session_data = [
+                                'logged_in' => TRUE,
+                                'id' => $cekEmail['id'],
+                                'role_id' => $cekEmail['role'],
+                                'name' => $cekEmail['name'],
+                                'uuid' => $cekEmail['uuid'],
+                            ];
+                            $session->set($session_data);
                             return redirect()->to('pimpinan/dashboard');
                         default:
                             // menambahkan session dengan mengguakan function setFlashdata
@@ -115,12 +139,12 @@ class Login extends BaseController
                             return redirect()->to('/');
                     }
                 } else {
-                    $session->setFlashdata('pesan', 'Password anda salah');
+                    $session->setFlashdata('pesan', 'Email atau password anda salah');
                     session()->setFlashdata('alert_type', 'danger');
                     return redirect()->to('/')->withInput();
                 }
             } else {
-                $session->setFlashdata('pesan', ' Email anda salah');
+                $session->setFlashdata('pesan', 'Email atau password anda salah');
                 session()->setFlashdata('alert_type', 'danger');
                 return redirect()->to('/')->withInput();
             }

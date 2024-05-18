@@ -32,6 +32,7 @@ class KriteriaProdi extends Migration
             ],
             'score' => [
                 'type' => 'FLOAT',
+                'default' => 0.00
             ],
             'catatan' => [
                 'type' => 'TEXT',
@@ -39,7 +40,7 @@ class KriteriaProdi extends Migration
             ],
             'aktif' => [
                 'type' => 'BOOLEAN',
-                'default' => true,
+                'default' => -1,
             ],
             'created_at' => [
                 'type' => 'DATETIME',

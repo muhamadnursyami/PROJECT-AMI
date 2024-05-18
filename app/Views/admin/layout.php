@@ -55,6 +55,18 @@
                                 <small class="ml-4">Jadwal Periode ED</small>
                             </a>
                         </li>
+                        <li <?= ($currentPage == 'kriteria-ed') ? 'class="active"' : ''; ?>>
+                            <a href="/admin/kriteria-ed" class="svg-icon">
+
+                                <small class="ml-4">Form kriteria ED</small>
+                            </a>
+                        </li>
+                        <li <?= ($currentPage == 'lihat-kriteria-ed') ? 'class="active"' : ''; ?>>
+                            <a href="/admin/kriteria-ed/view" class="svg-icon">
+
+                                <small class="ml-4">Lihat Progress ED</small>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div class="pt-5 pb-2"></div>
