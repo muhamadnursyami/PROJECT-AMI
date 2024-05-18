@@ -5,6 +5,14 @@
     <div class="col-md-6 col-lg-3">
         <div class="card card-block card-stretch card-height">
             <div class="card-body">
+                <?php if (!empty(session()->getFlashdata('gagal'))) : ?>
+                    <div class="alert bg-danger" role="alert">
+                        <div class="iq-alert-text"> <small><?= session()->getFlashdata('gagal') ?> </small></div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    </div>
+                <?php endif ?>
                 <div class="top-block d-flex align-items-center justify-content-between">
                     <h5>Akun</h5>
                     <span class="badge badge-primary">Monthly</span>

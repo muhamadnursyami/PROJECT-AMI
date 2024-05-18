@@ -65,7 +65,7 @@
                             </a>
                             <ul id="otherpage" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class=" ">
-                                    <a href="<?= base_url() ?>auditi/form-ed" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                    <a href="<?= base_url('auditi/form-ed') ?>" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                         <svg class="svg-icon" id="p-dash10" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="8.5" cy="7" r="4"></circle>

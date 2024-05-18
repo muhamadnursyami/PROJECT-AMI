@@ -28,6 +28,40 @@ class UserSeeder extends Seeder
             'role' => 'auditi',
             'id_prodi' => 1,
         ]);
+
+        $this->db->table('users')->insert([
+            'uuid' => service('uuid')->uuid4()->toString(),
+            'name' => 'auditi1',
+            'email' => 'auditi1@gmail.com',
+            'password' => password_hash('123', PASSWORD_BCRYPT),
+            'role' => 'auditi',
+            'id_prodi' => 2,
+        ]);
+
+        $this->db->table('users')->insert([
+            'uuid' => service('uuid')->uuid4()->toString(),
+            'name' => 'auditi2',
+            'email' => 'auditi2@gmail.com',
+            'password' => password_hash('123', PASSWORD_BCRYPT),
+            'role' => 'auditi',
+            'id_prodi' => 3,
+        ]);
+        $this->db->table('users')->insert([
+            'uuid' => service('uuid')->uuid4()->toString(),
+            'name' => 'auditi3',
+            'email' => 'auditi3@gmail.com',
+            'password' => password_hash('123', PASSWORD_BCRYPT),
+            'role' => 'auditi',
+            'id_prodi' => 8,
+        ]);
+        $this->db->table('users')->insert([
+            'uuid' => service('uuid')->uuid4()->toString(),
+            'name' => 'auditi4',
+            'email' => 'auditi4@gmail.com',
+            'password' => password_hash('123', PASSWORD_BCRYPT),
+            'role' => 'auditi',
+            'id_prodi' => 10,
+        ]);
         
 
         // buat auditor
@@ -40,8 +74,21 @@ class UserSeeder extends Seeder
             'role' => 'auditor'
         ]);
 
-        // buat prodinya auditor
-        // {belum dibuat}
+        $this->db->table('users')->insert([
+            'uuid' => service('uuid')->uuid4()->toString(),
+            'name' => 'auditor2',
+            'email' => 'auditor2@gmail.com',
+            'password' => password_hash('123', PASSWORD_BCRYPT),
+            'role' => 'auditor'
+        ]);
+
+        $this->db->table('users')->insert([
+            'uuid' => service('uuid')->uuid4()->toString(),
+            'name' => 'auditor3',
+            'email' => 'auditor3@gmail.com',
+            'password' => password_hash('123', PASSWORD_BCRYPT),
+            'role' => 'auditor'
+        ]);
 
         // buat pimpinan
         // passwordnya 123

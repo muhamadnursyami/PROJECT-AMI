@@ -43,23 +43,32 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="active">
-                            <a href="../backend/index.html" class="svg-icon">
+                        <li <?= ($currentPage == 'dashboard') ? 'class="active"' : ''; ?>>
+                            <a href="/auditor/dashboard" class="svg-icon">
                                 <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg>
-                                <small class="ml-4"><?= $title ?></small>
+                                <small class="ml-4"> Dashboard </small>
 
                             </a>
                         </li>
-                        <li class="">
+                        <li <?= ($currentPage == 'onstrumen-audit') ? 'class="active"' : ''; ?>>
                             <a href="../backend/page-employee.html" class="svg-icon">
                                 <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
                                 <small class="ml-4">Insturmen Audit</small>
+                            </a>
+                        </li>
+                        <li <?= ($currentPage == 'lihat-form-ed') ? 'class="active"' : ''; ?>>
+                            <a href="/auditor/form-ed/view" class="svg-icon">
+                                <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <small class="ml-4">Lihat Form ED</small>
                             </a>
                         </li>
 
