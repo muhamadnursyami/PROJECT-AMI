@@ -10,7 +10,7 @@ class PerubahanKriteria extends Migration
     {
         
         $this->forge->addField([
-            'id_kriteria' => [
+            'id_kriteria_prodi' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
@@ -20,20 +20,12 @@ class PerubahanKriteria extends Migration
                 'constraint' => 100,
                 'unique' => true,
             ],
-            'score_sebelum' => [
+            'capaian_sebelum' => [
                 'type' => 'FLOAT',
                 'null' => true,
             ],
-            'catatan_sebelum' => [
-                'type' => 'TEXT',
-                'null' => true,
-            ],
-            'score_setelah' => [
+            'capaian_setelah' => [
                 'type' => 'FLOAT',
-                'null' => true,
-            ],
-            'catatan_setelah' => [
-                'type' => 'TEXT',
                 'null' => true,
             ],
             'created_at' => [
@@ -47,7 +39,7 @@ class PerubahanKriteria extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id_kriteria');
-        $this->forge->addForeignKey('id_kriteria', 'kriteria_prodi', 'id', 'CASCADE', 'CASCADE', 'fk_perubahanKriteria_kriteriaProdi');
+        $this->forge->addForeignKey('id_kriteria_prodi', 'kriteria_prodi', 'id', 'CASCADE', 'CASCADE', 'fk_perubahanKriteria_kriteriaProdi');
         $this->forge->createTable('perubahan_kriteria');
 
     }

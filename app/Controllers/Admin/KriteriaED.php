@@ -5,8 +5,10 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\KriteriaModel;
 use App\Models\KriteriaProdiModel;
+use App\Models\KriteriaStandarModel;
 use App\Models\LembagaAkreditasiModel;
 use App\Models\PerubahanKriteriaModel;
+use App\Models\ProdiModel;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -18,6 +20,8 @@ class KriteriaED extends BaseController
     private $kriteriaProdi;
     private $lembaga_akreditasi;
     private $perubahanKriteria;
+    private $kriteriaStandar;
+    private $prodi;
 
     public function __construct()
     {
@@ -27,6 +31,8 @@ class KriteriaED extends BaseController
         $this->kriteriaProdi = new KriteriaProdiModel();
         $this->lembaga_akreditasi = new LembagaAkreditasiModel();
         $this->perubahanKriteria = new PerubahanKriteriaModel();
+        $this->kriteriaStandar = new KriteriaStandarModel();
+        $this->prodi = new ProdiModel();
 
     }
 
@@ -36,8 +42,9 @@ class KriteriaED extends BaseController
     // read criteria
     public function index(){
 
-        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,lembaga_akreditasi.nama as lembaga_akreditasi, users.name, keterangan as kriteria, bobot, users.id_prodi')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('users', 'users.id = kriteria.id_user')->findAll();
-
+        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,lembaga_akreditasi.nama as lembaga_akreditasi, kriteria, bobot, prodi.nama as nama_prodi, standar')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('prodi', 'prodi.id = kriteria.id_prodi')->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')->findAll();
+        // dd($kriteria);
+        
         $data = [
             'title' => 'Kelola kriteria ED',
             'currentPage' => 'kriteria-ed',
@@ -53,15 +60,16 @@ class KriteriaED extends BaseController
     public function create()
     {
 
-        $users = $this->users->select('id, email, name')->where('role', 'auditi')->findAll();
+        $prodi = $this->prodi->findAll();
         $lembaga_akreditasi = $this->lembaga_akreditasi->findAll();
+        $kriteriaStandar = $this->kriteriaStandar->findAll();
         
-
         $data = [
             'title' => 'Tambah Kriteria ED',
             'currentPage' => 'kriteria-ed',
             'lembaga_akreditasi' => $lembaga_akreditasi,
-            'users' => $users,
+            'prodi' => $prodi,
+            'kriteria_standar' => $kriteriaStandar,
         ];
 
         return view('admin/kriteriaED/create', $data);
@@ -71,20 +79,27 @@ class KriteriaED extends BaseController
     public function save()
     {
 
+
         if (!$this->validate([
+            'standar' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ]
+            ],
             'lembaga_akreditasi' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
                 ]
             ],
-            'id_auditi' => [
+            'id_prodi' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
                 ]
             ],
-            'keterangan' => [
+            'kriteria' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
@@ -105,30 +120,32 @@ class KriteriaED extends BaseController
 
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
-            'id_user' => $this->request->getPost('id_auditi'),
+            'id_prodi' => $this->request->getPost('id_prodi'),
             'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
-            "keterangan" => $this->request->getPost('keterangan'),
+            "kriteria" => $this->request->getPost('kriteria'),
             'bobot' => $this->request->getPost('bobot'),
+            'id_kriteria_standar' => $this->request->getPost('standar'),
         ];
         
 
         $this->kriteria->insert($data);
 
         $dat = $this->kriteria->where("uuid", $data['uuid'])->first();
-        $dat2 = $this->users->where("id", $data["id_user"])->first();
 
         // input ke kriteria prodi
         $data_kriteriaProdi = [
             'uuid' => service('uuid')->uuid4()->toString(),
             'id_kriteria' => $dat['id'],
-            'id_prodi' => $dat2['id_prodi'],
+            'id_prodi' => $data['id_prodi'],
         ];
 
         $this->kriteriaProdi->insert($data_kriteriaProdi);
 
+        $kriteriaProdi = $this->kriteriaProdi->where('uuid', $data_kriteriaProdi['uuid'])->first();
+
         // input ke perubahan kriteria
         $data_perubahanKriteria = [
-            'id_kriteria' => $dat['id'],
+            'id_kriteria_prodi' => $kriteriaProdi['id'],
             'uuid' => service('uuid')->uuid4()->toString(),
         ];
 
@@ -141,15 +158,18 @@ class KriteriaED extends BaseController
     public function update($uuid)
     {
 
-        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,lembaga_akreditasi.nama as lembaga_akreditasi, lembaga_akreditasi.id as id_lembaga_akreditasi ,users.name, users.id as id_user, keterangan as kriteria, bobot, users.id_prodi')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('users', 'users.id = kriteria.id_user')->where('kriteria.uuid', $uuid)->first();
-        $users = $this->users->select('id, email, name')->where('role', 'auditi')->findAll();
+        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,lembaga_akreditasi.nama as lembaga_akreditasi, lembaga_akreditasi.id as id_lembaga_akreditasi ,prodi.nama as nama_prodi, prodi.id as id_prodi, bobot, kriteria, standar, kriteria_standar.id as id_standar')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('prodi', 'prodi.id = kriteria.id_prodi')->join('kriteria_prodi', 'kriteria_prodi.id_kriteria = kriteria.id')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('kriteria.uuid', $uuid)->first();
+        $prodi = $this->prodi->findAll();
         $lembaga_akreditasi = $this->lembaga_akreditasi->findAll();
+        $kriteriaStandar = $this->kriteriaStandar->findAll();
+
 
         $data = [
             'title' => 'Tambah Indikator ED',
             'currentPage' => 'kriteria-ed',
             'kriteria' => $kriteria,
-            'users' => $users,
+            'prodi' => $prodi,
+            'kriteria_standar' => $kriteriaStandar, 
             'lembaga_akreditasi' => $lembaga_akreditasi,
             'uuid' => $uuid,
         ];
@@ -162,19 +182,25 @@ class KriteriaED extends BaseController
     {   
 
         if (!$this->validate([
+            'standar' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ]
+            ],
             'lembaga_akreditasi' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
                 ]
             ],
-            'id_auditi' => [
+            'id_prodi' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
                 ]
             ],
-            'keterangan' => [
+            'kriteria' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => '{field} Harus diisi'
@@ -193,22 +219,24 @@ class KriteriaED extends BaseController
             return redirect()->back()->withInput()->with('validation', $validation);
         }
 
+
         $data = [
-            'id_user' => $this->request->getPost('id_auditi'),
+            'id_prodi' => $this->request->getPost('id_prodi'),
             'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
-            "keterangan" => $this->request->getPost('keterangan'),
+            "kriteria" => $this->request->getPost('kriteria'),
             'bobot' => $this->request->getPost('bobot'),
+            'id_kriteria_standar' => $this->request->getPost('standar'),
         ];
+
         
 
         $this->kriteria->set($data)->where('uuid', $uuid)->update();
         
         $ambilKriteria = $this->kriteria->where('uuid', $uuid)->first();
-        $ambilUser = $this->users->where('id', $data['id_user'])->first();
 
-        // update juga data prodi di kriteria prodi semisalnya data di kriteria keubah auditinya, karna auditi beda prodi
+        // update juga data prodi di kriteria prodi semisalnya data di kriteria keubah prodinya
         $dataKriteriaProdi = [
-            'id_prodi' => $ambilUser['id_prodi'],
+            'id_prodi' => $data['id_prodi'],
         ];
 
         $this->kriteriaProdi->set($dataKriteriaProdi)->where('id_kriteria', $ambilKriteria['id'])->update();

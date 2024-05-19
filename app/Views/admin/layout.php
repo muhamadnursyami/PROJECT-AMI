@@ -55,6 +55,12 @@
                                 <small class="ml-4">Jadwal Periode ED</small>
                             </a>
                         </li>
+                        <li <?= ($currentPage == 'kelola-standar-ed') ? 'class="active"' : ''; ?>>
+                            <a href="/admin/kriteria-ed/tambah/standar" class="svg-icon">
+
+                                <small class="ml-4">Kelola Standar ED</small>
+                            </a>
+                        </li>
                         <li <?= ($currentPage == 'kriteria-ed') ? 'class="active"' : ''; ?>>
                             <a href="/admin/kriteria-ed" class="svg-icon">
 

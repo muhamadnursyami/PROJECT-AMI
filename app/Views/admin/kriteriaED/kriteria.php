@@ -34,10 +34,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Lembaga Akreditasi</th>
+                                    <th scope="col">Standar</th>
                                     <th scope="col">Kriteria</th>
                                     <th scope="col">bobot</th>
-                                    <th scope="col">Auditi</th>
+                                    <th scope="col">Nama Prodi</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -46,10 +46,10 @@
                                 <?php foreach ($kriteria as $key => $value) { ?>
                                     <tr>
                                         <th scope="row"><?= $no; ?></th>
-                                        <td><?= $value['lembaga_akreditasi']; ?></td>
+                                        <td><?= $value['standar']; ?></td>
                                         <td><?= $value['kriteria']; ?></td>
                                         <td><?= $value['bobot']; ?></td>
-                                        <td><?= $value['name']; ?></td>
+                                        <td><?= $value['nama_prodi']; ?></td>
                                         <td>
                                             <a href="/admin/kriteria-ed/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>
                                             <form action="/admin/kriteria-ed/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">

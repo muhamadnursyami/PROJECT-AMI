@@ -13,12 +13,10 @@ class PerubahanKriteriaModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id_kriteria',
+        'id_kriteria_prodi',
         'uuid',
-        'score_sebelum',
-        'catatan_sebelum',
-        'score_setelah',
-        'catatan_setelah',
+        'capaian_sebelum',
+        'capaian_setelah',
     ];
 
     protected bool $allowEmptyInserts = false;

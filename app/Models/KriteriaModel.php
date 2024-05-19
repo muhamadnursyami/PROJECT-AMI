@@ -13,11 +13,12 @@ class KriteriaModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id_user',
+        'id_prodi',
         'id_lembaga_akreditasi',
         'uuid',
-        'keterangan',
-        'bobot'
+        'kriteria',
+        'bobot',
+        'id_kriteria_standar',
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -27,7 +28,7 @@ class KriteriaModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';

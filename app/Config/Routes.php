@@ -38,6 +38,13 @@ $routes->post('admin/kriteria-ed/hapus/(:segment)', 'Admin\KriteriaED::delete/$1
 // lihat ed admin
 $routes->get('admin/kriteria-ed/view', 'Admin\ViewEDController::index');
 $routes->get('admin/kriteria-ed/view/(:segment)', 'Admin\ViewEDController::view/$1');
+// admin kelola standar
+$routes->get('admin/kriteria-ed/tambah/standar', 'Admin\StandarController::index');
+$routes->get('admin/kriteria-ed/tambah/standar/tambah', 'Admin\StandarController::create');
+$routes->post('admin/kriteria-ed/tambah/standar/tambah', 'Admin\StandarController::createPost');
+$routes->get('admin/kriteria-ed/tambah/standar/edit/(:segment)', 'Admin\StandarController::edit/$1');
+$routes->post('admin/kriteria-ed/tambah/standar/edit/(:segment)', 'Admin\StandarController::editPost/$1');
+$routes->post('admin/kriteria-ed/tambah/standar/hapus/(:segment)', 'Admin\StandarController::hapusPost/$1');
 
 // FITUR ROLE AUDITI
 // isi form ed

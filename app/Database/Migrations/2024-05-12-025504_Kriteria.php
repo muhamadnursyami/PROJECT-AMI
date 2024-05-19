@@ -16,7 +16,12 @@ class Kriteria extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'id_user' => [ // id user ke auditi
+            // 'id_user' => [ // id user ke auditi
+            //     'type' => 'INT',
+            //     'constraint' => 11,
+            //     'unsigned' => true,
+            // ],
+            'id_prodi' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
@@ -31,11 +36,7 @@ class Kriteria extends Migration
                 'constraint' => 40,
                 'unique' => true,
             ],
-            // 'standar' => [
-            //     'type' => 'VARCHAR',
-            //     'constraint' => 255,
-            // ],
-            'keterangan' => [
+            'kriteria' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
@@ -53,7 +54,8 @@ class Kriteria extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_users');
+        // $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_users');
+        $this->forge->addForeignKey('id_prodi', 'prodi', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_prodi');
         $this->forge->addForeignKey('id_lembaga_akreditasi', 'lembaga_akreditasi', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_lembaga_akreditasi');
         $this->forge->createTable('kriteria');
 

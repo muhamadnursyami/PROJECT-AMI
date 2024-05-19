@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KriteriaProdiModel extends Model
+class KriteriaStandarModel extends Model
 {
-    protected $table            = 'kriteria_prodi';
+    protected $table            = 'kriteria_standar';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -14,12 +14,8 @@ class KriteriaProdiModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'uuid',
-        'id_kriteria',
-        'id_prodi',
-        'capaian',
-        'akar_penyebab',
-        'tautan_bukti',
-        'progress',
+        'standar',
+        'is_aktif',
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -29,7 +25,7 @@ class KriteriaProdiModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
