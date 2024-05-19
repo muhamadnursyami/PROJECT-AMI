@@ -14,7 +14,7 @@
                     </div>
                 <?php endif ?>
                 <div class="top-block d-flex align-items-center justify-content-between">
-                    <h5>Akun</h5>
+                    <h5>Auditor prodi <?= $prodi['nama'] ?></h5>
                     <span class="badge badge-primary">Monthly</span>
                 </div>
                 <h3>$<span class="counter">35000</span></h3>

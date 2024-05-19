@@ -22,7 +22,7 @@ class ViewEDController extends BaseController
     public function index()
     {
 
-        $kriteriaProdi = $this->kriteriaProdi->select('score, catatan, keterangan, aktif, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('users', 'users.id_prodi = prodi.id')->findAll();
+        $kriteriaProdi = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('users', 'users.id_prodi = prodi.id')->findAll();
         // dd($kriteriaProdi);
 
         $dataProdi = [];
@@ -46,14 +46,25 @@ class ViewEDController extends BaseController
         // progress capaian per masing-masing prodi
         foreach ($dataProdi as $key => $value) {
 
-            $capaian[$i] = count($this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, id_kriteria, id_prodi, score, catatan, aktif, nama, id_user, id_lembaga_akreditasi, keterangan, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->where("prodi.nama = '$value'")->where('score != 0')->findAll());
-            $total[$i] = count($this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, id_kriteria, id_prodi, score, catatan, aktif, nama, id_user, id_lembaga_akreditasi, keterangan, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->where("prodi.nama = '$value'")->findAll());
+            // pake nama prodi
+            $capaian[$i] = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+                ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+                ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+                ->where('capaian != 0')->where('akar_penyebab IS NOT null')
+                ->where('tautan_bukti IS NOT null')
+                ->where('kriteria_standar.is_aktif', 1)
+                ->where('prodi.nama', $value)->findAll());
+            $total[$i] = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+                ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+                ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+                ->where('kriteria_standar.is_aktif', 1)
+                ->where('prodi.nama', "$value")->findAll());
 
             if ($total[$i] != 0) {
                 $persentase_terisi[$i] = ($capaian[$i] / $total[$i]) * 100;
             } else {
 
-                $persentase_terisi[$i] = 0;
+                $persentase_terisi[$i] = 100;
             }
 
             $i++;
@@ -75,20 +86,34 @@ class ViewEDController extends BaseController
     public function view($uuid)
     {
 
-        $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, id_kriteria, id_prodi, score, catatan, aktif, nama, id_user, id_lembaga_akreditasi, keterangan, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->where('prodi.uuid', $uuid)->findAll();
+        $form_ed = $this->kriteriaProdi->select('standar, is_aktif, kriteria_prodi.uuid as uuid, id_kriteria, kriteria_prodi.id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('prodi.uuid', $uuid)->findAll();
 
         if (count($form_ed) == 0) {
             return redirect()->to('admin/kriteria-ed/view')->with('gagal', 'Data form kriteria prodi belum ada');
         }
         // buat hitung progress pengisian ed
-        $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->where('score != 0')->where('prodi.uuid', $uuid)->findAll());
-        $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->where('prodi.uuid', $uuid)->findAll());
+        $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+            ->where('capaian != 0')->where('akar_penyebab IS NOT null')
+            ->where('tautan_bukti IS NOT null')
+            ->where('kriteria_standar.is_aktif', 1)
+            ->where('prodi.uuid', "$uuid")->findAll());
+        $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+            ->where('kriteria_standar.is_aktif', 1)
+            ->where('prodi.uuid', "$uuid")->findAll());
+
+        // dd($total);
 
         $persentase_terisi = 0;
 
         if ($total != 0) {
 
             $persentase_terisi = ($capaian / $total) * 100;
+        }else {
+            $persentase_terisi = 100;
         }
 
 

@@ -31,32 +31,44 @@
                     <form action="/admin/kriteria-ed/tambah" method="POST">
                         <?= csrf_field() ?>
                         <div class="row mb-5 text-start">
+
                             <div class="col-12 col-lg-6">
-                                <select class="form-control mb-3" name="lembaga_akreditasi" required>
-                                    <option value="">Pilih Lembaga Akreditasi</option>
-                                    <?php foreach ($lembaga_akreditasi as $key) { ?>
+                                <select class="form-control" name="standar" required>
+                                    <option value="">Pilih Standar</option>
+                                    <?php foreach ($kriteria_standar as $key) { ?>
+                                        <option value="<?= $key['id']; ?>"><?= $key['standar']; ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="ms-5">Tidak ada standar? <a href="/admin/kriteria-ed/tambah/standar">Klik disini</a> Untuk menambah standar</small>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <select class="form-control mb-3" name="id_prodi" required>
+                                    <option value="">Pilih jurusan</option>
+                                    <?php foreach ($prodi as $key) { ?>
                                         <option value="<?= $key['id']; ?>"><?= $key['nama']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-6">
-                                <select class="form-control mb-3" name="id_auditi" required>
-                                    <option value="">Pilih auditi</option>
-                                    <?php foreach ($users as $key) { ?>
-                                        <option value="<?= $key['id']; ?>"><?= $key['name']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
                             <div class="col-12 mt-3">
-                                <label for="keterangan" class="h6"> Kriteria :</label>
-                                <textarea class="form-control" id="keterangan" rows="3" name="keterangan"><?= old('keterangan'); ?></textarea>
+                                <label for="kriteria" class="h6"> Kriteria :</label>
+                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= old('keterangan'); ?></textarea>
                             </div>
                             <div class="col-12 col-lg-6 mt-auto">
                                 <label for="bobot" class="h6">Bobot</label>
                                 <input type="text" class="form-control" id="bobot" name="bobot" value="<?= old('bobot'); ?>">
                                 <small></small>
                             </div>
+                            <div class="col-12 col-lg-6 mt-auto">
+                                <select class="form-control" name="lembaga_akreditasi" required>
+                                    <option value="">Pilih Lembaga Akreditasi</option>
+                                    <?php foreach ($lembaga_akreditasi as $key) { ?>
+                                        <option value="<?= $key['id']; ?>"><?= $key['nama']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
                         </div>
+
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-primary mr-3">Tambah Kriteria</button>
                             <a href="/admin/kriteria-ed" class="btn bg-danger">Cancel</a>

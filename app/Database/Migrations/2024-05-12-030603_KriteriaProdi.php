@@ -30,17 +30,21 @@ class KriteriaProdi extends Migration
                 'constraint' => 40,
                 'unique' => true,
             ],
-            'score' => [
+            'capaian' => [
                 'type' => 'FLOAT',
                 'default' => 0.00
             ],
-            'catatan' => [
+            'akar_penyebab' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
-            'aktif' => [
-                'type' => 'BOOLEAN',
-                'default' => -1,
+            'tautan_bukti' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
+            'progress' => [
+                'type' => 'FLOAT',
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',

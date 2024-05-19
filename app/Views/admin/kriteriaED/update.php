@@ -6,41 +6,53 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
-                        <h4 class="card-title">FORM pengisian kriteria ED</h4>
+                        <h4 class="card-title">FORM Ubah Data kriteria ED</h4>
                     </div>
                 </div>
                 <div class="card-body">
                     <form action="/admin/kriteria-ed/ubah/<?= $uuid ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row mb-5 text-start">
+
                             <div class="col-12 col-lg-6">
-                                <select class="form-control mb-3" name="lembaga_akreditasi" required>
-                                    <option value="<?= $kriteria['id_lembaga_akreditasi']; ?>" selected><?= $kriteria['lembaga_akreditasi']; ?></option>
-                                    <?php foreach ($lembaga_akreditasi as $key) { ?>
+                                <select class="form-control" name="standar" required>
+                                    <option value="<?= $kriteria['id_standar'] ?>" selected><?= $kriteria['standar'] ?></option>
+                                    <?php foreach ($kriteria_standar as $key) { ?>
+                                        <option value="<?= $key['id']; ?>"><?= $key['standar']; ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="ms-5">Tidak ada standar? <a href="/admin/kriteria-ed/tambah/standar">Klik disini</a> Untuk menambah standar</small>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <select class="form-control mb-3" name="id_prodi" required>
+                                    <option value="<?= $kriteria['id_prodi'] ?>" selected><?= $kriteria['nama_prodi'] ?></option>
+                                    <?php foreach ($prodi as $key) { ?>
                                         <option value="<?= $key['id']; ?>"><?= $key['nama']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-6">
-                                <select class="form-control mb-3" name="id_auditi" required>
-                                    <option value="<?= $kriteria['id_user'] ?>" selected><?= $kriteria['name'] ?></option>
-                                    <?php foreach ($users as $key) { ?>
-                                        <option value="<?= $key['id']; ?>"><?= $key['name']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
                             <div class="col-12 mt-3">
-                                <label for="keterangan" class="h6"> Kriteria :</label>
-                                <textarea class="form-control" id="keterangan" rows="3" name="keterangan"><?= $kriteria['kriteria'] ?></textarea>
+                                <label for="kriteria" class="h6"> Kriteria :</label>
+                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= $kriteria['kriteria'] ?></textarea>
                             </div>
                             <div class="col-12 col-lg-6 mt-auto">
                                 <label for="bobot" class="h6">Bobot</label>
                                 <input type="text" class="form-control" id="bobot" name="bobot" value="<?= $kriteria['bobot'] ?>">
                                 <small></small>
                             </div>
+                            <div class="col-12 col-lg-6 mt-auto">
+                                <select class="form-control" name="lembaga_akreditasi" required>
+                                    <option value="<?= $kriteria['id_lembaga_akreditasi'] ?>"><?= $kriteria['lembaga_akreditasi'] ?></option>
+                                    <?php foreach ($lembaga_akreditasi as $key) { ?>
+                                        <option value="<?= $key['id']; ?>"><?= $key['nama']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
                         </div>
+
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary mr-3">Ubah Kriteria</button>
+                            <button type="submit" class="btn btn-primary mr-3">Tambah Kriteria</button>
                             <a href="/admin/kriteria-ed" class="btn bg-danger">Cancel</a>
                         </div>
                     </form>
