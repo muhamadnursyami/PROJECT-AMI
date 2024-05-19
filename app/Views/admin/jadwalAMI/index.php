@@ -14,12 +14,13 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
-                    <h5 class="card-title">Jadwal Periode Evaluasi Diri</h5>
-                    <small class="text-danger">Jadwal Periode Evaluasi Diri Hanya dapat di tambahkan hanya 1 kali saja</small>
+                    <h5 class="card-title">Jadwal Pelaksanaan AMI</h5>
+                    <small class="text-danger">Jadwal Pelaksanaan AMI Hanya dapat di tambahkan hanya 1 kali saja</small>
                 </div>
+
                 <?php if ($showAddButton) : ?>
                     <div>
-                        <a href="/admin/jadwal-periode/create" class="btn btn-primary">Tambah Jadwal</a>
+                        <a href="/admin/jadwal-ami/create" class="btn btn-primary">Tambah Jadwal AMI</a>
                     </div>
                 <?php endif; ?>
 
@@ -30,24 +31,29 @@
                         <thead>
                             <tr class="ligth">
                                 <th>#</th>
+                                <th class="text-center">Nama Periode</th>
+                                <th class="text-center">Tahun</th>
+                                <th class="text-center">Ruang Lingkup</th>
                                 <th class="text-center">Tanggal Mulai</th>
                                 <th class="text-center">Tanggal Selesai</th>
-                                <th class="text-center">Deskripsi</th>
                                 <th class="text-center" style="min-width: 100px">Action</th>
                             </tr>
                         </thead>
                         <?php $i = 1 ?>
-                        <?php foreach ($jadwalPeriodeED as $jadwalED) : ?>
+                        <?php foreach ($jadwalAMI as $jdwlAMI) : ?>
                             <tbody>
                                 <tr>
                                     <td class="text-center"><?= $i++ ?></td>
-                                    <td class="text-center"><?= $jadwalED['tanggal_mulai'] ?></td>
-                                    <td class="text-center"><?= $jadwalED['tanggal_selesai'] ?></td>
-                                    <td class="text-center"><?= $jadwalED['deskripsi'] ?></td>
+                                    <td class="text-center"><?= $jdwlAMI['nama_periode'] ?></td>
+                                    <td class="text-center"><?= $jdwlAMI['tahun'] ?></td>
+                                    <td class="text-center"><?= $jdwlAMI['ruang_lingkup'] ?></td>
+                                    <td class="text-center"><?= $jdwlAMI['tanggal_mulai'] ?></td>
+                                    <td class="text-center"><?= $jdwlAMI['tanggal_selesai'] ?></td>
+
                                     <td class="text-center">
                                         <div class="flex align-items-center list-user-action">
-                                            <a href="/admin/jadwal-periode/edit/<?= $jadwalED['uuid'] ?>" class="btn  btn-primary">Edit</a>
-                                            <form action="/admin/jadwal-periode/<?= $jadwalED['id'] ?>" method="POST" class="d-inline">
+                                            <a href="/admin/jadwal-ami/edit/<?= $jdwlAMI['uuid'] ?>" class="btn  btn-primary">Edit</a>
+                                            <form action="/admin/jadwal-ami/<?= $jdwlAMI['id'] ?>" method="POST" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <button class="btn  btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</button>
@@ -57,6 +63,7 @@
                                 </tr>
                             </tbody>
                         <?php endforeach ?>
+
                     </table>
                 </div>
 

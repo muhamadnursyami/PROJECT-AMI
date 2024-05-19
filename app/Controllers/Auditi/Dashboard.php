@@ -2,18 +2,31 @@
 
 namespace App\Controllers\Auditi;
 
+use App\Models\PeriodeModel;
+use App\Models\JadwalPeriodeEDModel;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Dashboard extends BaseController
 {
+    protected $jadwal_periode_ED_Model;
+    protected $periode_Model;
+    public function __construct()
+    {
+        $this->jadwal_periode_ED_Model = new JadwalPeriodeEDModel();
+        $this->periode_Model = new PeriodeModel();
+    }
     public function index()
     {
-        // variabel data yang dapat dikirimkan dan membuat sesuatu menjadi dinamis
-        // contoh nya title sesuai halaman yang ditampilkan , jadi kita bisa kirim lewat sini
-        // dan dikirkan melalui parameter ke 2 pada function view(..., $data);
+
+        $jadwalPeriodeED = $this->jadwal_periode_ED_Model->getJadwalPeriodeED();
+        $periode = $this->periode_Model->getPeriode();
         $data = [
-            'title' => 'Dashboard'
+            'title' => 'Dashboard',
+            'currentPage' => 'dashboard',
+            'jadwalPeriodeED' => $jadwalPeriodeED,
+            'jadwalAMI' => $periode
+
         ];
         return view('auditi/dashboard', $data);
     }

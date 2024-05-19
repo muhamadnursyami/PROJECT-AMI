@@ -46,6 +46,30 @@ $routes->get('admin/kriteria-ed/tambah/standar/edit/(:segment)', 'Admin\StandarC
 $routes->post('admin/kriteria-ed/tambah/standar/edit/(:segment)', 'Admin\StandarController::editPost/$1');
 $routes->post('admin/kriteria-ed/tambah/standar/hapus/(:segment)', 'Admin\StandarController::hapusPost/$1');
 
+// jadwal AMI
+$routes->get('admin/jadwal-ami', 'Admin\Periode::index');
+$routes->get('admin/jadwal-ami/create', 'Admin\Periode::create');
+$routes->post('admin/jadwal-ami/save', 'Admin\Periode::save');
+$routes->post('admin/jadwal-ami/update/(:num)', 'Admin\Periode::update/$1');
+$routes->get('admin/jadwal-ami/edit/(:segment)', 'Admin\Periode::edit/$1');
+$routes->delete('admin/jadwal-ami/(:num)', 'Admin\Periode::delete/$1');
+
+// Kelola Auditor
+$routes->get('admin/kelola-auditor', 'Admin\KelolaAuditor::index');
+$routes->get('admin/kelola-auditor/tambah', 'Admin\KelolaAuditor::create');
+$routes->post('admin/kelola-auditor/tambah', 'Admin\KelolaAuditor::save');
+$routes->get('admin/kelola-auditor/ubah/(:segment)', 'Admin\KelolaAuditor::update/$1');
+$routes->post('admin/kelola-auditor/ubah/(:segment)', 'Admin\KelolaAuditor::updatePost/$1');
+$routes->post('admin/kelola-auditor/hapus/(:segment)', 'Admin\KelolaAuditor::delete/$1');
+
+// Penugasan Auditor
+$routes->get('admin/penugasan-auditor', 'Admin\PenugasanAuditor::index');
+$routes->get('admin/penugasan-auditor/tambah', 'Admin\PenugasanAuditor::create');
+$routes->post('admin/penugasan-auditor/tambah', 'Admin\PenugasanAuditor::save');
+$routes->get('admin/penugasan-auditor/ubah/(:segment)', 'Admin\PenugasanAuditor::update/$1');
+$routes->post('admin/penugasan-auditor/ubah/(:segment)', 'Admin\PenugasanAuditor::updatePost/$1');
+$routes->post('admin/penugasan-auditor/hapus/(:segment)', 'Admin\PenugasanAuditor::delete/$1');
+
 // FITUR ROLE AUDITI
 // isi form ed
 $routes->get('auditi/form-ed', 'Auditi\FormEDController::create');
