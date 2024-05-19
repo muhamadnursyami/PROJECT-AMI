@@ -47,8 +47,16 @@ $routes->post('admin/jadwal-ami/update/(:num)', 'Admin\JadwalAMI::update/$1');
 $routes->get('admin/jadwal-ami/edit/(:segment)', 'Admin\JadwalAMI::edit/$1');
 $routes->delete('admin/jadwal-ami/(:num)', 'Admin\JadwalAMI::delete/$1');
 
+// Kelola Auditor
+$routes->get('admin/kelola-auditor', 'Admin\KelolaAuditor::index');
+$routes->get('admin/kelola-auditor/tambah', 'Admin\KelolaAuditor::create');
+$routes->post('admin/kelola-auditor/tambah', 'Admin\KelolaAuditor::save');
+$routes->get('admin/kelola-auditor/ubah/(:segment)', 'Admin\KelolaAuditor::update/$1');
+$routes->post('admin/kelola-auditor/ubah/(:segment)', 'Admin\KelolaAuditor::updatePost/$1');
+$routes->post('admin/kelola-auditor/hapus/(:segment)', 'Admin\KelolaAuditor::delete/$1');
 
-
+// Penugasan Auditor
+$routes->get('admin/penugasan-auditor', 'Admin\PenugasanAuditor::index');
 
 
 // FITUR ROLE AUDITI

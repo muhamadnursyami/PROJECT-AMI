@@ -68,6 +68,16 @@
                                 <small class="ml-4">Jadwal AMI</small>
                             </a>
                         </li>
+                        <li <?= ($currentPage == 'kelolaAuditor') ? 'class="active"' : ''; ?>>
+                            <a href="/admin/kelola-auditor" class="svg-icon">
+                                <small class="ml-4">Kelola Auditor</small>
+                            </a>
+                        </li>
+                        <li <?= ($currentPage == 'penugasanAuditor') ? 'class="active"' : ''; ?>>
+                            <a href="/admin/penugasan-auditor" class="svg-icon">
+                                <small class="ml-4">Penugasan Auditor</small>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div class="pt-5 pb-2"></div>
