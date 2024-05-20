@@ -70,6 +70,13 @@ $routes->get('admin/penugasan-auditor/ubah/(:segment)', 'Admin\PenugasanAuditor:
 $routes->post('admin/penugasan-auditor/ubah/(:segment)', 'Admin\PenugasanAuditor::updatePost/$1');
 $routes->post('admin/penugasan-auditor/hapus/(:segment)', 'Admin\PenugasanAuditor::delete/$1');
 
+// Kelola Auditi
+$routes->get('admin/kelola-auditi', 'Admin\KelolaAuditi::index');
+// $routes->get('admin/kelola-auditi/tambah', 'Admin\KelolaAuditi::create');
+// $routes->post('admin/kelola-auditi/tambah', 'Admin\KelolaAuditi::save');
+$routes->get('admin/kelola-auditi/kelola/(:segment)', 'Admin\KelolaAuditi::kelola/$1');
+$routes->post('admin/kelola-auditi/kelola/(:segment)', 'Admin\KelolaAuditi::kelolaPost/$1');
+$routes->post('admin/kelola-auditi/hapus/(:segment)', 'Admin\KelolaAuditi::delete/$1');
 // FITUR ROLE AUDITI
 // isi form ed
 $routes->get('auditi/form-ed', 'Auditi\FormEDController::create');
