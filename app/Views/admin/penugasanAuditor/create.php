@@ -1,5 +1,13 @@
 <?= $this->extend('admin/layout') ?>
 <?= $this->section('content') ?>
+<?php if (session()->getFlashdata('warning')) : ?>
+    <div class="alert bg-warning" role="alert">
+        <div class="iq-alert-text"> <small><?= session()->getFlashdata('warning') ?> </small></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+<?php endif ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-lg-12">

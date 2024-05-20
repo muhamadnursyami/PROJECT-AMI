@@ -7,8 +7,11 @@ use App\Models\AuditorModel;
 use App\Models\PenugasanAuditorModel;
 use App\Models\ProdiModel;
 use App\Models\PeriodeModel;
+use App\Models\KriteriaModel;
+use App\Models\KriteriaProdiModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use PhpParser\Node\Stmt\Return_;
+
 
 class PenugasanAuditor extends BaseController
 {
@@ -53,33 +56,39 @@ class PenugasanAuditor extends BaseController
 
     public function save()
     {
-        if (!$this->validate([
-            'auditor' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} Harus diisi'
-                ]
-            ],
-            'prodi' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} Harus diisi'
-                ]
-            ]
-        ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->back()->withInput()->with('validation', $validation);
+        // Validasi input auditor dan prodi
+        $validationRules = [
+            'auditor' => 'required',
+            'prodi' => 'required'
+        ];
+
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
-        $periode = $this->periode_Model->select('id')->first();
+        // Mendapatkan id_prodi dari form
+        $prodiId = $this->request->getPost('prodi');
 
+        // Check apakah kriteria prodi telah diisi
+        $kriteriaProdiModel = new KriteriaProdiModel();
+        $isEdCompleted = $kriteriaProdiModel->checkEdCompletion($prodiId);
+
+        // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
+        if (!$isEdCompleted) {
+            session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
+            return redirect()->back()->withInput();
+        }
+
+        // Lanjutkan dengan penyimpanan data penugasan auditor jika kriteria prodi telah diisi
+        $periode = $this->periode_Model->select('id')->first();
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
             'id_auditor' => $this->request->getPost('auditor'),
-            'id_prodi' => $this->request->getPost('prodi'),
-            'id_periode' => $periode
+            'id_prodi' => $prodiId,
+            'id_periode' => $periode['id'] // Pastikan ini sudah sesuai dengan struktur tabel Anda
         ];
 
+        // Menyimpan data penugasan auditor
         $this->penugasanAuditor->insert($data);
 
         return redirect()->to('admin/penugasan-auditor')->with('sukses', 'Berhasil menambah Penugasan Auditor');
@@ -107,22 +116,27 @@ class PenugasanAuditor extends BaseController
 
     public function updatePost($uuid)
     {
-        if (!$this->validate([
-            'auditor' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} Harus diisi'
-                ]
-            ],
-            'prodi' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} Harus diisi'
-                ]
-            ]
-        ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->back()->withInput()->with('validation', $validation);
+        // Validasi input auditor dan prodi
+        $validationRules = [
+            'auditor' => 'required',
+            'prodi' => 'required'
+        ];
+
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('validation', $this->validator);
+        }
+
+        // Mendapatkan id_prodi dari form
+        $prodiId = $this->request->getPost('prodi');
+
+        // Check apakah kriteria prodi telah diisi
+        $kriteriaProdiModel = new KriteriaProdiModel();
+        $isEdCompleted = $kriteriaProdiModel->checkEdCompletion($prodiId);
+
+        // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
+        if (!$isEdCompleted) {
+            session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
+            return redirect()->back()->withInput();
         }
 
         $data = [
