@@ -43,82 +43,24 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="active">
-                            <a href="../backend/index.html" class="svg-icon">
+                        <li <?= ($currentPage == 'dashboard') ? 'class="active"' : ''; ?>>
+                            <a href="/auditi/dashboard" class="svg-icon">
                                 <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg>
-                                <small class="ml-4"><?= $title ?></small>
-
+                                <small class="ml-4">Dashboard</small>
                             </a>
                         </li>
 
-                        <li class=" ">
-                            <a href="#otherpage" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <svg class="svg-icon" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                        <li <?= ($currentPage == 'form-ed') ? 'class="active"' : ''; ?>>
+                            <a href="/auditi/form-ed" class="svg-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25" fill="currentColor">
+                                    <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
                                 </svg>
-                                <small class="ml-4">Kustomisasi LAM</small>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="otherpage" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class=" ">
-                                    <a href="<?= base_url('auditi/form-ed') ?>" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                        <svg class="svg-icon" id="p-dash10" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="8.5" cy="7" r="4"></circle>
-                                            <polyline points="17 11 19 13 23 9"></polyline>
-                                        </svg>
-                                        <small class="ml-4">Evaluasi Diri </small>
-                                        <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                        <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                    </a>
-                                    <ul id="user" class="iq-submenu collapse" data-parent="#otherpage">
-                                        <li class="">
-                                            <a href="../app/user-profile.html">
-                                                <i class="las la-minus"></i><small>User Profile</small>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="../app/user-add.html">
-                                                <i class="las la-minus"></i><small>User Add</small>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="<?= base_url('app/user-list.html') ?>">
-                                                <i class="las la-minus"></i><small>User List</small>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="">
-                                    <a href="../backend/pages-invoice.html" class="svg-icon">
-                                        <svg class="svg-icon" id="p-dash07" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                            <polyline points="14 2 14 8 20 8"></polyline>
-                                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                                            <polyline points="10 9 9 9 8 9"></polyline>
-                                        </svg>
-                                        <small class="ml-4">Detail Evaluasi Diri</small>
-                                    </a>
-                                </li>
-
-
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="../backend/page-employee.html" class="svg-icon">
-                                <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                                <small class="ml-4">Catatan Audit</small>
+                                <small class="ml-4">Evaluasi Diri</small>
                             </a>
                         </li>
-
-
 
                     </ul>
                 </nav>

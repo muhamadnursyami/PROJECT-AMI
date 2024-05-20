@@ -28,6 +28,16 @@ class Periode extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 4,
             ],
+            'ruang_lingkup' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+            ],
+            'tanggal_mulai' => [
+                'type' => 'Date'
+            ],
+            'tanggal_selesai' => [
+                'type' => 'Date'
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
@@ -40,7 +50,6 @@ class Periode extends Migration
 
         $this->forge->addPrimaryKey('id');
         $this->forge->createTable('periode');
-
     }
 
     public function down()
