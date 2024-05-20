@@ -11,6 +11,14 @@
 
                 </div>
                 <div class="card-body">
+                    <?php if (session('validation')) { ?>
+                        <div class="alert bg-danger" role="alert">
+                            <?php foreach (session('validation')->getErrors() as $error) : ?>
+                                <?= esc($error) ?>
+                                <br>
+                            <?php endforeach ?>
+                        </div>
+                    <?php } ?>
                     <form action="/admin/kelola-auditor/ubah/<?= $uuid ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row mb-5 text-start">
