@@ -29,27 +29,35 @@
                     <?php } ?>
                     <?php if (!empty(session()->getFlashdata('sukses'))) : ?>
                         <div class="alert bg-success" role="alert">
-
                             <div class="iq-alert-text"> <small><?= session()->getFlashdata('sukses') ?> </small></div>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <i class="ri-close-line"></i>
                             </button>
                         </div>
                     <?php endif ?>
-                    <form action="/admin/penugasan-auditor/tambah" method="POST">
+                    <div class="col-12">
+                        <p class="text-danger font-weight-bold">Perhatikan Prodi Tujuan tidak boleh sama dengan Prodi Asal !!!</p>
+                    </div>
+                    <!-- Dropdown "Auditor" di luar dari form -->
+                    <div class="col-12">
+                        <label for="auditor" class="h6">Auditor</label>
+                        <select class="form-control mb-3" name="auditor" id="auditor" required>
+                            <option value="">Pilih Auditor</option>
+                            <?php foreach ($auditor as $key) { ?>
+                                <option value="<?= $key['id']; ?>"><?= $key['nama']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="selectedProdiName" class="h6">Prodi Asal</label>
+                        <input type="text" class="form-control mb-3" id="selectedProdiName" readonly>
+                    </div>
+                    <form action="/admin/penugasan-auditor/tambah" method="POST" class="col-12">
                         <?= csrf_field() ?>
                         <div class="row mb-5 text-start">
-                            <div class="col-12 col-lg-6">
-                                <label for="auditor" class="h6">Auditor</label>
-                                <select class="form-control mb-3" name="auditor" id="auditor" required>
-                                    <option value="">Pilih Auditor</option>
-                                    <?php foreach ($auditor as $key) { ?>
-                                        <option value="<?= $key['id']; ?>"><?= $key['nama']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <label for="Prodi" class="h6">Prodi</label>
+                            <input type="hidden" name="id_auditor" id="id_auditor">
+                            <div class="col-12">
+                                <label for="prodi" class="h6">Prodi Tujuan</label>
                                 <select class="form-control mb-3" name="prodi" id="prodi" required>
                                     <option value="">Pilih Prodi </option>
                                     <?php foreach ($prodi as $key) { ?>
@@ -65,12 +73,28 @@
                     </form>
                 </div>
             </div>
-
-
         </div>
-
     </div>
 </div>
 
+<script>
+    document.getElementById('auditor').addEventListener('change', function() {
+        var selectedAuditorId = this.value;
+
+        // Kirimkan ID auditor ke server dengan AJAX
+        fetch('/admin/penugasan-auditor/getProdiNameByAuditor/' + selectedAuditorId)
+            .then(response => response.json())
+            .then(data => {
+                // Tanggapi respons dan dapatkan nama prodi dan id auditor
+                var prodiName = data.prodi_name;
+                var auditorId = data.auditor_id;
+
+                // Tampilkan nama prodi di dalam input readonly
+                document.getElementById('selectedProdiName').value = prodiName;
+                // Set nilai id auditor pada hidden input
+                document.getElementById('id_auditor').value = auditorId;
+            });
+    });
+</script>
 
 <?= $this->endSection() ?>

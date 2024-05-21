@@ -65,6 +65,7 @@ $routes->post('admin/kelola-auditor/hapus/(:segment)', 'Admin\KelolaAuditor::del
 // Penugasan Auditor
 $routes->get('admin/penugasan-auditor', 'Admin\PenugasanAuditor::index');
 $routes->get('admin/penugasan-auditor/tambah', 'Admin\PenugasanAuditor::create');
+$routes->get('/admin/penugasan-auditor/getProdiNameByAuditor/(:num)', 'Admin\PenugasanAuditor::getProdiNameByAuditor/$1');
 $routes->post('admin/penugasan-auditor/tambah', 'Admin\PenugasanAuditor::save');
 $routes->get('admin/penugasan-auditor/ubah/(:segment)', 'Admin\PenugasanAuditor::update/$1');
 $routes->post('admin/penugasan-auditor/ubah/(:segment)', 'Admin\PenugasanAuditor::updatePost/$1');

@@ -28,8 +28,14 @@ class PenugasanAuditor extends BaseController
     }
     public function index()
     {
-        $penugasanAuditor = $this->penugasanAuditor->select('penugasan_auditor.uuid as uuid, auditor.nama as nama, prodi.nama as prodi, periode.tanggal_mulai, periode.tanggal_selesai')->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')->join('periode', 'periode.id = penugasan_auditor.id_periode')->findAll();
-        // dd($penugasanAuditor);
+        $penugasanAuditor = $this->penugasanAuditor
+            ->select('penugasan_auditor.uuid as uuid, auditor.nama as nama, prodi_tujuan.nama as prodi_tujuan, prodi_asal.nama as prodi_asal, periode.tanggal_mulai, periode.tanggal_selesai')
+            ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
+            ->join('prodi as prodi_tujuan', 'prodi_tujuan.id = penugasan_auditor.id_prodi')
+            ->join('auditor as a2', 'a2.id = penugasan_auditor.id_auditor')
+            ->join('prodi as prodi_asal', 'prodi_asal.id = a2.id_prodi')
+            ->join('periode', 'periode.id = penugasan_auditor.id_periode')
+            ->findAll();
         $data = [
             'title' => 'Penugasan Auditor',
             'currentPage' => 'penugasanAuditor',
@@ -53,12 +59,24 @@ class PenugasanAuditor extends BaseController
         return view('admin/penugasanAuditor/create', $data);
     }
 
+    public function getProdiNameByAuditor($auditorId)
+    {
+        // Panggil model untuk mendapatkan ID prodi berdasarkan ID auditor
+        $prodiId = $this->auditor->getProdiIdByAuditorId($auditorId);
+
+        // Panggil model untuk mendapatkan nama prodi berdasarkan ID prodi
+        $prodiName = $this->prodi->getProdiNameById($prodiId);
+
+        // Mengembalikan respons dalam bentuk JSON
+        return $this->response->setJSON(['prodi_name' => $prodiName, 'auditor_id' => $auditorId]);
+    }
+
 
     public function save()
     {
         // Validasi input auditor dan prodi
         $validationRules = [
-            'auditor' => 'required',
+            'id_auditor' => 'required',
             'prodi' => 'required'
         ];
 
@@ -78,12 +96,19 @@ class PenugasanAuditor extends BaseController
             session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
             return redirect()->back()->withInput();
         }
-
+        // Check apakah prodi asal dan prodi tujuan sama
+        $auditorProdi = $this->request->getPost('id_auditor');
+        if ($auditorProdi == $prodiId) {
+            session()->setFlashdata('warning', 'Prodi asal dan prodi tujuan tidak boleh sama.');
+            return redirect()->back()->withInput();
+        }
         // Lanjutkan dengan penyimpanan data penugasan auditor jika kriteria prodi telah diisi
         $periode = $this->periode_Model->select('id')->first();
+
+        // dd($this->request->getPost('id_auditor'));
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
-            'id_auditor' => $this->request->getPost('auditor'),
+            'id_auditor' => $this->request->getPost('id_auditor'),
             'id_prodi' => $prodiId,
             'id_periode' => $periode['id'] // Pastikan ini sudah sesuai dengan struktur tabel Anda
         ];
@@ -118,7 +143,7 @@ class PenugasanAuditor extends BaseController
     {
         // Validasi input auditor dan prodi
         $validationRules = [
-            'auditor' => 'required',
+            'id_auditor' => 'required',
             'prodi' => 'required'
         ];
 
@@ -128,7 +153,8 @@ class PenugasanAuditor extends BaseController
 
         // Mendapatkan id_prodi dari form
         $prodiId = $this->request->getPost('prodi');
-
+        // Mendapatkan id auditor dari form
+        $auditorId = $this->request->getPost('id_auditor');
         // Check apakah kriteria prodi telah diisi
         $kriteriaProdiModel = new KriteriaProdiModel();
         $isEdCompleted = $kriteriaProdiModel->checkEdCompletion($prodiId);
@@ -139,8 +165,15 @@ class PenugasanAuditor extends BaseController
             return redirect()->back()->withInput();
         }
 
+        // Check apakah prodi asal dan prodi tujuan sama
+
+        $auditorProdi = $this->auditor->find($auditorId)['id_prodi'];
+        if ($auditorProdi == $prodiId) {
+            session()->setFlashdata('warning', 'Prodi asal dan prodi tujuan tidak boleh sama.');
+            return redirect()->back()->withInput();
+        }
         $data = [
-            'id_auditor' => $this->request->getPost('auditor'),
+            'id_auditor' => $this->request->getPost('id_auditor'),
             'id_prodi' => $this->request->getPost('prodi'),
         ];
 

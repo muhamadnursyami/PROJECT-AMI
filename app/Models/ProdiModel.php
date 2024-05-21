@@ -47,4 +47,19 @@ class ProdiModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getProdiNameById($prodiId)
+    {
+        // Dapatkan nama prodi berdasarkan ID prodi
+        $query = $this->select('nama')
+            ->where('id', $prodiId)
+            ->get();
+
+        // Periksa apakah query berhasil
+        if ($query->getResult()) {
+            return $query->getRow()->nama;
+        } else {
+            return null;
+        }
+    }
 }
