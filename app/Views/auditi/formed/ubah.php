@@ -20,6 +20,7 @@
                         </div>
                     <?php endif ?>
                     <h4>Progress Form Evaluasi Diri <?= $prodi ?></h4>
+                    <a href="/auditi/form-ed" class="btn bg-warning mt-3">Kembali</a>
                     <?php if (!empty(session()->getFlashdata('persentase'))) { ?>
                         <div class="progress mt-3 mb-4">
                             <div class="progress-bar" role="progressbar" style="width: <?= session()->getFlashdata('persentase') ?>%;" aria-valuenow="<?= session()->getFlashdata('persentase') ?>" aria-valuemin="0" aria-valuemax="100"><?= session()->getFlashdata('persentase') ?>%</div>
@@ -41,8 +42,6 @@
                                         <th scope="col">Standar</th>
                                         <th scope="col">Kriteria</th>
                                         <th scope="col">Bobot</th>
-                                        <th scope="col">Capaian</th>
-                                        <th scope="col">Pilih Capaian</th>
                                         <th scope="col">Akar Penyebab</th>
                                         <th scope="col">Tatan Bukti</th>
                                     </tr>
@@ -57,95 +56,6 @@
                                                 <td><?= $form_ed[$i]['standar']; ?></td>
                                                 <td><?= $form_ed[$i]['kriteria']; ?></td>
                                                 <td><?= $form_ed[$i]['bobot']; ?></td>
-                                                <td><?= $form_ed[$i]['capaian']; ?></td>
-                                                <td>
-                                                    <?php if ($form_ed[$i]['capaian'] == 1) { ?>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="1<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1" checked="checked">
-                                                            <label class="form-check-label" for="1<?= $form_ed[$i]['uuid'] ?>">1</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="2<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2">
-                                                            <label class="form-check-label" for="2<?= $form_ed[$i]['uuid'] ?>">2</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="3<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3">
-                                                            <label class="form-check-label" for="3<?= $form_ed[$i]['uuid'] ?>">3</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="4<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4">
-                                                            <label class="form-check-label" for="4<?= $form_ed[$i]['uuid'] ?>">4</label>
-                                                        </div>
-                                                    <?php } else if ($form_ed[$i]['capaian'] == 2) { ?>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="1<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1">
-                                                            <label class="form-check-label" for="1<?= $form_ed[$i]['uuid'] ?>">1</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="2<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2" checked="checked">
-                                                            <label class="form-check-label" for="2<?= $form_ed[$i]['uuid'] ?>">2</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="3<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3">
-                                                            <label class="form-check-label" for="3<?= $form_ed[$i]['uuid'] ?>">3</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="4<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4">
-                                                            <label class="form-check-label" for="4<?= $form_ed[$i]['uuid'] ?>">4</label>
-                                                        </div>
-                                                    <?php } else if ($form_ed[$i]['capaian'] == 3) { ?>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="1<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1">
-                                                            <label class="form-check-label" for="1<?= $form_ed[$i]['uuid'] ?>">1</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="2<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2">
-                                                            <label class="form-check-label" for="2<?= $form_ed[$i]['uuid'] ?>">2</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="3<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3" checked="checked">
-                                                            <label class="form-check-label" for="3<?= $form_ed[$i]['uuid'] ?>">3</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="4<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4">
-                                                            <label class="form-check-label" for="4<?= $form_ed[$i]['uuid'] ?>">4</label>
-                                                        </div>
-                                                    <?php } else if ($form_ed[$i]['capaian'] == 4) { ?>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="1<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1">
-                                                            <label class="form-check-label" for="1<?= $form_ed[$i]['uuid'] ?>">1</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="2<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2">
-                                                            <label class="form-check-label" for="2<?= $form_ed[$i]['uuid'] ?>">2</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="3<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3">
-                                                            <label class="form-check-label" for="3<?= $form_ed[$i]['uuid'] ?>">3</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="4<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4" checked="checked">
-                                                            <label class="form-check-label" for="4<?= $form_ed[$i]['uuid'] ?>">4</label>
-                                                        </div>
-                                                    <?php } else { ?>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="1<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="1">
-                                                            <label class="form-check-label" for="1<?= $form_ed[$i]['uuid'] ?>">1</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="2<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="2">
-                                                            <label class="form-check-label" for="2<?= $form_ed[$i]['uuid'] ?>">2</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="3<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="3">
-                                                            <label class="form-check-label" for="3<?= $form_ed[$i]['uuid'] ?>">3</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" id="4<?= $form_ed[$i]['uuid'] ?>" type="radio" name="<?= $form_ed[$i]['uuid'] ?>" value="4">
-                                                            <label class="form-check-label" for="4<?= $form_ed[$i]['uuid'] ?>">4</label>
-                                                        </div>
-                                                    <?php } ?>
-                                                </td>
                                                 <td>
                                                     <?php if (!is_null($form_ed[$i]['akar_penyebab'])) { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">

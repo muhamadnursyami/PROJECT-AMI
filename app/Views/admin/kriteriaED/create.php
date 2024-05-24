@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-12 mt-3">
                                 <label for="kriteria" class="h6"> Kriteria :</label>
-                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= old('keterangan'); ?></textarea>
+                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= old('kriteria'); ?></textarea>
                             </div>
                             <div class="col-12 col-lg-6 mt-auto">
                                 <label for="bobot" class="h6">Bobot</label>

@@ -42,8 +42,8 @@ class KriteriaProdi extends Migration
                 'type' => 'TEXT',
                 'null' => true,
             ],
-            'progress' => [
-                'type' => 'FLOAT',
+            'catatan' => [
+                'type' => 'TEXT',
                 'null' => true,
             ],
             'created_at' => [

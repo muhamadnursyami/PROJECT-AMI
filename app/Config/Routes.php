@@ -89,4 +89,5 @@ $routes->post('auditi/form-ed/ubah', 'Auditi\FormEDController::ubahPost');
 // FITUR ROLE AUDITOR
 // lihat form ed
 $routes->get('auditor/form-ed/view', 'Auditor\ViewEDAuditorController::index');
-$routes->get('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::view/$1');
+$routes->get('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::create/$1');
+$routes->post('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::createPost/$1');

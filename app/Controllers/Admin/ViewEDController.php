@@ -50,7 +50,7 @@ class ViewEDController extends BaseController
             $capaian[$i] = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-                ->where('capaian != 0')->where('akar_penyebab IS NOT null')
+                ->where('akar_penyebab IS NOT null')
                 ->where('tautan_bukti IS NOT null')
                 ->where('kriteria_standar.is_aktif', 1)
                 ->where('prodi.nama', $value)->findAll());
@@ -86,7 +86,7 @@ class ViewEDController extends BaseController
     public function view($uuid)
     {
 
-        $form_ed = $this->kriteriaProdi->select('standar, is_aktif, kriteria_prodi.uuid as uuid, id_kriteria, kriteria_prodi.id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('prodi.uuid', $uuid)->findAll();
+        $form_ed = $this->kriteriaProdi->select('standar, is_aktif, kriteria_prodi.uuid as uuid, id_kriteria, catatan ,kriteria_prodi.id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('prodi.uuid', $uuid)->findAll();
 
         if (count($form_ed) == 0) {
             return redirect()->to('admin/kriteria-ed/view')->with('gagal', 'Data form kriteria prodi belum ada');
@@ -95,7 +95,7 @@ class ViewEDController extends BaseController
         $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
             ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
             ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-            ->where('capaian != 0')->where('akar_penyebab IS NOT null')
+            ->where('akar_penyebab IS NOT null')
             ->where('tautan_bukti IS NOT null')
             ->where('kriteria_standar.is_aktif', 1)
             ->where('prodi.uuid', "$uuid")->findAll());

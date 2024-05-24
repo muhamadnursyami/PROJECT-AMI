@@ -28,24 +28,24 @@
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 mt-2">
-                                <label for="ruang_lingkup" class="h6"> Ruang Lingkup :</label>
-                                <input type="text" class="form-control <?= (session('validation')) ? 'is-invalid' : '';  ?>" id="ruang_lingkup" name="ruang_lingkup" value="<?= old('ruang_lingkup'); ?>" /></input>
-                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                    <?= $validation->getError('ruang_lingkup') ?>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6 mt-2">
                                 <label for="tanggal_mulai" class="h6">Tanggal Mulai</label>
                                 <input type="date" class="form-control <?= (session('validation')) ? 'is-invalid' : '';  ?>" id="tanggal_mulai" name="tanggal_mulai" value="<?= old('tanggal_mulai'); ?>">
                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                     <?= $validation->getError('tanggal_mulai') ?>
                                 </div>
                             </div>
-                            <div class="col-12 mt-2">
+                            <div class="col-12 col-lg-6 mt-2">
                                 <label for="tanggal_selesai" class="h6">Tanggal Selesai</label>
                                 <input type="date" class="form-control <?= (session('validation')) ? 'is-invalid' : '';  ?>" id="tanggal_selesai" name="tanggal_selesai" value="<?= old('tanggal_selesai'); ?>">
                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                     <?= $validation->getError('tanggal_selesai') ?>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <label for="ruang_lingkup" class="h6"> Ruang Lingkup :</label>
+                                <input type="text" class="form-control <?= (session('validation')) ? 'is-invalid' : '';  ?>" id="ruang_lingkup" name="ruang_lingkup" value="<?= old('ruang_lingkup'); ?>" /></input>
+                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                    <?= $validation->getError('ruang_lingkup') ?>
                                 </div>
                             </div>
 

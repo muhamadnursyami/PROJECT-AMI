@@ -19,7 +19,7 @@ class KriteriaProdiModel extends Model
         'capaian',
         'akar_penyebab',
         'tautan_bukti',
-        'progress',
+        'catatan',
     ];
 
     protected bool $allowEmptyInserts = false;
