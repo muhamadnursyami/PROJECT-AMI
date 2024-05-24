@@ -38,6 +38,7 @@ class FormEDController extends BaseController
                 ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')
+                ->where('is_aktif', 1)
                 ->where('prodi.id', $user['id_prodi'])->findAll();
 
 
@@ -48,7 +49,7 @@ class FormEDController extends BaseController
             $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-                ->where('capaian != 0')->where('akar_penyebab IS NOT null')
+                ->where('akar_penyebab IS NOT null')
                 ->where('tautan_bukti IS NOT null')
                 ->where('kriteria_standar.is_aktif', 1)
                 ->where('prodi.id', $user['id_prodi'])->findAll());
@@ -79,6 +80,7 @@ class FormEDController extends BaseController
             if ($tanggalSelesaiTimestamp < $tanggalSekarangTimestamp) {
                 $formTerkunci = true;
             }
+            
 
             // dd($formTerkunci);
 
@@ -103,21 +105,12 @@ class FormEDController extends BaseController
         $uuid = session()->get('uuid');
         $user = $this->users->where('uuid', $uuid)->first();
 
+
+        
         // dd($this->request->getVar());
         foreach ($this->request->getVar() as $key => $value) {
             if ($key == "csrf_test_name" || $key == "datatable_length") {
                 continue;
-            }
-
-            // jika capaian terisi
-            if (strlen($key) == 36) {
-                $uuid = $key;
-                $this->kriteriaProdi->set('capaian', $value)->where('uuid', $uuid)->update();
-                $kriteriaProdi = $this->kriteriaProdi->where('uuid', $uuid)->first();
-
-                $this->perubahanKriteria->set('capaian_sebelum', $kriteriaProdi['capaian'])
-                    ->where('id_kriteria_prodi', $kriteriaProdi['id'])
-                    ->update();
             }
 
             // jika akar penyebab terisi
@@ -144,7 +137,7 @@ class FormEDController extends BaseController
         $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
             ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
             ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-            ->where('capaian != 0')->where('akar_penyebab IS NOT null')
+            ->where('akar_penyebab IS NOT null')
             ->where('tautan_bukti IS NOT null')
             ->where('kriteria_standar.is_aktif', 1)
             ->where('prodi.id', $user['id_prodi'])->findAll());
@@ -180,6 +173,7 @@ class FormEDController extends BaseController
                 ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')
+                ->where('is_aktif', 1)
                 ->where('prodi.id', $user['id_prodi'])->findAll();
 
             if (count($form_ed) == 0) {
@@ -189,7 +183,7 @@ class FormEDController extends BaseController
             $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-                ->where('capaian != 0')->where('akar_penyebab IS NOT null')
+                ->where('akar_penyebab IS NOT null')
                 ->where('tautan_bukti IS NOT null')
                 ->where('kriteria_standar.is_aktif', 1)
                 ->where('prodi.id', $user['id_prodi'])->findAll());
@@ -231,19 +225,6 @@ class FormEDController extends BaseController
                 continue;
             }
 
-            // jika capaian terisi
-            if (strlen($key) == 36) {
-                $uuid = $key;
-                $kriteriaProdi = $this->kriteriaProdi->where('uuid', $uuid)->first();
-                $this->kriteriaProdi->set('capaian', $value)->where('uuid', $uuid)->update();
-
-                if (!($kriteriaProdi['capaian'] == $value)) {
-                    $this->perubahanKriteria->set('capaian_setelah', $value)
-                        ->where('id_kriteria_prodi', $kriteriaProdi['id'])
-                        ->update();
-                }
-            }
-
             // jika akar penyebab terisi
             if (strlen($key) == 48) {
                 if ($value == "") {
@@ -268,7 +249,7 @@ class FormEDController extends BaseController
         $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
             ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
             ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-            ->where('capaian != 0')->where('akar_penyebab IS NOT null')
+            ->where('akar_penyebab IS NOT null')
             ->where('tautan_bukti IS NOT null')
             ->where('kriteria_standar.is_aktif', 1)
             ->where('prodi.id', $user['id_prodi'])->findAll());

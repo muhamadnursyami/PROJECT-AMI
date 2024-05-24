@@ -19,12 +19,15 @@ class PenugasanAuditor extends BaseController
     protected $prodi;
     protected $penugasanAuditor;
     protected $periode_Model;
+    private $kriteriaProdi;
+
     public function __construct()
     {
         $this->auditor = new AuditorModel();
         $this->prodi = new ProdiModel();
         $this->penugasanAuditor = new PenugasanAuditorModel();
         $this->periode_Model = new PeriodeModel();
+        $this->kriteriaProdi = new KriteriaProdiModel();
     }
     public function index()
     {
@@ -88,14 +91,74 @@ class PenugasanAuditor extends BaseController
         $prodiId = $this->request->getPost('prodi');
 
         // Check apakah kriteria prodi telah diisi
-        $kriteriaProdiModel = new KriteriaProdiModel();
-        $isEdCompleted = $kriteriaProdiModel->checkEdCompletion($prodiId);
+        // $kriteriaProdiModel = new KriteriaProdiModel();
+        // $isEdCompleted = $kriteriaProdiModel->checkEdCompletion($prodiId);
 
-        // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
-        if (!$isEdCompleted) {
-            session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
-            return redirect()->back()->withInput();
+        // check yang kubuat
+        $kriteriaProdi = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
+            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+            ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+            ->join('users', 'users.id_prodi = prodi.id')
+            ->findAll();
+        $dataProdi = [];
+        $dataAuditi = [];
+        $uuidProdi = [];
+
+        foreach ($kriteriaProdi as $key => $value) {
+            array_push($dataProdi, $value['nama']);
+            array_push($dataAuditi, $value['nama_user']);
+            array_push($uuidProdi, $value['uuid_prodi']);
         }
+        $dataAuditi = array_unique($dataAuditi);
+        $dataProdi = array_unique($dataProdi);
+        $uuidProdi = array_unique($uuidProdi);
+
+        $capaian = [];
+        $total = [];
+        $persentase_terisi = [];
+
+        $i = 0;
+        // progress capaian per masing-masing prodi
+        foreach ($dataProdi as $key => $value) {
+
+            // pake nama prodi
+            $capaian[$i] = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+                ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+                ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+                ->where('akar_penyebab IS NOT null')
+                ->where('tautan_bukti IS NOT null')
+                ->where('kriteria_standar.is_aktif', 1)
+                ->where('prodi.nama', $value)->findAll());
+            $total[$i] = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+                ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+                ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+                ->where('kriteria_standar.is_aktif', 1)
+                ->where('prodi.nama', "$value")->findAll());
+
+            if ($total[$i] != 0) {
+                $persentase_terisi[$i] = ($capaian[$i] / $total[$i]) * 100;
+            } else {
+
+                $persentase_terisi[$i] = 100;
+            }
+
+            $i++;
+        }
+        
+        foreach ($persentase_terisi as $key => $value) {
+            // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
+            if ($value < 100) {
+                session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
+                return redirect()->back()->withInput();
+            }
+        }
+        // 
+
+        // // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
+        // if ($persentase_terisi < 100) {
+        //     session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
+        //     return redirect()->back()->withInput();
+        // }
         // Check apakah prodi asal dan prodi tujuan sama
         $auditorProdi = $this->request->getPost('id_auditor');
         if ($auditorProdi == $prodiId) {
