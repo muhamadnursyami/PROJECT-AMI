@@ -50,8 +50,6 @@ class PenugasanAuditor extends Migration
         $this->forge->addForeignKey('id_prodi', 'prodi', 'id', 'CASCADE', 'CASCADE', 'fk_penugasanAuditor_prodi');
         $this->forge->addForeignKey('id_periode', 'periode', 'id', 'CASCADE', 'CASCADE', 'fk_penugasanAuditor_periode');
         $this->forge->createTable('penugasan_auditor');
-
-
     }
 
     public function down()

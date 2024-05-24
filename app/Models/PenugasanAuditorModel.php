@@ -4,18 +4,19 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ProdiModel extends Model
+class PenugasanAuditorModel extends Model
 {
-    protected $table            = 'prodi';
+    protected $table            = 'penugasan_auditor';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'uuid',
-        'nama',
-        'fakultas',
+        "id_auditor",
+        "id_prodi",
+        "id_periode",
+        "uuid",
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -47,19 +48,4 @@ class ProdiModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function getProdiNameById($prodiId)
-    {
-        // Dapatkan nama prodi berdasarkan ID prodi
-        $query = $this->select('nama')
-            ->where('id', $prodiId)
-            ->get();
-
-        // Periksa apakah query berhasil
-        if ($query->getResult()) {
-            return $query->getRow()->nama;
-        } else {
-            return null;
-        }
-    }
 }

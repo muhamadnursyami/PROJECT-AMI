@@ -4,18 +4,21 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ProdiModel extends Model
+class JadwalAMIModel extends Model
 {
-    protected $table            = 'prodi';
+
+    protected $table            = 'jadwal_ami';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'uuid',
-        'nama',
-        'fakultas',
+        "uuid",
+        "tanggal_mulai",
+        "tanggal_selesai",
+        "deskripsi",
+
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -48,18 +51,13 @@ class ProdiModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getProdiNameById($prodiId)
-    {
-        // Dapatkan nama prodi berdasarkan ID prodi
-        $query = $this->select('nama')
-            ->where('id', $prodiId)
-            ->get();
 
-        // Periksa apakah query berhasil
-        if ($query->getResult()) {
-            return $query->getRow()->nama;
-        } else {
-            return null;
+    public  function getJadwalAMI($uuid = false)
+    {
+        if ($uuid == false) {
+            return $this->findAll();
         }
+
+        return $this->where('uuid', $uuid)->first();
     }
 }

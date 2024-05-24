@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\KriteriaProdiModel;
 use App\Models\PerubahanKriteriaModel;
 use App\Models\UserModel;
+use App\Models\JadwalPeriodeEDModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class FormEDController extends BaseController
@@ -14,11 +15,13 @@ class FormEDController extends BaseController
     private $kriteriaProdi;
     private $users;
     private $perubahanKriteria;
+    private $jadwal_periode_ED_Model;
     public function __construct()
     {
         $this->kriteriaProdi = new KriteriaProdiModel();
         $this->users = new UserModel();
         $this->perubahanKriteria = new PerubahanKriteriaModel();
+        $this->jadwal_periode_ED_Model = new JadwalPeriodeEDModel();
     }
 
     public function create()
@@ -60,17 +63,33 @@ class FormEDController extends BaseController
             if ($total != 0) {
 
                 $persentase_terisi = ($capaian / $total) * 100;
-            }else {
+            } else {
                 $persentase_terisi = 100;
             }
 
+
+            $jadwalPeriodeED = $this->jadwal_periode_ED_Model->first();
+            $tanggalSelesai = $jadwalPeriodeED['tanggal_selesai'];
+            // Mengonversi tanggal selesai ke format yang dapat dibandingkan
+            $tanggalSelesaiTimestamp = strtotime($tanggalSelesai);
+            $tanggalSekarangTimestamp = time();
+
+            // Jika tanggal selesai sudah lewat, kunci form
+            $formTerkunci = false;
+            if ($tanggalSelesaiTimestamp < $tanggalSekarangTimestamp) {
+                $formTerkunci = true;
+            }
+
+            // dd($formTerkunci);
 
             $data = [
                 'title' => 'Isi Form ED',
                 'currentPage' => 'form-ed',
                 'form_ed' => $form_ed,
                 'persentase' => $persentase_terisi,
-                'prodi' => $form_ed[0]['nama']
+                'prodi' => $form_ed[0]['nama'],
+                'formTerkunci' => $formTerkunci
+
 
             ];
             return view('auditi/formed/create', $data);
@@ -140,7 +159,7 @@ class FormEDController extends BaseController
         if ($total != 0) {
 
             $persentase_terisi = ($capaian / $total) * 100;
-        }else {
+        } else {
             $persentase_terisi = 100;
         }
 
@@ -185,7 +204,7 @@ class FormEDController extends BaseController
             if ($total != 0) {
 
                 $persentase_terisi = ($capaian / $total) * 100;
-            }else {
+            } else {
                 $persentase_terisi = 100;
             }
 
@@ -264,7 +283,7 @@ class FormEDController extends BaseController
         if ($total != 0) {
 
             $persentase_terisi = ($capaian / $total) * 100;
-        }else {
+        } else {
             $persentase_terisi = 100;
         }
 

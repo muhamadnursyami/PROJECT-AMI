@@ -51,4 +51,40 @@ class KriteriaProdiModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function checkEdCompletion($prodiId)
+    {
+        $completed = $this->getEdProgress($prodiId);
+        // dd($completed);
+        if ($completed === 100) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getEdProgress($prodiId)
+    {
+        $query = $this->db->query("
+        SELECT 
+            IFNULL(SUM(CASE WHEN capaian IS NOT NULL AND capaian != '' THEN bobot ELSE 0 END), 0) AS completed_weight,
+            IFNULL(SUM(bobot), 0) AS total_weight
+        FROM kriteria_prodi
+        JOIN kriteria ON kriteria.id = kriteria_prodi.id_kriteria
+        JOIN kriteria_standar ON kriteria.id_kriteria_standar = kriteria_standar.id
+        WHERE kriteria_prodi.id_prodi = ?
+          AND kriteria_standar.is_aktif = 1
+    ", [$prodiId]);
+
+        $result = $query->getRow();
+
+        if ($result) {
+            if ($result->total_weight > 0) {
+                return ($result->completed_weight / $result->total_weight) * 100;
+            }
+        }
+
+        // Jika tidak ada data atau total weight adalah 0, maka persentase dianggap 0
+        return 0;
+    }
 }

@@ -12,11 +12,12 @@
                 <div class="card-body">
                     <?php if (session('validation')) { ?>
                         <div class="alert bg-danger" role="alert">
-                            <ul>
-                                <?php foreach (session('validation')->getErrors() as $error) : ?>
-                                    <li><?= esc($error) ?></li>
-                                <?php endforeach ?>
-                            </ul>
+
+                            <?php foreach (session('validation')->getErrors() as $error) : ?>
+                                <?= esc($error) ?>
+                                <br>
+                            <?php endforeach ?>
+
                         </div>
                     <?php } ?>
                     <?php if (!empty(session()->getFlashdata('sukses'))) : ?>

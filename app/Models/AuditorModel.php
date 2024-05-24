@@ -50,4 +50,16 @@ class AuditorModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public function getProdiIdByAuditorId($auditorId)
+    {
+        // Query untuk mengambil id_prodi berdasarkan id_auditor
+        $query = $this->select('id_prodi')
+            ->where('id', $auditorId)
+            ->get();
+
+        // Mengembalikan hasil query
+        return $query->getRow('id_prodi');
+    }
 }

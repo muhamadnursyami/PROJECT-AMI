@@ -33,7 +33,6 @@
             <div class="iq-sidebar-logo d-flex align-items-center border-bottom">
                 <a href="../backend/index.html" class="header-logo ml-2">
                     <img src="<?= base_url('assets/images/logo-umrah.png') ?>" alt="logo">
-                    <!-- <h3 class="logo-title light-logo">Webkit</h3> -->
                 </a>
                 <div class="iq-menu-bt-sidebar ml-0">
                     <i class="las la-bars wrapper-menu"></i>
@@ -53,91 +52,14 @@
 
                             </a>
                         </li>
-                        <li <?= ($currentPage == 'onstrumen-audit') ? 'class="active"' : ''; ?>>
-                            <a href="../backend/page-employee.html" class="svg-icon">
-                                <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                                <small class="ml-4">Insturmen Audit</small>
-                            </a>
-                        </li>
                         <li <?= ($currentPage == 'lihat-form-ed') ? 'class="active"' : ''; ?>>
                             <a href="/auditor/form-ed/view" class="svg-icon">
-                                <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="25" height="25">
+                                    <path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path>
                                 </svg>
                                 <small class="ml-4">Lihat Form ED</small>
                             </a>
                         </li>
-
-                        <li class=" ">
-                            <a href="#otherpage" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <svg class="svg-icon" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                                <small class="ml-4">Daftar Temuan</small>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="otherpage" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class=" ">
-                                    <a href="#user" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                        <svg class="svg-icon" id="p-dash10" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="8.5" cy="7" r="4"></circle>
-                                            <polyline points="17 11 19 13 23 9"></polyline>
-                                        </svg>
-                                        <small class="ml-4">Detail Temuan</small>
-                                        <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                        <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                    </a>
-                                    <ul id="user" class="iq-submenu collapse" data-parent="#otherpage">
-                                        <li class="">
-                                            <a href="../app/user-profile.html">
-                                                <i class="las la-minus"></i><small>User Profile</small>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="../app/user-add.html">
-                                                <i class="las la-minus"></i><small>User Add</small>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="<?= base_url('app/user-list.html') ?>">
-                                                <i class="las la-minus"></i><small>User List</small>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="">
-                                    <a href="../backend/pages-invoice.html" class="svg-icon">
-                                        <svg class="svg-icon" id="p-dash07" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                            <polyline points="14 2 14 8 20 8"></polyline>
-                                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                                            <polyline points="10 9 9 9 8 9"></polyline>
-                                        </svg>
-                                        <small class="ml-4">Detail Temuan</small>
-                                    </a>
-                                </li>
-
-
-                            </ul>
-                        </li>
-
-                        <li class="">
-                            <a href="../backend/page-employee.html" class="svg-icon">
-                                <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                                <small class="ml-4">Cetak Laporan</small>
-                            </a>
-                        </li>
-
-
                     </ul>
                 </nav>
                 <div class="pt-5 pb-2"></div>

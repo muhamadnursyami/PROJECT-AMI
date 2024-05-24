@@ -20,6 +20,7 @@ class UserModel extends Model
         "name",
         "password",
         "role",
+        "id_prodi"
 
     ];
 

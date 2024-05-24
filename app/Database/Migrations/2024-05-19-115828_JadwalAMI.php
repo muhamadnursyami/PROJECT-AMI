@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class JadwalEd extends Migration
+class JadwalAMI extends Migration
 {
     public function up()
     {
@@ -13,22 +13,18 @@ class JadwalEd extends Migration
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
-                'auto_increment' => true
+                'auto_increment' => true,
             ],
             'uuid' => [
                 'type' => 'VARCHAR',
                 'constraint' => 40,
                 'unique' => true,
             ],
-            'id_jadwal_periode_ed' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
+            'tanggal_mulai' => [
+                'type' => 'Date'
             ],
-            'id_user' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
+            'tanggal_selesai' => [
+                'type' => 'Date'
             ],
             'deskripsi' => [
                 'type' => 'TEXT',
@@ -41,17 +37,15 @@ class JadwalEd extends Migration
             'updated_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
-            ],
+            ]
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_jadwal_periode_ed', 'jadwal_periode_ed', 'id', 'CASCADE', 'CASCADE', 'fk_formED_jadwalPeriodeED');
-        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE', 'fk_formED_usersAuditor');
-        $this->forge->createTable('jadwal_ed');
+        $this->forge->createTable('jadwal_ami');
     }
 
     public function down()
     {
-        $this->forge->dropTable('jadwal_ed');
+        $this->forge->dropTable('jadwal_ami');
     }
 }
