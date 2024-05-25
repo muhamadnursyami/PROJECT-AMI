@@ -4,9 +4,9 @@ namespace App\Controllers\Auditor;
 
 use App\Controllers\BaseController;
 use App\Models\AuditorModel;
-use App\Models\KriteriaModel;
 use App\Models\KriteriaProdiModel;
 use App\Models\PenugasanAuditorModel;
+use App\Models\PeriodeModel;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -17,6 +17,7 @@ class ViewEDAuditorController extends BaseController
     private $auditor;
     private $penugasanAuditor;
     private $users;
+    private $periode;
 
     public function __construct()
     {
@@ -24,11 +25,24 @@ class ViewEDAuditorController extends BaseController
         $this->auditor = new AuditorModel();
         $this->penugasanAuditor = new PenugasanAuditorModel();
         $this->users = new UserModel();
+        $this->periode = new PeriodeModel();
     }
+
 
     // index
     public function index()
     {
+
+        $jadwalPeriode = $this->periode->first();
+        $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
+        // Mengonversi tanggal selesai ke format yang dapat dibandingkan
+        $tanggalSelesaiTimestamp = strtotime($tanggalSelesai);
+        $tanggalSekarangTimestamp = time();
+        // Jika tanggal selesai sudah lewat, kunci form
+        $formTerkunci = false;
+        if ($tanggalSelesaiTimestamp < $tanggalSekarangTimestamp) {
+            $formTerkunci = true;
+        }
 
         $id_user = session()->get('id');
         $auditor = $this->auditor->where('id_user', $id_user)->first();
@@ -112,6 +126,7 @@ class ViewEDAuditorController extends BaseController
             'nama_auditi' => $dataAuditi,
             'persentase_terisi' => $persentase_terisi,
             'uuid_prodi' => $uuidProdi,
+            'formTerkunci' => $formTerkunci,
         ];
 
         return view('auditor/viewED/index', $data);
@@ -165,9 +180,16 @@ class ViewEDAuditorController extends BaseController
                 $persentase_terisi = 100;
             }
 
-
-
-            // dd($formTerkunci);
+            $jadwalPeriode = $this->periode->first();
+            $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
+            // Mengonversi tanggal selesai ke format yang dapat dibandingkan
+            $tanggalSelesaiTimestamp = strtotime($tanggalSelesai);
+            $tanggalSekarangTimestamp = time();
+            // Jika tanggal selesai sudah lewat, kunci form
+            $formTerkunci = false;
+            if ($tanggalSelesaiTimestamp < $tanggalSekarangTimestamp) {
+                $formTerkunci = true;
+            }
 
             $data = [
                 'title' => 'Isi Form ED',
@@ -176,7 +198,7 @@ class ViewEDAuditorController extends BaseController
                 'persentase' => $persentase_terisi,
                 'prodi' => $form_ed[0]['nama'],
                 'uuid' => $uuid2,
-
+                'formTerkunci' => $formTerkunci,
             ];
             return view('auditor/viewED/create', $data);
         }
@@ -187,7 +209,7 @@ class ViewEDAuditorController extends BaseController
     public function createPost($uuid2)
     {
 
-        
+
         foreach ($this->request->getVar() as $key => $value) {
             if ($key == "csrf_test_name" || $key == "datatable_length") {
                 continue;

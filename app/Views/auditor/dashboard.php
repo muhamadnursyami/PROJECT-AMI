@@ -2,6 +2,7 @@
 
 <?= $this->section('content') ?>
 
+
 <h4 class="mb-5">Selamat Datang di Dashboard Auditor</h4>
 
 
@@ -13,6 +14,16 @@
         </button>
     </div>
 <?php endif ?>
+<?php if ($waktu < 4 and $waktu > 0) : ?>
+    <div class="alert bg-warning" role="alert">
+        <div class="iq-alert-text"> Waktu Pelaksanaan AMI tersisa <?= $waktu; ?> hari lagi.</small></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+<?php endif ?>
+
+
 <h5 class="mt-3">Ini di Prodi : <?= $prodi["nama"] ?></h5>
 <div class="row">
     <div class="col-lg-12">
