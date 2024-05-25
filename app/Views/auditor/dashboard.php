@@ -24,7 +24,7 @@
 <?php endif ?>
 
 
-<h5 class="mt-3">Ini di Prodi : <?= $prodi["nama"] ?></h5>
+<h5 class="mt-3 text-danger">Prodi Asal : <?= $prodi["nama"] ?></h5>
 <div class="row">
     <div class="col-lg-12">
         <?php if (!empty($jadwalPeriodeED)) : ?>

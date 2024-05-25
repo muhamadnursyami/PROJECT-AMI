@@ -57,6 +57,14 @@
                         <div class="row mb-5 text-start">
                             <input type="hidden" name="id_auditor" id="id_auditor">
                             <div class="col-12">
+                                <label for="ketua" class="h6">Apakah Auditor yang dipilih sebagai Ketua?</label>
+                                <select class="form-control mb-3" name="ketua" id="ketua" required>
+                                    <option value="">Pilih Ketua</option>
+                                    <option value="1">Iya</option>
+                                    <option value="0">Tidak</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
                                 <label for="prodi" class="h6">Prodi Tujuan</label>
                                 <select class="form-control mb-3" name="prodi" id="prodi" required>
                                     <option value="">Pilih Prodi </option>

@@ -17,6 +17,7 @@ class PenugasanAuditorModel extends Model
         "id_prodi",
         "id_periode",
         "uuid",
+        "ketua"
     ];
 
     protected bool $allowEmptyInserts = false;

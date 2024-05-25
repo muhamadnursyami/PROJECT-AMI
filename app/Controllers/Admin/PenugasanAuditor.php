@@ -32,13 +32,16 @@ class PenugasanAuditor extends BaseController
     public function index()
     {
         $penugasanAuditor = $this->penugasanAuditor
-            ->select('penugasan_auditor.uuid as uuid, auditor.nama as nama, prodi_tujuan.nama as prodi_tujuan, prodi_asal.nama as prodi_asal, periode.tanggal_mulai, periode.tanggal_selesai')
+            ->select('penugasan_auditor.uuid as uuid, penugasan_auditor.ketua as ketua ,auditor.nama as nama, prodi_tujuan.nama as prodi_tujuan, prodi_asal.nama as prodi_asal, periode.tanggal_mulai, periode.tanggal_selesai')
             ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
             ->join('prodi as prodi_tujuan', 'prodi_tujuan.id = penugasan_auditor.id_prodi')
             ->join('auditor as a2', 'a2.id = penugasan_auditor.id_auditor')
             ->join('prodi as prodi_asal', 'prodi_asal.id = a2.id_prodi')
             ->join('periode', 'periode.id = penugasan_auditor.id_periode')
             ->findAll();
+
+
+        // dd($penugasanAuditor);
         $data = [
             'title' => 'Penugasan Auditor',
             'currentPage' => 'penugasanAuditor',
@@ -81,7 +84,8 @@ class PenugasanAuditor extends BaseController
         // Validasi input auditor dan prodi
         $validationRules = [
             'id_auditor' => 'required',
-            'prodi' => 'required'
+            'prodi' => 'required',
+            'ketua' => 'required'
         ];
 
         if (!$this->validate($validationRules)) {
@@ -141,7 +145,6 @@ class PenugasanAuditor extends BaseController
 
             $persentase_terisi = 100;
         }
-        
         // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
         if ($persentase_terisi < 100) {
             session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
@@ -162,12 +165,12 @@ class PenugasanAuditor extends BaseController
         }
         // Lanjutkan dengan penyimpanan data penugasan auditor jika kriteria prodi telah diisi
         $periode = $this->periode_Model->select('id')->first();
-
         // dd($this->request->getPost('id_auditor'));
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
             'id_auditor' => $this->request->getPost('id_auditor'),
             'id_prodi' => $prodiId,
+            'ketua' => $this->request->getPost('ketua'),
             'id_periode' => $periode['id'] // Pastikan ini sudah sesuai dengan struktur tabel Anda
         ];
 

@@ -138,8 +138,8 @@ class ViewEDAuditorController extends BaseController
         $uuid = session()->get('uuid');
         $user = $this->users->where('uuid', $uuid)->first();
         $auditor = $this->auditor->where('id_user', $user['id'])->first();
+        $penugasan_auditor = $this->penugasanAuditor->where('id_auditor', $auditor['id'])->first();
 
-        // dd($auditor);
 
 
         // dd($user);
@@ -199,6 +199,7 @@ class ViewEDAuditorController extends BaseController
                 'prodi' => $form_ed[0]['nama'],
                 'uuid' => $uuid2,
                 'formTerkunci' => $formTerkunci,
+                'penugasanAuditor' => $penugasan_auditor
             ];
             return view('auditor/viewED/create', $data);
         }
