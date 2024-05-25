@@ -77,6 +77,7 @@ class PenugasanAuditor extends BaseController
 
     public function save()
     {
+
         // Validasi input auditor dan prodi
         $validationRules = [
             'id_auditor' => 'required',
@@ -119,38 +120,32 @@ class PenugasanAuditor extends BaseController
 
         $i = 0;
         // progress capaian per masing-masing prodi
-        foreach ($dataProdi as $key => $value) {
 
-            // pake nama prodi
-            $capaian[$i] = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-                ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-                ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-                ->where('akar_penyebab IS NOT null')
-                ->where('tautan_bukti IS NOT null')
-                ->where('kriteria_standar.is_aktif', 1)
-                ->where('prodi.nama', $value)->findAll());
-            $total[$i] = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-                ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-                ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-                ->where('kriteria_standar.is_aktif', 1)
-                ->where('prodi.nama', "$value")->findAll());
+        // pake nama prodi
+        $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+            ->where('akar_penyebab IS NOT null')
+            ->where('tautan_bukti IS NOT null')
+            ->where('kriteria_standar.is_aktif', 1)
+            ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
+        $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+            ->where('kriteria_standar.is_aktif', 1)
+            ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
 
-            if ($total[$i] != 0) {
-                $persentase_terisi[$i] = ($capaian[$i] / $total[$i]) * 100;
-            } else {
+        if ($total != 0) {
+            $persentase_terisi = ($capaian / $total) * 100;
+        } else {
 
-                $persentase_terisi[$i] = 100;
-            }
-
-            $i++;
+            $persentase_terisi = 100;
         }
         
-        foreach ($persentase_terisi as $key => $value) {
-            // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
-            if ($value < 100) {
-                session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
-                return redirect()->back()->withInput();
-            }
+        // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
+        if ($persentase_terisi < 100) {
+            session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
+            return redirect()->back()->withInput();
         }
         // 
 
