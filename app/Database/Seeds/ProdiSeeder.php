@@ -26,11 +26,6 @@ class ProdiSeeder extends Seeder
             ],
             [
                 'uuid' => service('uuid')->uuid4()->toString(),
-                'nama' => 'Teknik Informatika',
-                'fakultas' => 'Teknik dan Teknologi Kemaritiman'
-            ],
-            [
-                'uuid' => service('uuid')->uuid4()->toString(),
                 'nama' => 'Pendidikan Bahasa dan Sastra Indonesia',
                 'fakultas' => 'Keguruan dan Ilmu Pendidikan',
             ],

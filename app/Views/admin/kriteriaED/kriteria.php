@@ -35,6 +35,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Standar</th>
+                                    <th scope="col">Kode Kriteria</th>
                                     <th scope="col">Kriteria</th>
                                     <th scope="col">bobot</th>
                                     <th scope="col">Nama Prodi</th>
@@ -47,6 +48,7 @@
                                     <tr>
                                         <th scope="row"><?= $no; ?></th>
                                         <td><?= $value['standar']; ?></td>
+                                        <td><?= $value['kode_kriteria']; ?></td>
                                         <td><?= $value['kriteria']; ?></td>
                                         <td><?= $value['bobot']; ?></td>
                                         <td><?= $value['nama_prodi']; ?></td>

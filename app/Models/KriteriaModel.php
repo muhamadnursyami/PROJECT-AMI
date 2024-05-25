@@ -19,6 +19,7 @@ class KriteriaModel extends Model
         'kriteria',
         'bobot',
         'id_kriteria_standar',
+        'kode_kriteria'
     ];
 
     protected bool $allowEmptyInserts = false;

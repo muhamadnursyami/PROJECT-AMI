@@ -8,7 +8,7 @@ class Kriteria extends Migration
 {
     public function up()
     {
-        
+
         $this->forge->addField([
             'id' => [
                 'type' => 'INT',
@@ -40,6 +40,10 @@ class Kriteria extends Migration
                 'type' => 'TEXT',
                 'null' => true,
             ],
+            'kode_kriteria' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
             'bobot' => [
                 'type' => 'FLOAT',
             ],
@@ -58,7 +62,6 @@ class Kriteria extends Migration
         $this->forge->addForeignKey('id_prodi', 'prodi', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_prodi');
         $this->forge->addForeignKey('id_lembaga_akreditasi', 'lembaga_akreditasi', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_lembaga_akreditasi');
         $this->forge->createTable('kriteria');
-
     }
 
     public function down()
