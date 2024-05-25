@@ -21,11 +21,21 @@ class Dashboard extends BaseController
 
         $jadwalPeriodeED = $this->jadwal_periode_ED_Model->getJadwalPeriodeED();
         $periode = $this->periode_Model->getPeriode();
+
+
+        // buat warning jika dekat masa waktu
+        $sekarang = time();
+        $tanggal_selesai = strtotime($jadwalPeriodeED[0]['tanggal_selesai']);
+
+        $selisih_detik = $tanggal_selesai - $sekarang;
+        $selisih_hari = floor($selisih_detik / (60 * 60 * 24)) + 1;
+
         $data = [
             'title' => 'Dashboard',
             'currentPage' => 'dashboard',
             'jadwalPeriodeED' => $jadwalPeriodeED,
-            'jadwalAMI' => $periode
+            'jadwalAMI' => $periode,
+            'waktu' => $selisih_hari,
 
         ];
         return view('auditi/dashboard', $data);

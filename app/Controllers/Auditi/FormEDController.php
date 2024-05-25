@@ -30,6 +30,8 @@ class FormEDController extends BaseController
         $uuid = session()->get('uuid');
         $user = $this->users->where('uuid', $uuid)->first();
 
+
+
         if (is_null($user['id_prodi'])) {
             return redirect()->to('auditi/dashboard')->with('gagal', 'Akun anda belum memiliki prodi, silahkan hubungi admin');
         } else {
@@ -80,9 +82,6 @@ class FormEDController extends BaseController
             if ($tanggalSelesaiTimestamp < $tanggalSekarangTimestamp) {
                 $formTerkunci = true;
             }
-            
-
-            // dd($formTerkunci);
 
             $data = [
                 'title' => 'Isi Form ED',
@@ -106,7 +105,7 @@ class FormEDController extends BaseController
         $user = $this->users->where('uuid', $uuid)->first();
 
 
-        
+
         // dd($this->request->getVar());
         foreach ($this->request->getVar() as $key => $value) {
             if ($key == "csrf_test_name" || $key == "datatable_length") {

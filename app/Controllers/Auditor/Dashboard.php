@@ -30,6 +30,17 @@ class Dashboard extends BaseController
         $auditor = $this->auditor->where('id_user', $id_user)->first();
         $prodi = $this->prodi->where('id', $auditor['id_prodi'])->first();
         $jadwalPeriodeED = $this->jadwal_periode_ED_Model->getJadwalPeriodeED();
+        
+        // buat warning jika dekat masa waktu
+        // tanggal selesai
+        $tanggal_string = $this->periode_Model->getPeriode();
+        
+        $sekarang = time();
+        $tanggal_selesai = strtotime($tanggal_string[0]['tanggal_selesai']);
+        
+        $selisih_detik = $tanggal_selesai - $sekarang;
+        $selisih_hari = floor($selisih_detik / (60 * 60 * 24)) + 1;
+
 
         $periode = $this->periode_Model->getPeriode();
         $data = [
@@ -37,7 +48,8 @@ class Dashboard extends BaseController
             'currentPage' => 'dashboard',
             'prodi' => $prodi,
             'jadwalPeriodeED' => $jadwalPeriodeED,
-            'jadwalAMI' => $periode
+            'jadwalAMI' => $periode,
+            'waktu' => $selisih_hari,
 
         ];
         return view('auditor/dashboard', $data);
