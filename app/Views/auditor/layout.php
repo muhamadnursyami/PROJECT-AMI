@@ -31,7 +31,7 @@
 
         <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center border-bottom">
-                <a href="../backend/index.html" class="header-logo ml-2">
+                <a href="/auditor/dashboard" class="header-logo ml-2">
                     <img src="<?= base_url('assets/images/logo-umrah.png') ?>" alt="logo">
                 </a>
                 <div class="iq-menu-bt-sidebar ml-0">
@@ -60,6 +60,24 @@
                                 <small class="ml-4">Lihat Form ED</small>
                             </a>
                         </li>
+                        <li <?= ($currentPage == 'form-1') ? 'class="active"' : ''; ?>>
+                            <a href="/auditor/form-1" class="svg-icon">
+                                <svg class="svg-icon" id="p-dash13" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                </svg>
+                                <small class="ml-4">Form 1</small>
+                            </a>
+                        </li>
+                        <li <?= ($currentPage == 'form-3') ? 'class="active"' : ''; ?>>
+                            <a href="/auditor/form-3" class="svg-icon">
+                                <svg class="svg-icon" id="p-dash13" width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                </svg>
+                                <small class="ml-4">Form 3</small>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div class="pt-5 pb-2"></div>
@@ -76,7 +94,7 @@
                         </a>
                     </div>
                     <div class="navbar-breadcrumb">
-                        <h5>Dashboard</h5>
+
                     </div>
                     <div class="d-flex align-items-center">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">

@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
 
 
-<h4 class="mb-5">Selamat Datang di Dashboard Auditor</h4>
+<h4 class="mb-5">Selamat Datang di Dashboard Auditor dari Prodi <?= $prodi["nama"] ?></h4>
 
 
 <?php if (!empty(session()->getFlashdata('gagal'))) : ?>
@@ -23,8 +23,6 @@
     </div>
 <?php endif ?>
 
-
-<h5 class="mt-3">Ini di Prodi : <?= $prodi["nama"] ?></h5>
 <div class="row">
     <div class="col-lg-12">
         <?php if (!empty($jadwalPeriodeED)) : ?>

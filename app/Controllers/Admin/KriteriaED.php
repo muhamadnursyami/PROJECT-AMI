@@ -33,18 +33,18 @@ class KriteriaED extends BaseController
         $this->perubahanKriteria = new PerubahanKriteriaModel();
         $this->kriteriaStandar = new KriteriaStandarModel();
         $this->prodi = new ProdiModel();
-
     }
 
     // kriteria
     // method crud (create (get & post), read, update(get & post), delete)
 
     // read criteria
-    public function index(){
+    public function index()
+    {
 
-        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,lembaga_akreditasi.nama as lembaga_akreditasi, kriteria, bobot, prodi.nama as nama_prodi, standar')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('prodi', 'prodi.id = kriteria.id_prodi')->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')->findAll();
+        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,kriteria.kode_kriteria ,lembaga_akreditasi.nama as lembaga_akreditasi, kriteria, bobot, prodi.nama as nama_prodi, standar')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('prodi', 'prodi.id = kriteria.id_prodi')->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')->findAll();
         // dd($kriteria);
-        
+
         $data = [
             'title' => 'Kelola kriteria ED',
             'currentPage' => 'kriteria-ed',
@@ -52,7 +52,6 @@ class KriteriaED extends BaseController
         ];
 
         return view('admin/kriteriaED/kriteria', $data);
-
     }
 
 
@@ -63,7 +62,7 @@ class KriteriaED extends BaseController
         $prodi = $this->prodi->findAll();
         $lembaga_akreditasi = $this->lembaga_akreditasi->findAll();
         $kriteriaStandar = $this->kriteriaStandar->findAll();
-        
+
         $data = [
             'title' => 'Tambah Kriteria ED',
             'currentPage' => 'kriteria-ed',
@@ -105,6 +104,12 @@ class KriteriaED extends BaseController
                     'required' => '{field} Harus diisi'
                 ],
             ],
+            'kode_kriteria' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ],
+            ],
             'bobot' => [
                 'rules' => 'required|numeric',
                 'errors' => [
@@ -123,10 +128,11 @@ class KriteriaED extends BaseController
             'id_prodi' => $this->request->getPost('id_prodi'),
             'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
             "kriteria" => $this->request->getPost('kriteria'),
+            "kode_kriteria" => $this->request->getPost('kode_kriteria'),
             'bobot' => $this->request->getPost('bobot'),
             'id_kriteria_standar' => $this->request->getPost('standar'),
         ];
-        
+
 
         $this->kriteria->insert($data);
 
@@ -158,7 +164,7 @@ class KriteriaED extends BaseController
     public function update($uuid)
     {
 
-        $kriteria = $this->kriteria->select('kriteria.uuid as uuid ,lembaga_akreditasi.nama as lembaga_akreditasi, lembaga_akreditasi.id as id_lembaga_akreditasi ,prodi.nama as nama_prodi, prodi.id as id_prodi, bobot, kriteria, standar, kriteria_standar.id as id_standar')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('prodi', 'prodi.id = kriteria.id_prodi')->join('kriteria_prodi', 'kriteria_prodi.id_kriteria = kriteria.id')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('kriteria.uuid', $uuid)->first();
+        $kriteria = $this->kriteria->select('kriteria.uuid as uuid , kriteria.kode_kriteria ,lembaga_akreditasi.nama as lembaga_akreditasi, lembaga_akreditasi.id as id_lembaga_akreditasi ,prodi.nama as nama_prodi, prodi.id as id_prodi, bobot, kriteria, standar, kriteria_standar.id as id_standar')->join('lembaga_akreditasi', 'lembaga_akreditasi.id = kriteria.id_lembaga_akreditasi')->join('prodi', 'prodi.id = kriteria.id_prodi')->join('kriteria_prodi', 'kriteria_prodi.id_kriteria = kriteria.id')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('kriteria.uuid', $uuid)->first();
         $prodi = $this->prodi->findAll();
         $lembaga_akreditasi = $this->lembaga_akreditasi->findAll();
         $kriteriaStandar = $this->kriteriaStandar->findAll();
@@ -169,7 +175,7 @@ class KriteriaED extends BaseController
             'currentPage' => 'kriteria-ed',
             'kriteria' => $kriteria,
             'prodi' => $prodi,
-            'kriteria_standar' => $kriteriaStandar, 
+            'kriteria_standar' => $kriteriaStandar,
             'lembaga_akreditasi' => $lembaga_akreditasi,
             'uuid' => $uuid,
         ];
@@ -179,7 +185,7 @@ class KriteriaED extends BaseController
 
     // update kriteria post
     public function updatePost($uuid)
-    {   
+    {
 
         if (!$this->validate([
             'standar' => [
@@ -206,6 +212,12 @@ class KriteriaED extends BaseController
                     'required' => '{field} Harus diisi'
                 ],
             ],
+            'kode_kriteria' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ],
+            ],
             'bobot' => [
                 'rules' => 'required|numeric',
                 'errors' => [
@@ -224,14 +236,15 @@ class KriteriaED extends BaseController
             'id_prodi' => $this->request->getPost('id_prodi'),
             'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
             "kriteria" => $this->request->getPost('kriteria'),
+            "kode_kriteria" => $this->request->getPost('kode_kriteria'),
             'bobot' => $this->request->getPost('bobot'),
             'id_kriteria_standar' => $this->request->getPost('standar'),
         ];
 
-        
+
 
         $this->kriteria->set($data)->where('uuid', $uuid)->update();
-        
+
         $ambilKriteria = $this->kriteria->where('uuid', $uuid)->first();
 
         // update juga data prodi di kriteria prodi semisalnya data di kriteria keubah prodinya

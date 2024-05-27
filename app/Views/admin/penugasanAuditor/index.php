@@ -37,6 +37,7 @@
                                     <th scope="col">Nama Auditor</th>
                                     <th scope="col">Prodi Asal</th>
                                     <th scope="col">Prodi Tujuan</th>
+                                    <th scope="col">Ketua</th>
                                     <th scope="col">Tanggal Mulai</th>
                                     <th scope="col">Tanggal Selesai</th>
                                 </tr>
@@ -49,6 +50,7 @@
                                         <td><?= $value['nama']; ?></td>
                                         <td><?= $value['prodi_asal']; ?></td>
                                         <td><?= $value['prodi_tujuan']; ?></td>
+                                        <td><?= $value['ketua'] == 1 ? 'Ya' : 'Tidak'; ?></td>
                                         <td><?= $value['tanggal_mulai']; ?></td>
                                         <td><?= $value['tanggal_selesai']; ?></td>
                                         <td>
