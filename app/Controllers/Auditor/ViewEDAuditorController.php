@@ -121,7 +121,7 @@ class ViewEDAuditorController extends BaseController
 
         $data = [
             "title" => "Lihat Progress Evaluasi Diri",
-            "currentPage" => "lihat-kriteria-ed",
+            "currentPage" => "lihat-form-ed",
             'nama_prodi' => $dataProdi,
             'nama_auditi' => $dataAuditi,
             'persentase_terisi' => $persentase_terisi,

@@ -9,7 +9,7 @@
                     <div class="header-title">
                         <h4 class="card-title">FORM UPDATE Kelengkapan Dokumen</h4>
                     </div>
-                    <a href="/auditor/form-1" class="text-end btn bg-danger">Kembali</a>
+                    <a href="/auditor/form-1" class="text-end btn bg-warning">Kembali</a>
                 </div>
                 <div class="card-body">
                     <form action="/auditor/form-1/kelengkapan-dokumen/ubah/<?= $uuid ?>" method="POST">

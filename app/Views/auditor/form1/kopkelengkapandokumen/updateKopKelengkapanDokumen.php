@@ -10,7 +10,7 @@
 
                         <h4 class="card-title">FORM Edit Kop Kelengkapan Dokumen</h4>
                     </div>
-                    <a href="/auditor/form-1" class=" text-end btn bg-danger">Kembali</a>
+                    <a href="/auditor/form-1" class=" text-end btn bg-warning">Kembali</a>
                 </div>
                 <div class="card-body">
                     <form action="/auditor/form-1/kop-kelengkapan-dokumen/ubah/<?= $uuid ?>" method="POST">
