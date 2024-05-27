@@ -91,3 +91,18 @@ $routes->post('auditi/form-ed/ubah', 'Auditi\FormEDController::ubahPost');
 $routes->get('auditor/form-ed/view', 'Auditor\ViewEDAuditorController::index');
 $routes->get('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::create/$1');
 $routes->post('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::createPost/$1');
+
+// form-1b
+// kop kelengkapan dokumen
+$routes->get('auditor/form-1', 'Auditor\Form1::index');
+$routes->get('auditor/form-1/kop-kelengkapan-dokumen/(:segment)', 'Auditor\Form1::kopKelengkapanDokumen/$1');
+$routes->post('auditor/form-1/kop-kelengkapan-dokumen/tambah', 'Auditor\Form1::kopKelengkapanDokumenPost');
+$routes->get('auditor/form-1/kop-kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kopkelengkapanDokumenUpdate/$1');
+$routes->post('auditor/form-1/kop-kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kopkelengkapanDokumenUpdatePost/$1');
+$routes->post('auditor/form-1/kop-kelengkapan-dokumen/hapus/(:segment)', 'Auditor\Form1::kopkelengkapanDokumenDelete/$1');
+// kelengkapan dokumen
+$routes->get('auditor/form-1/kelengkapan-dokumen/(:segment)', 'Auditor\Form1::kelengkapanDokumen/$1');
+$routes->post('auditor/form-1/kelengkapan-dokumen/tambah/(:segment)', 'Auditor\Form1::kelengkapanDokumenPost/$1');
+$routes->get('auditor/form-1/kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kelengkapanDokumenUpdate/$1');
+$routes->post('auditor/form-1/kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kelengkapanDokumenUpdatePost/$1');
+$routes->post('auditor/form-1/kelengkapan-dokumen/hapus/(:segment)', 'Auditor\Form1::kelengkapanDokumenDelete/$1');
