@@ -40,6 +40,14 @@
                         <div class="row mb-5 text-start">
                             <input type="hidden" name="id_auditor" id="id_auditor">
                             <div class="col-12">
+                                <label for="ketua" class="h6">Apakah Auditor yang dipilih sebagai Ketua?</label>
+                                <select class="form-control mb-3" name="ketua" id="ketua" required>
+                                    <option value="">Pilih Ketua</option>
+                                    <option value="1" <?php if (isset($penugasanAuditor['ketua']) && $penugasanAuditor['ketua'] == 1) echo 'selected'; ?>>Iya</option>
+                                    <option value="0" <?php if (isset($penugasanAuditor['ketua']) && $penugasanAuditor['ketua'] == 0) echo 'selected'; ?>>Tidak</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
                                 <label for="Prodi" class="h6">Prodi</label>
                                 <select class="form-control mb-3" name="prodi" id="prodi" required>
                                     <option value="<?= $penugasanAuditor['id_prodi'] ?>" selected><?= $penugasanAuditor['prodi'] ?></option>

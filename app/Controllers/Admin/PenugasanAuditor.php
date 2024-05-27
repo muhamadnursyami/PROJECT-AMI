@@ -183,7 +183,7 @@ class PenugasanAuditor extends BaseController
 
     public function update($uuid)
     {
-        $penugasanAuditor = $this->penugasanAuditor->select('penugasan_auditor.uuid as uuid, auditor.id as id_auditor,prodi.id as id_prodi , auditor.nama as nama, prodi.nama as prodi, periode.tanggal_mulai, periode.tanggal_selesai')->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')->join('periode', 'periode.id = penugasan_auditor.id_periode')->where('penugasan_auditor.uuid', $uuid)->first();
+        $penugasanAuditor = $this->penugasanAuditor->select('penugasan_auditor.uuid as uuid, penugasan_auditor.ketua as ketua ,auditor.id as id_auditor,prodi.id as id_prodi , auditor.nama as nama, prodi.nama as prodi, periode.tanggal_mulai, periode.tanggal_selesai')->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')->join('periode', 'periode.id = penugasan_auditor.id_periode')->where('penugasan_auditor.uuid', $uuid)->first();
         $prodi = $this->prodi->findAll();
         $auditor = $this->auditor->findAll();
         $data = [
@@ -205,7 +205,8 @@ class PenugasanAuditor extends BaseController
         // Validasi input auditor dan prodi
         $validationRules = [
             'id_auditor' => 'required',
-            'prodi' => 'required'
+            'prodi' => 'required',
+            'ketua' => 'required'
         ];
 
         if (!$this->validate($validationRules)) {
@@ -214,30 +215,73 @@ class PenugasanAuditor extends BaseController
 
         // Mendapatkan id_prodi dari form
         $prodiId = $this->request->getPost('prodi');
-        // Mendapatkan id auditor dari form
-        $auditorId = $this->request->getPost('id_auditor');
-        // Check apakah kriteria prodi telah diisi
-        $kriteriaProdiModel = new KriteriaProdiModel();
-        $isEdCompleted = $kriteriaProdiModel->checkEdCompletion($prodiId);
 
+        // check yang kubuat
+        $kriteriaProdi = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
+            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+            ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+            ->join('users', 'users.id_prodi = prodi.id')
+            ->findAll();
+        $dataProdi = [];
+        $dataAuditi = [];
+        $uuidProdi = [];
+
+        foreach ($kriteriaProdi as $key => $value) {
+            array_push($dataProdi, $value['nama']);
+            array_push($dataAuditi, $value['nama_user']);
+            array_push($uuidProdi, $value['uuid_prodi']);
+        }
+        $dataAuditi = array_unique($dataAuditi);
+        $dataProdi = array_unique($dataProdi);
+        $uuidProdi = array_unique($uuidProdi);
+
+        $capaian = [];
+        $total = [];
+        $persentase_terisi = [];
+
+        $i = 0;
+        // progress capaian per masing-masing prodi
+
+        // pake nama prodi
+        $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+            ->where('akar_penyebab IS NOT null')
+            ->where('tautan_bukti IS NOT null')
+            ->where('kriteria_standar.is_aktif', 1)
+            ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
+        $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+            ->where('kriteria_standar.is_aktif', 1)
+            ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
+
+        if ($total != 0) {
+            $persentase_terisi = ($capaian / $total) * 100;
+        } else {
+
+            $persentase_terisi = 100;
+        }
         // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
-        if (!$isEdCompleted) {
+        if ($persentase_terisi < 100) {
             session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
             return redirect()->back()->withInput();
         }
-
         // Check apakah prodi asal dan prodi tujuan sama
-
-        $auditorProdi = $this->auditor->find($auditorId)['id_prodi'];
+        $auditorProdi = $this->request->getPost('id_auditor');
         if ($auditorProdi == $prodiId) {
             session()->setFlashdata('warning', 'Prodi asal dan prodi tujuan tidak boleh sama.');
             return redirect()->back()->withInput();
         }
+
         $data = [
             'id_auditor' => $this->request->getPost('id_auditor'),
-            'id_prodi' => $this->request->getPost('prodi'),
+            'id_prodi' => $prodiId,
+            'ketua' => $this->request->getPost('ketua'),
+
         ];
 
+        // dd($data);
         $this->penugasanAuditor->set($data)->where('uuid', $uuid)->update();
         return redirect()->to('/admin/penugasan-auditor')->with('sukses', 'Berhasil mengubah Penugasan Auditor');
     }
