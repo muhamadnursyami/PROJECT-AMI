@@ -58,7 +58,13 @@ class Periode extends BaseController
             'ruang_lingkup' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'ruang lingkup Mulai harus diisi !'
+                    'required' => 'ruang lingkup harus diisi !'
+                ]
+            ],
+            'penjaminan_mutu_audit' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'penjaminan mutu audit harus diisi !'
                 ]
             ],
             'tanggal_mulai' => [
@@ -83,12 +89,12 @@ class Periode extends BaseController
         $uuid = service('uuid');
         $uuid4 = $uuid->uuid4();
         $uuid4String = $uuid4->toString();
-        // dd($this->request->getVar());
         $this->periode_Model->save([
             'uuid' => $uuid4String,
             'nama_periode' => $this->request->getVar('nama_periode'),
             'tahun' => $this->request->getVar('tahun'),
             'ruang_lingkup' => $this->request->getVar('ruang_lingkup'),
+            'penjaminan_mutu_audit' => $this->request->getVar('penjaminan_mutu_audit'),
             'tanggal_mulai' => $this->request->getVar('tanggal_mulai'),
             'tanggal_selesai' => $this->request->getVar('tanggal_selesai'),
 
@@ -140,6 +146,12 @@ class Periode extends BaseController
                     'required' => 'Tanggal Mulai harus diisi !'
                 ]
             ],
+            'penjaminan_mutu_audit' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'penjaminan mutu audit harus diisi !'
+                ]
+            ],
             'tanggal_mulai' => [
                 'rules' => 'required',
                 'errors' => [
@@ -163,6 +175,7 @@ class Periode extends BaseController
             'nama_periode' => $this->request->getVar('nama_periode'),
             'tahun' => $this->request->getVar('tahun'),
             'ruang_lingkup' => $this->request->getVar('ruang_lingkup'),
+            'penjaminan_mutu_audit' => $this->request->getVar('penjaminan_mutu_audit'),
             'tanggal_mulai' => $this->request->getVar('tanggal_mulai'),
             'tanggal_selesai' => $this->request->getVar('tanggal_selesai'),
         ]);

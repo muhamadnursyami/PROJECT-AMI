@@ -38,6 +38,10 @@ class Periode extends Migration
             'tanggal_selesai' => [
                 'type' => 'Date'
             ],
+            'penjaminan_mutu_audit' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
