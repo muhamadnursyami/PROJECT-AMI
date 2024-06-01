@@ -8,6 +8,7 @@ class CatatanAudit extends Migration
 {
     public function up()
     {
+        // Definisi struktur tabel catatan_audit
         $this->forge->addField([
             'id' => [
                 'type' => 'INT',
@@ -27,12 +28,16 @@ class CatatanAudit extends Migration
             ],
             'uuid' => [
                 'type' => 'VARCHAR',
-                'constraint' => 40,
-                'unique' => true, 
+                'constraint' => 100,
+                'unique' => true,
             ],
             'catatan_audit' => [
                 'type' => 'TEXT',
                 'null' => true,
+            ],
+            'label' => [
+                'type' => "ENUM('+', '-')",
+                'null' => false,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -45,15 +50,14 @@ class CatatanAudit extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_kriteria', 'kriteria_prodi', 'id', 'CASCADE', 'CASCADE', 'fk_catatanAudit_kriteriaProdi');
-        $this->forge->addForeignKey('id_penugasan_auditor', 'penugasan_auditor', 'id', 'CASCADE', 'CASCADE', 'fk_catatanAudit_penugasanAuditor');
+        $this->forge->addForeignKey('id_kriteria', 'kriteria_prodi', 'id', 'CASCADE', 'CASCADE', 'fk_catatan_audit_berdasarkan_kriteriaProdi');
+        $this->forge->addForeignKey('id_penugasan_auditor', 'penugasan_auditor', 'id', 'CASCADE', 'CASCADE', 'fk_catatan_audit_berdasarkan_penugasanAuditor');
         $this->forge->createTable('catatan_audit');
-
-
     }
 
     public function down()
     {
+
         $this->forge->dropTable('catatan_audit');
     }
 }

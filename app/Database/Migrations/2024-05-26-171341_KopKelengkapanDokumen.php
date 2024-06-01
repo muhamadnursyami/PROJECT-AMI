@@ -4,11 +4,10 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Kriteria extends Migration
+class KopKelengkapanDokumen extends Migration
 {
     public function up()
     {
-
         $this->forge->addField([
             'id' => [
                 'type' => 'INT',
@@ -16,36 +15,40 @@ class Kriteria extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            // 'id_user' => [ // id user ke auditi
-            //     'type' => 'INT',
-            //     'constraint' => 11,
-            //     'unsigned' => true,
-            // ],
-            'id_prodi' => [
+            'id_penugasan_auditor' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
-            ],
-            'id_lembaga_akreditasi' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
+                'null' => true,
             ],
             'uuid' => [
                 'type' => 'VARCHAR',
                 'constraint' => 40,
                 'unique' => true,
             ],
-            'kriteria' => [
+            'lokasi' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
-            'kode_kriteria' => [
+            'ruang_lingkup' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
-            'bobot' => [
-                'type' => 'FLOAT',
+            'tanggal_audit' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
+            'wakil_auditi' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
+            'auditor_ketua' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
+            'auditor_anggota' => [
+                'type' => 'TEXT',
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -58,14 +61,11 @@ class Kriteria extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        // $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_users');
-        $this->forge->addForeignKey('id_prodi', 'prodi', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_prodi');
-        $this->forge->addForeignKey('id_lembaga_akreditasi', 'lembaga_akreditasi', 'id', 'CASCADE', 'CASCADE', 'fk_kriteria_lembaga_akreditasi');
-        $this->forge->createTable('kriteria');
+        $this->forge->addForeignKey('id_penugasan_auditor', 'penugasan_auditor', 'id', 'CASCADE', 'CASCADE', 'fk_kop_kelengkapan_dokumen_berdasarkan_penugasanAuditor');
+        $this->forge->createTable('kop_kelengkapan_dokumen');
     }
-
     public function down()
     {
-        $this->forge->dropTable('kriteria');
+        $this->forge->dropTable('kop_kelengkapan_dokumen');
     }
 }

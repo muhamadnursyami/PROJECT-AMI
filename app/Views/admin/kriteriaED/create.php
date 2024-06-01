@@ -32,7 +32,8 @@
                         <?= csrf_field() ?>
                         <div class="row mb-5 text-start">
 
-                            <div class="col-12 col-lg-6">
+                            <div class="col-12 col-lg-4">
+                                <label for="standar" class="h6">Standar</label>
                                 <select class="form-control" name="standar" required>
                                     <option value="">Pilih Standar</option>
                                     <?php foreach ($kriteria_standar as $key) { ?>
@@ -41,7 +42,8 @@
                                 </select>
                                 <small class="ms-5">Tidak ada standar? <a href="/admin/kriteria-ed/tambah/standar">Klik disini</a> Untuk menambah standar</small>
                             </div>
-                            <div class="col-12 col-lg-6">
+                            <div class="col-12 col-lg-4">
+                                <label for="id_prodi" class="h6">Jurusan</label>
                                 <select class="form-control mb-3" name="id_prodi" required>
                                     <option value="">Pilih jurusan</option>
                                     <?php foreach ($prodi as $key) { ?>
@@ -49,16 +51,17 @@
                                     <?php } ?>
                                 </select>
                             </div>
+                            <div class="col-12 col-lg-4">
+                                <label for="kode_kriteria" class="h6">Kode Kriteria </label>
+                                <input type="text" class="form-control" id="kode_kriteria" name="kode_kriteria" value="<?= old('kode_kriteria'); ?>">
+                            </div>
+
                             <div class="col-12 mt-3">
-                                <label for="kriteria" class="h6"> Kriteria :</label>
+                                <label for="kriteria" class="h6">Kriteria </label>
                                 <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= old('kriteria'); ?></textarea>
                             </div>
-                            <div class="col-12 col-lg-6 mt-auto">
-                                <label for="bobot" class="h6">Bobot</label>
-                                <input type="text" class="form-control" id="bobot" name="bobot" value="<?= old('bobot'); ?>">
-                                <small></small>
-                            </div>
-                            <div class="col-12 col-lg-6 mt-auto">
+                            <div class="col-12 col-lg-6 mt-3">
+                                <label for="lembaga_akreditasi" class="h6">Lembaga Akreditasi </label>
                                 <select class="form-control" name="lembaga_akreditasi" required>
                                     <option value="">Pilih Lembaga Akreditasi</option>
                                     <?php foreach ($lembaga_akreditasi as $key) { ?>
@@ -66,6 +69,12 @@
                                     <?php } ?>
                                 </select>
                             </div>
+                            <div class="col-12 col-lg-6 mt-3">
+                                <label for="bobot" class="h6">Bobot</label>
+                                <input type="text" class="form-control" id="bobot" name="bobot" value="<?= old('bobot'); ?>">
+                                <small></small>
+                            </div>
+
 
                         </div>
 

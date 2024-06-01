@@ -4,21 +4,23 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AuditorModel extends Model
+class KopKelengkapanDokumenModel extends Model
 {
-    protected $table            = 'auditor';
+    protected $table            = 'kop_kelengkapan_dokumen';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        "id_user",
-        "id_prodi",
+        "id_penugasan_auditor",
         "uuid",
-        "kode_auditor",
-        "nama",
-        "akhir_sertifikat",
+        "lokasi",
+        "ruang_lingkup",
+        "tanggal_audit",
+        "wakil_auditi",
+        "auditor_ketua",
+        "auditor_anggota"
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -28,7 +30,7 @@ class AuditorModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -50,27 +52,4 @@ class AuditorModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-
-    public function getProdiIdByAuditorId($auditorId)
-    {
-        // Query untuk mengambil id_prodi berdasarkan id_auditor
-        $query = $this->select('id_prodi')
-            ->where('id', $auditorId)
-            ->get();
-
-        // Mengembalikan hasil query
-        return $query->getRow('id_prodi');
-    }
-
-    public function getAuditorNameById($auditorId)
-    {
-        // Query untuk mengambil nama auditor berdasarkan ID auditor
-        $query = $this->select('nama')
-            ->where('id', $auditorId)
-            ->get();
-
-        // Mengembalikan nama auditor
-        return $query->getRow('nama');
-    }
 }

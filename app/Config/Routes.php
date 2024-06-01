@@ -91,3 +91,31 @@ $routes->post('auditi/form-ed/ubah', 'Auditi\FormEDController::ubahPost');
 $routes->get('auditor/form-ed/view', 'Auditor\ViewEDAuditorController::index');
 $routes->get('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::create/$1');
 $routes->post('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::createPost/$1');
+
+// form-1b
+// kop kelengkapan dokumen
+$routes->get('auditor/form-1', 'Auditor\Form1::index');
+$routes->get('auditor/form-1/kop-kelengkapan-dokumen/(:segment)', 'Auditor\Form1::kopKelengkapanDokumen/$1');
+$routes->post('auditor/form-1/kop-kelengkapan-dokumen/tambah', 'Auditor\Form1::kopKelengkapanDokumenPost');
+$routes->get('auditor/form-1/kop-kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kopkelengkapanDokumenUpdate/$1');
+$routes->post('auditor/form-1/kop-kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kopkelengkapanDokumenUpdatePost/$1');
+$routes->post('auditor/form-1/kop-kelengkapan-dokumen/hapus/(:segment)', 'Auditor\Form1::kopkelengkapanDokumenDelete/$1');
+// kelengkapan dokumen
+$routes->get('auditor/form-1/kelengkapan-dokumen/(:segment)', 'Auditor\Form1::kelengkapanDokumen/$1');
+$routes->post('auditor/form-1/kelengkapan-dokumen/tambah/(:segment)', 'Auditor\Form1::kelengkapanDokumenPost/$1');
+$routes->get('auditor/form-1/kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kelengkapanDokumenUpdate/$1');
+$routes->post('auditor/form-1/kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kelengkapanDokumenUpdatePost/$1');
+$routes->post('auditor/form-1/kelengkapan-dokumen/hapus/(:segment)', 'Auditor\Form1::kelengkapanDokumenDelete/$1');
+
+// catatan audit
+$routes->get('auditor/form-3', 'Auditor\Form3::index');
+$routes->get('auditor/form-3/catatan-audit/tambah/positif/(:segment)', 'Auditor\Form3::createCatatanPositif/$1');
+$routes->get('auditor/form-3/catatan-audit/tambah/negatif/(:segment)', 'Auditor\Form3::createCatatanNegatif/$1');
+$routes->post('auditor/form-3/catatan-audit/tambah/positif/(:segment)', 'Auditor\Form3::createCatatanPositifPost/$1');
+$routes->post('auditor/form-3/catatan-audit/tambah/negatif/(:segment)', 'Auditor\Form3::createCatatanNegatifPost/$1');
+$routes->get('auditor/form-3/catatan-audit/ubah/positif/(:segment)', 'Auditor\Form3::updateCatatanPositif/$1');
+$routes->get('auditor/form-3/catatan-audit/ubah/negatif/(:segment)', 'Auditor\Form3::updateCatatanNegatif/$1');
+$routes->post('auditor/form-3/catatan-audit/ubah/positif/(:segment)', 'Auditor\Form3::updateCatatanPositifPost/$1');
+$routes->post('auditor/form-3/catatan-audit/ubah/negatif/(:segment)', 'Auditor\Form3::updateCatatanNegatifPost/$1');
+$routes->post('auditor/form-3/catatan-audit/positif/hapus/(:segment)', 'Auditor\Form3::catatanPositifDelete/$1');
+$routes->post('auditor/form-3/catatan-audit/negatif/hapus/(:segment)', 'Auditor\Form3::catatanNegatifDelete/$1');
