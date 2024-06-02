@@ -35,6 +35,15 @@
                             </button>
                         </div>
                     <?php endif ?>
+                    <?php if (!empty(session()->getFlashdata('gagal'))) : ?>
+                        <div class="alert bg-danger" role="alert">
+
+                            <div class="iq-alert-text"> <small><?= session()->getFlashdata('gagal') ?> </small></div>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="ri-close-line"></i>
+                            </button>
+                        </div>
+                    <?php endif ?>
                     <div class="col-12">
                         <p class="text-danger font-weight-bold">Perhatikan Prodi Tujuan tidak boleh sama dengan Prodi Asal !!!</p>
                     </div>

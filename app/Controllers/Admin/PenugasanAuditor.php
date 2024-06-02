@@ -92,7 +92,7 @@ class PenugasanAuditor extends BaseController
             return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
-        // Mendapatkan id_prodi dari form
+        // Mendapatkan id_prodi dari form (prodi tujuan)
         $prodiId = $this->request->getPost('prodi');
 
         // Check apakah kriteria prodi telah diisi
@@ -159,13 +159,22 @@ class PenugasanAuditor extends BaseController
         // }
         // Check apakah prodi asal dan prodi tujuan sama
         $auditorProdi = $this->request->getPost('id_auditor');
-        if ($auditorProdi == $prodiId) {
+        // dapatin id_prodi dari auditor
+        $auditor = $this->auditor->where('id', $auditorProdi)->first();
+
+        // dd($auditorProdi);
+        if ($prodiId == $auditor['id_prodi']) {
             session()->setFlashdata('warning', 'Prodi asal dan prodi tujuan tidak boleh sama.');
             return redirect()->back()->withInput();
         }
         // Lanjutkan dengan penyimpanan data penugasan auditor jika kriteria prodi telah diisi
         $periode = $this->periode_Model->select('id')->first();
         // dd($this->request->getPost('id_auditor'));
+
+        if(is_null($periode)){
+            return redirect()->to('admin/penugasan-auditor/tambah')->with('gagal', 'Gagal menambah penugasan auditor, Jadwal AMI belum dibuat');
+        }
+
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
             'id_auditor' => $this->request->getPost('id_auditor'),

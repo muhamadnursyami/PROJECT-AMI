@@ -15,6 +15,11 @@ php spark db:seed ProdiSeeder
 ```bash
 php spark db:seed AuditorSeeder
 ```
+4.
+```bash
+php spark db:seed FormEDSeeder
+```
+
 
 
 ## Server Requirements

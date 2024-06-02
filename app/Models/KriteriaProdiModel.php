@@ -16,6 +16,7 @@ class KriteriaProdiModel extends Model
         'uuid',
         'id_kriteria',
         'id_prodi',
+        'capaian_auditi',
         'capaian',
         'akar_penyebab',
         'tautan_bukti',

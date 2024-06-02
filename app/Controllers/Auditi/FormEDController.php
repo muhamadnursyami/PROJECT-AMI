@@ -36,7 +36,7 @@ class FormEDController extends BaseController
             return redirect()->to('auditi/dashboard')->with('gagal', 'Akun anda belum memiliki prodi, silahkan hubungi admin');
         } else {
 
-            $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')
+            $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, capaian_auditi, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')
                 ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')
@@ -53,6 +53,7 @@ class FormEDController extends BaseController
                 ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
                 ->where('akar_penyebab IS NOT null')
                 ->where('tautan_bukti IS NOT null')
+                ->where('capaian_auditi != 0')
                 ->where('kriteria_standar.is_aktif', 1)
                 ->where('prodi.id', $user['id_prodi'])->findAll());
             $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
@@ -122,6 +123,16 @@ class FormEDController extends BaseController
                 }
             }
 
+            // jika capaian auditi terisi
+            if (strlen($key) == 50) {
+                if ($value == "" || $value == 0) {
+                    echo "Data capaian auditi kosong<br>";
+                } else {
+                    $uuid = substr($key, 14);
+                    $this->kriteriaProdi->set('capaian_auditi', $value)->where('uuid', $uuid)->update();
+                }
+            }
+
             // jika tautan bukti terisi
             if (strlen($key) == 47) {
                 if ($value == "") {
@@ -138,6 +149,7 @@ class FormEDController extends BaseController
             ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
             ->where('akar_penyebab IS NOT null')
             ->where('tautan_bukti IS NOT null')
+            ->where('capaian_auditi != 0')
             ->where('kriteria_standar.is_aktif', 1)
             ->where('prodi.id', $user['id_prodi'])->findAll());
         $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
@@ -168,7 +180,7 @@ class FormEDController extends BaseController
             return redirect()->to('auditi/dashboard')->with('gagal', 'Akun anda belum memiliki prodi, silahkan hubungi admin');
         } else {
 
-            $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')
+            $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian_auditi, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')
                 ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')
@@ -184,6 +196,7 @@ class FormEDController extends BaseController
                 ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
                 ->where('akar_penyebab IS NOT null')
                 ->where('tautan_bukti IS NOT null')
+                ->where('capaian_auditi != 0')
                 ->where('kriteria_standar.is_aktif', 1)
                 ->where('prodi.id', $user['id_prodi'])->findAll());
             $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
@@ -234,6 +247,16 @@ class FormEDController extends BaseController
                 }
             }
 
+            // jika capaian auditi terisi
+            if (strlen($key) == 50) {
+                if ($value == "" || $value == 0) {
+                    echo "Data capaian auditi kosong<br>";
+                } else {
+                    $uuid = substr($key, 14);
+                    $this->kriteriaProdi->set('capaian_auditi', $value)->where('uuid', $uuid)->update();
+                }
+            }
+
             // jika tautan bukti terisi
             if (strlen($key) == 47) {
                 if ($value == "") {
@@ -249,6 +272,7 @@ class FormEDController extends BaseController
             ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
             ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
             ->where('akar_penyebab IS NOT null')
+            ->where('capaian_auditi != 0')
             ->where('tautan_bukti IS NOT null')
             ->where('kriteria_standar.is_aktif', 1)
             ->where('prodi.id', $user['id_prodi'])->findAll());

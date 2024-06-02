@@ -64,37 +64,43 @@
 
         <hr class="mt-5">
         <div class="row mt-5 text-center">
-            <table id="datatable" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Kode Kriteria</th>
-                        <th>Status Dokumen</th>
-                        <th>Nama Dokumen</th>
-                        <th>Keterangan</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (!is_null($dataKelengkapanDokumen)) { ?>
-                        <?php foreach ($dataKelengkapanDokumen as $key => $value) { ?>
-
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="datatable" class="table data-table table-striped">
+                        <thead>
                             <tr>
-                                <td><?= $value['kode_kriteria'] ?></td>
-                                <td><?= $value['status_dokumen'] ?></td>
-                                <td><?= $value['nama_dokumen'] ?></td>
-                                <td><?= $value['keterangan'] ?></td>
-                                <td>
-                                    <a href="/auditor/form-1/kelengkapan-dokumen/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>
-                                    <form action="/auditor/form-1/kelengkapan-dokumen/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
-                                    </form>
-                                </td>
+                                <th>Kode Kriteria</th>
+                                <th>Status Dokumen</th>
+                                <th>Nama Dokumen</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (!is_null($dataKelengkapanDokumen)) { ?>
+                                <?php foreach ($dataKelengkapanDokumen as $key => $value) { ?>
 
-                        <?php } ?>
-                    <?php } ?>
-                </tbody>
-            </table>
+                                    <tr>
+                                        <td><?= $value['kode_kriteria'] ?></td>
+                                        <td><?= $value['status_dokumen'] ?></td>
+                                        <td><?= $value['nama_dokumen'] ?></td>
+                                        <td><?= $value['keterangan'] ?></td>
+                                        <td>
+                                            <a href="/auditor/form-1/kelengkapan-dokumen/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>
+                                            <form action="/auditor/form-1/kelengkapan-dokumen/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                <?php } ?>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!--  -->
+            </div>
         </div>
     </div>
 </div>
