@@ -70,7 +70,7 @@ class ViewEDAuditorController extends BaseController
         $i = 0;
         foreach ($penugasan_auditor as $key => $value) {
 
-            $kriteriaProdi[$i] = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
+            $kriteriaProdi[$i] = $this->kriteriaProdi->select('capaian, capaian_auditi, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('users', 'users.id_prodi = prodi.id')
@@ -157,7 +157,7 @@ class ViewEDAuditorController extends BaseController
         if (is_null($auditor['id_prodi'])) {
             return redirect()->to('auditi/dashboard')->with('gagal', 'Akun anda belum memiliki prodi, silahkan hubungi admin');
         } else {
-            $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot, catatan')
+            $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, capaian_auditi, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot, catatan')
                 ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')

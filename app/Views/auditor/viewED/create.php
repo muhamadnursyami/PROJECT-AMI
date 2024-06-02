@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Form Tambah Data Evaluasi Diri</h4>
+                            <h4 class="card-title">Form Data Evaluasi Diri</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -45,14 +45,14 @@
                                 <table id="datatable" class="table data-table table-striped">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Standar</th>
-                                            <th scope="col">Kriteria</th>
-                                            <th scope="col">Bobot</th>
-                                            <th scope="col">Akar Penyebab</th>
-                                            <th scope="col">Tautan Bukti</th>
-                                            <th scope="col">Pilih Capaian</th>
-                                            <th scope="col">Masukkan Catatan</th>
+                                            <th scope="col" style="width: 5%;">#</th>
+                                            <th scope="col" style="width: 15%;">Standar</th>
+                                            <th scope="col" style="width: 25%;">Kriteria</th>
+                                            <th scope="col" style="width: 15%;">Akar Penyebab</th>
+                                            <th scope="col" style="width: 15%;">Tautan Bukti</th>
+                                            <th scope="col" style="width: 5%;">Capaian Auditi</th>
+                                            <th scope="col" style="width: 10%;">Pilih Capaian</th>
+                                            <th scope="col" style="width: 15%;">Masukkan Catatan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,18 +62,20 @@
                                                 <td scope="row"><?= $no; ?></td>
                                                 <td><?= $form_ed[$i]['standar']; ?></td>
                                                 <td><?= $form_ed[$i]['kriteria']; ?></td>
-                                                <td><?= $form_ed[$i]['bobot']; ?></td>
                                                 <td>
                                                     <div class="col-12 col-lg-12 mt-auto">
                                                         <label for="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" class="h6">Akar Penyebab</label>
-                                                        <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['akar_penyebab'] ?>" <?= $penugasanAuditor['ketua'] == 0 ? 'disabled' : '' ?>>
+                                                        <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['akar_penyebab'] ?>" disabled>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="col-12 col-lg-12 mt-auto">
                                                         <label for="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" class="h6">Tautan Bukti</label>
-                                                        <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>" <?= $penugasanAuditor['ketua'] == 0 ? 'disabled' : '' ?>>
+                                                        <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>" disabled>
                                                     </div>
+                                                </td>
+                                                <td>
+                                                    <?= $form_ed[$i]['capaian_auditi']; ?>
                                                 </td>
                                                 <td>
                                                     <label for="validationCustom04">Capaian</label>

@@ -49,12 +49,12 @@
                                 <table id="datatable" class="table data-table table-striped">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Standar</th>
-                                            <th scope="col">Kriteria</th>
-                                            <th scope="col">Bobot</th>
-                                            <th scope="col">Akar Penyebab</th>
-                                            <th scope="col">Tatan Bukti</th>
+                                            <th scope="col" style="width: 5%;">#</th>
+                                            <th scope="col" style="width: 15%;">Standar</th>
+                                            <th scope="col" style="width: 40%;">Kriteria</th>
+                                            <th scope="col" style="width: 15%;">Akar Penyebab</th>
+                                            <th scope="col" style="width: 15%;">Tatan Bukti</th>
+                                            <th scope="col" style="width: 10%;">Capaian</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,7 +65,6 @@
                                                 <td scope="row"><?= $no; ?></td>
                                                 <td><?= $form_ed[$i]['standar']; ?></td>
                                                 <td><?= $form_ed[$i]['kriteria']; ?></td>
-                                                <td><?= $form_ed[$i]['bobot']; ?></td>
                                                 <td>
                                                     <?php if (!is_null($form_ed[$i]['akar_penyebab'])) { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">
@@ -92,6 +91,25 @@
                                                         </div>
                                                     <?php } ?>
 
+                                                </td>
+                                                <td>
+                                                    <?php if ($form_ed[$i]['capaian_auditi'] != 0) { ?>
+                                                        <select class="custom-select" id="validationCustom04" name="capaian_auditi<?= $form_ed[$i]['uuid'] ?>" disabled>
+                                                            <option selected value="<?= $form_ed[$i]['capaian_auditi'] ?>"><?= $form_ed[$i]['capaian_auditi'] ?></option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                        </select>
+                                                    <?php } else { ?>
+                                                        <select class="custom-select" id="validationCustom04" name="capaian_auditi<?= $form_ed[$i]['uuid'] ?>">
+                                                            <option selected disabled value="">Pilih Capaian</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                        </select>
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
                                             <?php $no++; ?>

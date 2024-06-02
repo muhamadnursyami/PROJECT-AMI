@@ -22,7 +22,10 @@ class ViewEDController extends BaseController
     public function index()
     {
 
-        $kriteriaProdi = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('users', 'users.id_prodi = prodi.id')->findAll();
+        $kriteriaProdi = $this->kriteriaProdi->select('capaian, capaian_auditi, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
+                                            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+                                            ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+                                            ->join('users', 'users.id_prodi = prodi.id')->findAll();
         // dd($kriteriaProdi);
 
         $dataProdi = [];
@@ -52,6 +55,7 @@ class ViewEDController extends BaseController
                 ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
                 ->where('akar_penyebab IS NOT null')
                 ->where('tautan_bukti IS NOT null')
+                ->where('capaian_auditi != 0')
                 ->where('kriteria_standar.is_aktif', 1)
                 ->where('prodi.nama', $value)->findAll());
             $total[$i] = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
@@ -86,7 +90,7 @@ class ViewEDController extends BaseController
     public function view($uuid)
     {
 
-        $form_ed = $this->kriteriaProdi->select('standar, is_aktif, kriteria_prodi.uuid as uuid, id_kriteria, catatan ,kriteria_prodi.id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('prodi.uuid', $uuid)->findAll();
+        $form_ed = $this->kriteriaProdi->select('standar, is_aktif, kriteria_prodi.uuid as uuid, id_kriteria, catatan ,kriteria_prodi.id_prodi, capaian, capaian_auditi, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('prodi.uuid', $uuid)->findAll();
 
         if (count($form_ed) == 0) {
             return redirect()->to('admin/kriteria-ed/view')->with('gagal', 'Data form kriteria prodi belum ada');
@@ -97,6 +101,7 @@ class ViewEDController extends BaseController
             ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
             ->where('akar_penyebab IS NOT null')
             ->where('tautan_bukti IS NOT null')
+            ->where('capaian_auditi != 0')
             ->where('kriteria_standar.is_aktif', 1)
             ->where('prodi.uuid', "$uuid")->findAll());
         $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')

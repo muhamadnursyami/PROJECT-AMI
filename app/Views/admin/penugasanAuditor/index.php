@@ -40,6 +40,7 @@
                                     <th scope="col">Ketua</th>
                                     <th scope="col">Tanggal Mulai</th>
                                     <th scope="col">Tanggal Selesai</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

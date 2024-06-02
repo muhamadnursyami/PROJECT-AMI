@@ -30,6 +30,10 @@ class KriteriaProdi extends Migration
                 'constraint' => 40,
                 'unique' => true,
             ],
+            'capaian_auditi' => [
+                'type' => 'FLOAT',
+                'default' => 0.00
+            ],
             'capaian' => [
                 'type' => 'FLOAT',
                 'default' => 0.00

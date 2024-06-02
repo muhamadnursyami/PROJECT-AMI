@@ -22,6 +22,10 @@ class Dashboard extends BaseController
         $jadwalPeriodeED = $this->jadwal_periode_ED_Model->getJadwalPeriodeED();
         $periode = $this->periode_Model->getPeriode();
 
+        // error buat nangani jadwal periode ed belum dibuat
+        if(count($jadwalPeriodeED) == 0){
+            return "Jadwal Periode ED Belum dibuat";
+        }
 
         // buat warning jika dekat masa waktu
         $sekarang = time();
