@@ -43,7 +43,55 @@ class Form3 extends BaseController
         $this->catatanAudit = new CatatanAuditModel();
     }
 
-    public function index()
+    public function beranda()
+    {
+
+        $jadwalPeriode = $this->periode_Model->first();
+        $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
+        // Mengonversi tanggal selesai ke format yang dapat dibandingkan
+        $tanggalSelesaiTimestamp = strtotime($tanggalSelesai);
+        $tanggalSekarangTimestamp = time();
+        // Jika tanggal selesai sudah lewat, kunci form
+        $formTerkunci = false;
+        if ($tanggalSelesaiTimestamp < $tanggalSekarangTimestamp) {
+            $formTerkunci = true;
+        }
+
+        $id_user = session()->get('id');
+        $user = $this->users->where('id', $id_user)->first();
+        $auditor = $this->auditor->where('id_user', $id_user)->first();
+        if (is_null($auditor)) {
+            $data = [
+                'title' => 'Dashboard',
+                'currentPage' => 'dashboard',
+                'error' => $user['name'] . " Belum memiliki prodi, silahkan hubungi admin",
+
+            ];
+            return view('auditor/dashboard', $data);
+        }
+
+        // dd($auditor);
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id,penugasan_auditor.uuid, prodi.uuid as uuid_prodi, ketua, auditor.nama as nama_auditor, fakultas, kode_auditor, prodi.nama as nama_prodi')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
+            ->where('id_auditor', $auditor['id'])->findAll();
+        // dd($penugasan_auditor); 
+
+        if (is_null($penugasan_auditor) || count($penugasan_auditor) == 0) {
+            return redirect()->to('auditor/dashboard')->with('gagal', $auditor['nama'] . " Belum ditugaskan");
+        }
+
+        $data = [
+            "title" => "Form 3",
+            "currentPage" => "form-3",
+            'penugasan_auditor' => $penugasan_auditor,
+            'formTerkunci' => $formTerkunci,
+        ];
+
+        return view('auditor/form3/beranda', $data);
+    }
+
+    public function index($uuid2)
     {
         $id_user = session()->get('id');
         $auditor = $this->auditor->where('id_user', $id_user)->first();
@@ -59,38 +107,11 @@ class Form3 extends BaseController
         if (empty($prodiIds)) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException("No prodi found for the auditor");
         }
-
-        // Get all assignments for the prodi ids
-        $penugasan_auditor = $this->penugasanAuditor->whereIn('id_prodi', $prodiIds)->findAll();
-
-        $isKetua = $this->penugasanAuditor->where('id_auditor', $auditor['id'])->first();
-
-        $kriteriaProdi = [];
-        foreach ($penugasan_auditor as $value) {
-            $kriteriaProdi[] = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
-                ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-                ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-                ->join('users', 'users.id_prodi = prodi.id')
-                ->where('users.id_prodi', $value['id_prodi'])
-                ->findAll();
-        }
-
-        $dataProdi = [];
-        $dataAuditi = [];
-        $uuidProdi = [];
-
-        foreach ($kriteriaProdi as $value) {
-            foreach ($value as $item) {
-                array_push($dataProdi, $item['nama']);
-                array_push($dataAuditi, $item['nama_user']);
-                array_push($uuidProdi, $item['uuid_prodi']);
-            }
-        }
-
-        $dataAuditi = array_unique($dataAuditi);
-        $dataProdi = array_unique($dataProdi);
-        $uuidProdi = array_unique($uuidProdi);
-
+        $penugasan_auditor = $this->penugasanAuditor
+            ->select('penugasan_auditor.*')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('prodi.uuid', $uuid2)
+            ->findAll();
         $dataCatatanAuditPositifBerdasakanProdi = [];
         $dataCatatanAuditNegatifBerdasakanProdi = [];
         foreach ($penugasan_auditor as $penugasan) {
@@ -103,14 +124,15 @@ class Form3 extends BaseController
                 }
             }
         }
-
+        $prodi = $this->prodi->where('uuid', $uuid2)->first();
         $data = [
             'title' => 'Form 3',
             'currentPage' => 'form-3',
-            'uuidProdi' => $uuidProdi,
+            'uuid2' => $uuid2,
+            'prodi' => $prodi,
             'dataCatatanAuditPositifBerdasakanProdi' => $dataCatatanAuditPositifBerdasakanProdi,
             'dataCatatanAuditNegatifBerdasakanProdi' => $dataCatatanAuditNegatifBerdasakanProdi,
-            'isKetua' => $isKetua
+
         ];
 
         return view('auditor/form3/index', $data);
@@ -120,39 +142,36 @@ class Form3 extends BaseController
         $uuid = session()->get('uuid');
         $user = $this->users->where('uuid', $uuid)->first();
         $auditor = $this->auditor->where('id_user', $user['id'])->first();
-        $penugasan_auditor = $this->penugasanAuditor->where('id_auditor', $auditor['id'])->first();
-        $form_ed = $this->kriteriaProdi->select('kriteria_prodi.id as id, ,standar, is_aktif, kriteria.kode_kriteria as kode_kriteria, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot, catatan')
-            ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-            ->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')
-            ->where('prodi.uuid', $uuid2)
-            ->where('is_aktif', 1)
-            ->first();
+
+        $prodi = $this->prodi->where('uuid', $uuid2)->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id')
+            ->join('prodi', 'prodi.id = id_prodi')->where('id_auditor', $auditor['id'])->where('prodi.uuid', $uuid2)->first();
+
+
 
 
         $data = [
             'title' => 'Tambah Catatan Audit Positif',
             'currentPage' => 'form-3',
-            'uuid' => $uuid2,
+            'uuid2' => $uuid2,
+            'prodi' => $prodi,
             'penugasan_auditor' => $penugasan_auditor,
-            'form_ed' => $form_ed
         ];
         return view('auditor/form3/createCatatanAuditPositif', $data);
     }
 
-    public function createCatatanPositifPost()
+    public function createCatatanPositifPost($uuid2)
     {
 
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
-            'id_kriteria' => $this->request->getPost('id_kriteria'),
             'id_penugasan_auditor' => $this->request->getPost('id_penugasan_auditor'),
             'label' => $this->request->getPost('label'),
             'catatan_audit' => $this->request->getPost('catatan_audit')
         ];
         // dd($data);
         $this->catatanAudit->insert($data);
-        return redirect()->to("/auditor/form-3")->with('sukses', 'Berhasil menambahkan catatan Audit Positif');
+        return redirect()->to("/auditor/form-3/$uuid2")->with('sukses', 'Berhasil menambahkan catatan Audit Positif');
     }
 
     public function createCatatanNegatif($uuid2)
@@ -160,51 +179,49 @@ class Form3 extends BaseController
         $uuid = session()->get('uuid');
         $user = $this->users->where('uuid', $uuid)->first();
         $auditor = $this->auditor->where('id_user', $user['id'])->first();
-        $penugasan_auditor = $this->penugasanAuditor->where('id_auditor', $auditor['id'])->first();
-        $form_ed = $this->kriteriaProdi->select('kriteria_prodi.id as id, ,standar, is_aktif, kriteria.kode_kriteria as kode_kriteria, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot, catatan')
-            ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-            ->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')
-            ->where('prodi.uuid', $uuid2)
-            ->where('is_aktif', 1)
-            ->first();
 
+        $prodi = $this->prodi->where('uuid', $uuid2)->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id')
+            ->join('prodi', 'prodi.id = id_prodi')->where('id_auditor', $auditor['id'])->where('prodi.uuid', $uuid2)->first();
 
         $data = [
             'title' => 'Tambah Catatan Audit Negatif',
             'currentPage' => 'form-3',
-            'uuid' => $uuid2,
+            'uuid2' => $uuid2,
+            'prodi' => $prodi,
             'penugasan_auditor' => $penugasan_auditor,
-            'form_ed' => $form_ed
         ];
         return view('auditor/form3/createCatatanAuditNegatif', $data);
     }
 
-    public function createCatatanNegatifPost()
+    public function createCatatanNegatifPost($uuid2)
     {
 
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
-            'id_kriteria' => $this->request->getPost('id_kriteria'),
             'id_penugasan_auditor' => $this->request->getPost('id_penugasan_auditor'),
             'label' => $this->request->getPost('label'),
             'catatan_audit' => $this->request->getPost('catatan_audit')
         ];
         // dd($data);
         $this->catatanAudit->insert($data);
-        return redirect()->to("/auditor/form-3")->with('sukses', 'Berhasil menambahkan catatan Audit Negatif');
+        return redirect()->to("/auditor/form-3/$uuid2")->with('sukses', 'Berhasil menambahkan catatan Audit Negatif');
     }
 
 
     public function updateCatatanPositif($uuid)
     {
         $catatanPositif = $this->catatanAudit->where('uuid', $uuid)->first();
-
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('penugasan_auditor.id', $catatanPositif['id_penugasan_auditor'])->first();
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
         $data = [
             'title' => 'Ubah Catatan Audit Positif',
             'currentPage' => 'form-3',
             'catatanPositif' => $catatanPositif,
-            'uuid' => $uuid
+            'uuid' => $uuid,
+            'uuid_prodi' => $uuid_prodi
 
         ];
         return view('auditor/form3/updateCatatanAuditPositif', $data);
@@ -216,17 +233,27 @@ class Form3 extends BaseController
         ];
 
         $this->catatanAudit->set($data)->where('uuid', $uuid)->update();
-        return redirect()->to("/auditor/form-3")->with('sukses', 'Berhasil mengedit Catatan Audit Positif');
+
+        $catatanAudit = $this->catatanAudit->where('uuid', $uuid)->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('penugasan_auditor.id', $catatanAudit['id_penugasan_auditor'])->first();
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
+        return redirect()->to("/auditor/form-3/$uuid_prodi")->with('sukses', 'Berhasil mengedit Catatan Audit Positif');
     }
     public function updateCatatanNegatif($uuid)
     {
         $catatanNegatif = $this->catatanAudit->where('uuid', $uuid)->first();
-
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('penugasan_auditor.id', $catatanNegatif['id_penugasan_auditor'])->first();
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
         $data = [
             'title' => 'Ubah Catatan Audit Positif',
             'currentPage' => 'form-3',
             'catatanNegatif' => $catatanNegatif,
-            'uuid' => $uuid
+            'uuid' => $uuid,
+            'uuid_prodi' => $uuid_prodi
 
         ];
         return view('auditor/form3/updateCatatanAuditNegatif', $data);
@@ -238,16 +265,33 @@ class Form3 extends BaseController
         ];
 
         $this->catatanAudit->set($data)->where('uuid', $uuid)->update();
-        return redirect()->to("/auditor/form-3")->with('sukses', 'Berhasil mengedit Catatan Audit Negatif');
+
+        $catatanAudit = $this->catatanAudit->where('uuid', $uuid)->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('penugasan_auditor.id', $catatanAudit['id_penugasan_auditor'])->first();
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
+
+        return redirect()->to("/auditor/form-3/$uuid_prodi")->with('sukses', 'Berhasil mengedit Catatan Audit Negatif');
     }
     public function catatanPositifDelete($uuid)
     {
+        $catatanAudit = $this->catatanAudit->where('uuid', $uuid)->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('penugasan_auditor.id', $catatanAudit['id_penugasan_auditor'])->first();
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
         $this->catatanAudit->where('uuid', $uuid)->delete();
-        return redirect()->to("/auditor/form-3")->with('sukses', 'Berhasil menghapus Catatan Audit Positif');
+        return redirect()->to("/auditor/form-3/$uuid_prodi")->with('sukses', 'Berhasil menghapus Catatan Audit Positif');
     }
     public function catatanNegatifDelete($uuid)
     {
+        $catatanAudit = $this->catatanAudit->where('uuid', $uuid)->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('penugasan_auditor.id', $catatanAudit['id_penugasan_auditor'])->first();
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
         $this->catatanAudit->where('uuid', $uuid)->delete();
-        return redirect()->to("/auditor/form-3")->with('sukses', 'Berhasil menghapus Catatan Audit Negatif');
+        return redirect()->to("/auditor/form-3/$uuid_prodi")->with('sukses', 'Berhasil menghapus Catatan Audit Negatif');
     }
 }

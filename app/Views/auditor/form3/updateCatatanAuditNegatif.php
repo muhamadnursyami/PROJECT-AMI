@@ -8,7 +8,7 @@
                     <div class="header-title">
                         <h4 class="card-title">FORM Ubah Catatan Audit Negatif</h4>
                     </div>
-                    <a href="/auditor/form-3" class="text-end btn bg-warning">Kembali</a>
+                    <a href="/auditor/form-3/<?= $uuid_prodi ?>" class="text-end btn bg-warning">Kembali</a>
                 </div>
                 <div class="card-body">
                     <form action="/auditor/form-3/catatan-audit/ubah/negatif/<?= $uuid ?>" method="POST">

@@ -34,6 +34,7 @@
                                 <th class="text-center">Nama Periode</th>
                                 <th class="text-center">Tahun</th>
                                 <th class="text-center">Ruang Lingkup</th>
+                                <th class="text-center">Penjaminan Audit Mutu</th>
                                 <th class="text-center">Tanggal Mulai</th>
                                 <th class="text-center">Tanggal Selesai</th>
                                 <th class="text-center" style="min-width: 100px">Action</th>
@@ -47,6 +48,7 @@
                                     <td class="text-center"><?= $jdwlAMI['nama_periode'] ?></td>
                                     <td class="text-center"><?= $jdwlAMI['tahun'] ?></td>
                                     <td class="text-center"><?= $jdwlAMI['ruang_lingkup'] ?></td>
+                                    <td class="text-center"><?= $jdwlAMI['penjaminan_mutu_audit'] ?></td>
                                     <td class="text-center"><?= $jdwlAMI['tanggal_mulai'] ?></td>
                                     <td class="text-center"><?= $jdwlAMI['tanggal_selesai'] ?></td>
 

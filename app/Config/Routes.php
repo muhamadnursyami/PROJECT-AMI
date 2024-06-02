@@ -110,7 +110,8 @@ $routes->post('auditor/form-1/kelengkapan-dokumen/ubah/(:segment)', 'Auditor\For
 $routes->post('auditor/form-1/kelengkapan-dokumen/hapus/(:segment)', 'Auditor\Form1::kelengkapanDokumenDelete/$1');
 
 // catatan audit
-$routes->get('auditor/form-3', 'Auditor\Form3::index');
+$routes->get('auditor/form-3', 'Auditor\Form3::beranda');
+$routes->get('auditor/form-3/(:segment)', 'Auditor\Form3::index/$1');
 $routes->get('auditor/form-3/catatan-audit/tambah/positif/(:segment)', 'Auditor\Form3::createCatatanPositif/$1');
 $routes->get('auditor/form-3/catatan-audit/tambah/negatif/(:segment)', 'Auditor\Form3::createCatatanNegatif/$1');
 $routes->post('auditor/form-3/catatan-audit/tambah/positif/(:segment)', 'Auditor\Form3::createCatatanPositifPost/$1');
