@@ -7,6 +7,7 @@ use App\Models\AuditorModel;
 use App\Models\ProdiModel;
 use App\Models\PeriodeModel;
 use App\Models\JadwalPeriodeEDModel;
+use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Dashboard extends BaseController
@@ -16,18 +17,31 @@ class Dashboard extends BaseController
     private $auditor;
     private $prodi;
     protected $periode_Model;
+    private $user;
     public function __construct()
     {
         $this->auditor = new AuditorModel();
         $this->prodi = new ProdiModel();
         $this->jadwal_periode_ED_Model = new JadwalPeriodeEDModel();
         $this->periode_Model = new PeriodeModel();
+        $this->user = new UserModel();
     }
 
     public function index()
     {
         $id_user = session()->get('id');
+        $user = $this->user->where('id', $id_user)->first();
         $auditor = $this->auditor->where('id_user', $id_user)->first();
+
+        if(is_null($auditor)){
+            $data = [
+                'title' => 'Dashboard',
+                'currentPage' => 'dashboard',
+                'error' => $user['name'] . " Belum memiliki prodi, silahkan hubungi admin",
+
+            ];
+            return view('auditor/dashboard', $data);
+        }        
         $prodi = $this->prodi->where('id', $auditor['id_prodi'])->first();
         $jadwalPeriodeED = $this->jadwal_periode_ED_Model->getJadwalPeriodeED();
         

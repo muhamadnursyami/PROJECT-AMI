@@ -8,12 +8,12 @@
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title d-flex">
 
-                        <h4 class="card-title">FORM Tambah Kop Kelengkapan Dokumen</h4>
+                        <h4 class="card-title">FORM Tambah Data Kelengkapan Dokumen <?= $prodi['nama'] ?></h4>
                     </div>
-                    <a href="/auditor/form-1" class=" text-end btn bg-warning">Kembali</a>
+                    <a href="/auditor/form-1/<?= $uuid2 ?>" class=" text-end btn bg-warning">Kembali</a>
                 </div>
                 <div class="card-body">
-                    <form action="/auditor/form-1/kop-kelengkapan-dokumen/tambah" method="POST">
+                    <form action="/auditor/form-1/kop-kelengkapan-dokumen/tambah/<?= $uuid2 ?>" method="POST">
                         <?= csrf_field() ?>
                         <input type="hidden" name="id_penugasanAuditor" value="<?= $id_penugasanAuditor['id'] ?>">
                         <div class="row">
@@ -45,8 +45,10 @@
                             </div>
                             <div class="col-12 col-lg-4">
                                 <label for="auditor_anggota" class="h6">Auditor Anggota</label>
-                                <input type="hidden" class="form-control" name="auditor_anggota" value="<?= $auditor_anggota[0] ?>">
-                                <input type="text" class="form-control" name="auditor_anggota" value="<?= $auditor_anggota[0] ?>" disabled>
+                                <?php foreach ($auditor_anggota as $key => $value) { ?>
+                                    <input type="hidden" class="form-control mt-2" name="auditor_anggota<?= $value ?>" value="<?= $value ?>">
+                                    <input type="text" class="form-control mt-2" name="auditor_anggota" value="<?= $value ?>" disabled>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="row justify-content-center mt-5">
