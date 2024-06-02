@@ -6,18 +6,17 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
-                        <h4 class="card-title">FORM Tambah Catatan Audit Negatif</h4>
+                        <h4 class="card-title">FORM Tambah Catatan Audit Negatif <?= $prodi['nama'] ?></h4>
                     </div>
                     <a href="/auditor/form-3" class=" text-end btn bg-warning">Kembali</a>
                 </div>
                 <div class="card-body">
 
-                    <form action="/auditor/form-3/catatan-audit/tambah/positif/<?= $uuid ?>" method="POST">
+                    <form action="/auditor/form-3/catatan-audit/tambah/positif/<?= $uuid2 ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row">
                             <input type="hidden" name="label" value="-">
                             <input type="hidden" name="id_penugasan_auditor" value="<?= $penugasan_auditor['id'] ?>">
-                            <input type="hidden" name="id_kriteria" value="<?= $form_ed['id'] ?>">
                             <div class="col-12">
                                 <div class="col-12 mt-3">
                                     <label for="catatan_audit" class="h6">Catatan Audit </label>
