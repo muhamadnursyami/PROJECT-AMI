@@ -45,7 +45,18 @@ class ViewEDAuditorController extends BaseController
         }
 
         $id_user = session()->get('id');
+        $user = $this->users->where('id', $id_user)->first();
         $auditor = $this->auditor->where('id_user', $id_user)->first();
+
+        if (is_null($auditor)) {
+            $data = [
+                'title' => 'Dashboard',
+                'currentPage' => 'dashboard',
+                'error' => $user['name'] . " Belum memiliki prodi, silahkan hubungi admin",
+
+            ];
+            return view('auditor/dashboard', $data);
+        }
         // dd($auditor);
         $penugasan_auditor = $this->penugasanAuditor->where('id_auditor', $auditor['id'])->findAll();
         // dd($penugasan_auditor); 

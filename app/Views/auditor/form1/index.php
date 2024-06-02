@@ -11,18 +11,17 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
         <div class="header-title">
-            <h4 class="card-title">Form 1 - Kelengkapan Dokumen</h4>
+            <h4 class="card-title">Form 1 - Kelengkapan Dokumen <?= $prodi['nama'] ?></h4>
+            <a href="/auditor/form-1" class="btn btn-warning mt-3">Kembali</a>
         </div>
     </div>
     <div class="card-body">
         <?php if (empty($dataKopKelengkapanDokumen)) : ?>
-            <?php if ($isKetua['ketua'] == 1) : ?>
-                <a href="/auditor/form-1/kop-kelengkapan-dokumen/<?= $uuid_prodi[0] ?>" class="btn btn-primary mb-3">Kop Kelengkapan Dokumen</a>
-            <?php endif; ?>
+
+            <a href="/auditor/form-1/kop-kelengkapan-dokumen/<?= $uuid2 ?>" class="btn btn-primary mb-3">Kop Kelengkapan Dokumen</a>
+
         <?php endif; ?>
-        <?php if ($isKetua['ketua'] == 1) : ?>
-            <a href="/auditor/form-1/kelengkapan-dokumen/<?= $uuid_prodi[0] ?>" class="btn btn-primary mb-3">Kelengkapan Dokumen</a>
-        <?php endif; ?>
+        <a href="/auditor/form-1/kelengkapan-dokumen/<?= $uuid2 ?>" class="btn btn-primary mb-3">Kelengkapan Dokumen</a>
         <div class="row text-center">
             <table id="datatable" class="table table-striped">
                 <thead>
@@ -37,24 +36,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($dataKopKelengkapanDokumen as $dokumen) : ?>
+                    <?php if (!is_null($dataKopKelengkapanDokumen)) { ?>
                         <tr>
-                            <td><?= $dokumen['lokasi'] ?></td>
-                            <td><?= $dokumen['ruang_lingkup'] ?></td>
-                            <td><?= $dokumen['tanggal_audit'] ?></td>
-                            <td><?= $dokumen['wakil_auditi'] ?></td>
-                            <td><?= $dokumen['auditor_ketua'] ?></td>
-                            <td><?= $dokumen['auditor_anggota'] ?></td>
+                            <td><?= $dataKopKelengkapanDokumen['lokasi'] ?></td>
+                            <td><?= $dataKopKelengkapanDokumen['ruang_lingkup'] ?></td>
+                            <td><?= $dataKopKelengkapanDokumen['tanggal_audit'] ?></td>
+                            <td><?= $dataKopKelengkapanDokumen['wakil_auditi'] ?></td>
+                            <td><?= $dataKopKelengkapanDokumen['auditor_ketua'] ?></td>
                             <td>
-                                <?php if ($isKetua['ketua'] == 1) : ?>
-                                    <a href="/auditor/form-1/kop-kelengkapan-dokumen/ubah/<?= $dokumen['uuid'] ?>" class="btn btn-primary">Ubah</a>
-                                    <form action="/auditor/form-1/kop-kelengkapan-dokumen/hapus/<?= $dokumen['uuid'] ?>" method="post" class="d-inline">
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
-                                    </form>
-                                <?php endif; ?>
+                                <ol>
+                                    <?php foreach ($anggota as $key => $value) { ?>
+                                        <li><?= $value; ?></li>
+                                    <?php } ?>
+                                </ol>
+                            </td>
+                            <td>
+                                <a href="/auditor/form-1/kop-kelengkapan-dokumen/ubah/<?= $uuid2 ?>" class="btn btn-primary">Ubah</a>
+                                <form action="/auditor/form-1/kop-kelengkapan-dokumen/hapus/<?= $uuid2 ?>" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
+                                </form>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -72,24 +75,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($dataKelengkapanDokumen as $dokumenGroup) : ?>
-                        <?php foreach ($dokumenGroup as $dokumen) : ?>
+                    <?php if (!is_null($dataKelengkapanDokumen)) { ?>
+                        <?php foreach ($dataKelengkapanDokumen as $key => $value) { ?>
+
                             <tr>
-                                <td><?= $dokumen['kode_kriteria'] ?></td>
-                                <td><?= $dokumen['status_dokumen'] ?></td>
-                                <td><?= $dokumen['nama_dokumen'] ?></td>
-                                <td><?= $dokumen['keterangan'] ?></td>
+                                <td><?= $value['kode_kriteria'] ?></td>
+                                <td><?= $value['status_dokumen'] ?></td>
+                                <td><?= $value['nama_dokumen'] ?></td>
+                                <td><?= $value['keterangan'] ?></td>
                                 <td>
-                                    <?php if ($isKetua['ketua'] == 1) : ?>
-                                        <a href="/auditor/form-1/kelengkapan-dokumen/ubah/<?= $dokumen['uuid'] ?>" class="btn btn-primary">Ubah</a>
-                                        <form action="/auditor/form-1/kelengkapan-dokumen/hapus/<?= $dokumen['uuid'] ?>" method="post" class="d-inline">
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
-                                        </form>
-                                    <?php endif; ?>
+                                    <a href="/auditor/form-1/kelengkapan-dokumen/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>
+                                    <form action="/auditor/form-1/kelengkapan-dokumen/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
+                                    </form>
                                 </td>
                             </tr>
-                        <?php endforeach; ?>
-                    <?php endforeach; ?>
+
+                        <?php } ?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>

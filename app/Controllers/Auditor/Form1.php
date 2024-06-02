@@ -15,6 +15,9 @@ use App\Models\KopKelengkapanDokumenModel;
 use App\Models\KriteriaModel;
 use App\Models\ProdiModel;
 use CodeIgniter\HTTP\ResponseInterface;
+use LengthException;
+
+use function PHPUnit\Framework\isNull;
 
 class Form1 extends BaseController
 {
@@ -41,8 +44,59 @@ class Form1 extends BaseController
         $this->kelengkapanDokumen = new KelengkapanDokumenModel();
     }
 
-    public function index()
+
+    public function beranda()
     {
+
+        $jadwalPeriode = $this->periode_Model->first();
+        $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
+        // Mengonversi tanggal selesai ke format yang dapat dibandingkan
+        $tanggalSelesaiTimestamp = strtotime($tanggalSelesai);
+        $tanggalSekarangTimestamp = time();
+        // Jika tanggal selesai sudah lewat, kunci form
+        $formTerkunci = false;
+        if ($tanggalSelesaiTimestamp < $tanggalSekarangTimestamp) {
+            $formTerkunci = true;
+        }
+
+        $id_user = session()->get('id');
+        $user = $this->users->where('id', $id_user)->first();
+        $auditor = $this->auditor->where('id_user', $id_user)->first();
+        if (is_null($auditor)) {
+            $data = [
+                'title' => 'Dashboard',
+                'currentPage' => 'dashboard',
+                'error' => $user['name'] . " Belum memiliki prodi, silahkan hubungi admin",
+
+            ];
+            return view('auditor/dashboard', $data);
+        }
+
+        // dd($auditor);
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id,penugasan_auditor.uuid, prodi.uuid as uuid_prodi, ketua, auditor.nama as nama_auditor, fakultas, kode_auditor, prodi.nama as nama_prodi')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
+            ->where('id_auditor', $auditor['id'])->findAll();
+        // dd($penugasan_auditor); 
+
+        if (is_null($penugasan_auditor) || count($penugasan_auditor) == 0) {
+            return redirect()->to('auditor/dashboard')->with('gagal', $auditor['nama'] . " Belum ditugaskan");
+        }
+
+        $data = [
+            "title" => "Lihat Progress Evaluasi Diri",
+            "currentPage" => "form-1",
+            'penugasan_auditor' => $penugasan_auditor,
+            'formTerkunci' => $formTerkunci,
+        ];
+
+        return view('auditor/form1/beranda', $data);
+    }
+
+    public function index($uuid2)
+    {
+        // dd($uuid2);
+
         $id_user = session()->get('id');
         $auditor = $this->auditor->where('id_user', $id_user)->first();
         if (!$auditor) {
@@ -57,68 +111,38 @@ class Form1 extends BaseController
         if (empty($prodiIds)) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException("No prodi found for the auditor");
         }
+        
+        $dataKopKelengkapanDokumen = $this->kopkelengkapanDokumen
+            ->join('prodi', 'prodi.nama = lokasi')
+            ->where('prodi.uuid', $uuid2)->first();
 
-        // Get all assignments for the prodi ids
-        $penugasan_auditor = $this->penugasanAuditor->whereIn('id_prodi', $prodiIds)->findAll();
+        $dataKelengkapanDokumen = $this->kelengkapanDokumen
+                                        ->select('kode_kriteria, status_dokumen, nama_dokumen, keterangan, ketua, kelengkapan_dokumen.uuid as uuid, prodi.nama as nama_prodi')
+                                        ->join('penugasan_auditor', 'penugasan_auditor.id = id_penugasan_auditor')
+                                        ->join('kriteria', 'kriteria.id = id_kriteria')
+                                        ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+                                        ->where('prodi.uuid', $uuid2)
+                                        ->findAll();
+        // dd($dataKelengkapanDokumen);
 
-        $isKetua = $this->penugasanAuditor->where('id_auditor', $auditor['id'])->first();
+        $anggota = [];
+        if (!is_null($dataKopKelengkapanDokumen)) {
 
-        $kriteriaProdi = [];
-        foreach ($penugasan_auditor as $value) {
-            $kriteriaProdi[] = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
-                ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-                ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-                ->join('users', 'users.id_prodi = prodi.id')
-                ->where('users.id_prodi', $value['id_prodi'])
-                ->findAll();
+            $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];
+            $anggota = explode(',', $anggota);
         }
 
-        $dataProdi = [];
-        $dataAuditi = [];
-        $uuidProdi = [];
 
-        foreach ($kriteriaProdi as $value) {
-            foreach ($value as $item) {
-                array_push($dataProdi, $item['nama']);
-                array_push($dataAuditi, $item['nama_user']);
-                array_push($uuidProdi, $item['uuid_prodi']);
-            }
-        }
-
-        $dataAuditi = array_unique($dataAuditi);
-        $dataProdi = array_unique($dataProdi);
-        $uuidProdi = array_unique($uuidProdi);
-
-        $dataKopKelengkapanDokumen = [];
-        $dataKelengkapanDokumen = [];
-
-        foreach ($penugasan_auditor as $penugasan) {
-            $kopDokumen = $this->kopkelengkapanDokumen->where('id_penugasan_auditor', $penugasan['id'])->first();
-            if ($kopDokumen) {
-                $dataKopKelengkapanDokumen[] = $kopDokumen;
-            }
-        }
-
-        foreach ($penugasan_auditor as $penugasan) {
-            $kelengkapanDokumen = $this->kelengkapanDokumen->where('id_penugasan_auditor', $penugasan['id'])->findAll();
-            if ($kelengkapanDokumen) {
-                foreach ($kelengkapanDokumen as &$dokumen) {
-                    $kriteria = $this->kriteria->select('kode_kriteria')->where('id', $dokumen['id_kriteria'])->first();
-                    if ($kriteria) {
-                        $dokumen['kode_kriteria'] = $kriteria['kode_kriteria'];
-                    }
-                }
-                $dataKelengkapanDokumen[] = $kelengkapanDokumen;
-            }
-        }
-
+        $prodi = $this->prodi->where('uuid', $uuid2)->first();
         $data = [
             'title' => 'Form 1',
             'currentPage' => 'form-1',
-            'uuid_prodi' => $uuidProdi,
+            'uuid_prodi' => $uuid2,
             'dataKopKelengkapanDokumen' => $dataKopKelengkapanDokumen,
             'dataKelengkapanDokumen' => $dataKelengkapanDokumen,
-            'isKetua' => $isKetua
+            'uuid2' => $uuid2,
+            'prodi' => $prodi,
+            'anggota' => $anggota
         ];
 
         return view('auditor/form1/index', $data);
@@ -131,12 +155,18 @@ class Form1 extends BaseController
         $uuid = session()->get('uuid');
         $user = $this->users->where('uuid', $uuid)->first();
         $auditor = $this->auditor->where('id_user', $user['id'])->first();
-        $penugasan_auditor = $this->penugasanAuditor->where('id_auditor', $auditor['id'])->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_auditor, id_prodi, id_periode, penugasan_auditor.uuid as uuid, ketua, prodi.nama as nama_prodi')
+            ->join('prodi', 'prodi.id = id_prodi')
+            ->where('id_auditor', $auditor['id'])
+            ->where('prodi.uuid', $uuid2)
+            ->first();
 
+        // dd($penugasan_auditor);
 
         // Mendapatkan nama prodi dari id_prodi yang didapat dari tabel penugasan auditor
         $prodiId = $penugasan_auditor['id_prodi'];
         $prodiName = $this->prodi->getProdiNameById($prodiId);
+        // dd($prodiName);
 
         // Mendapatkan semua data dari tabel penugasan auditor yang memiliki id prodinya sama dengan id dari auditor yang sedang aktif
         $penugasan_auditor_with_same_prodi = $this->penugasanAuditor->where('id_prodi', $prodiId)->findAll();
@@ -154,6 +184,8 @@ class Form1 extends BaseController
             }
         }
         $periode_Model = $this->periode_Model->first();
+        // dd($auditor_anggota);
+        $prodi = $this->prodi->where('uuid', $uuid2)->first();
 
         $data = [
             'title' => 'Kop Kelengkapan Dokumen',
@@ -163,14 +195,25 @@ class Form1 extends BaseController
             'auditor_anggota' => $auditor_anggota,
             'periode' => $periode_Model,
             'id_penugasanAuditor' => $penugasan_auditor,
-            'uuid2' => $uuid2
+            'uuid2' => $uuid2,
+            'prodi' => $prodi
 
         ];
         return view("auditor/form1/kopkelengkapandokumen/createKopKelengkapanDokumen", $data);
     }
 
-    public function kopKelengkapanDokumenPost()
+    public function kopKelengkapanDokumenPost($uuid)
     {
+
+        $anggota = [];
+        foreach ($this->request->getVar() as $key => $value) {
+
+            if ((substr($key, 0, 15)) == "auditor_anggota") {
+                array_push($anggota, $value);
+            }
+        }
+
+        $anggota = implode(',', $anggota);
 
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
@@ -179,24 +222,30 @@ class Form1 extends BaseController
             'tanggal_audit' => $this->request->getPost('tanggal_audit'),
             'wakil_auditi' => $this->request->getPost('wakil_auditi'),
             'auditor_ketua' => $this->request->getPost('auditor_ketua'),
-            'auditor_anggota' => $this->request->getPost('auditor_anggota'),
+            'auditor_anggota' => $anggota,
             'id_penugasan_auditor' => $this->request->getPost('id_penugasanAuditor')
         ];
 
         $this->kopkelengkapanDokumen->insert($data);
-        return redirect()->to("/auditor/form-1")->with('sukses', 'Berhasil menyimpan data kop kelengkapan dokumen');
+        return redirect()->to("/auditor/form-1/$uuid")->with('sukses', 'Berhasil menyimpan data kop kelengkapan dokumen');
     }
 
 
     public function kopkelengkapanDokumenUpdate($uuid)
     {
-        $kopkelengkapanDokumen = $this->kopkelengkapanDokumen->where('uuid', $uuid)->first();
+        $kopkelengkapanDokumen = $this->kopkelengkapanDokumen->join('prodi', 'prodi.nama = lokasi')
+            ->where('prodi.uuid', $uuid)->first();
+        $anggota = $kopkelengkapanDokumen['auditor_anggota'];
+        // dd($anggota);
+        $anggota = explode(',', $anggota);
+        // dd($anggota);
 
         $data = [
             'title' => 'Ubah Kop Kelengkapan Dokumen',
             'currentPage' => 'form-1',
             'kopkelengkapanDokumen' => $kopkelengkapanDokumen,
-            'uuid' => $uuid
+            'uuid' => $uuid,
+            'anggota' => $anggota
         ];
 
         return view("auditor/form1/kopkelengkapandokumen/updateKopKelengkapanDokumen", $data);
@@ -204,25 +253,36 @@ class Form1 extends BaseController
 
     public function kopkelengkapanDokumenUpdatePost($uuid)
     {
+
+        $prodi = $this->prodi->where('uuid', $uuid)->first();
+
         $data = [
             'wakil_auditi' => $this->request->getPost('wakil_auditi'),
         ];
 
-        $this->kopkelengkapanDokumen->set($data)->where('uuid', $uuid)->update();
-        return redirect()->to("/auditor/form-1")->with('sukses', 'Berhasil mengedit data kop kelengkapan dokumen');
+        $this->kopkelengkapanDokumen->set($data)->where('lokasi', $prodi['nama'])->update();
+        return redirect()->to("/auditor/form-1/$uuid")->with('sukses', 'Berhasil mengedit data kop kelengkapan dokumen');
     }
 
     public function kopkelengkapanDokumenDelete($uuid)
     {
-        $this->kopkelengkapanDokumen->where('uuid', $uuid)->delete();
-        return redirect()->to("/auditor/form-1")->with('sukses', 'Berhasil menghapus data kop kelengkapan dokumen');
+        $prodi = $this->prodi->where('uuid', $uuid)->first();
+
+        $this->kopkelengkapanDokumen->where('lokasi', $prodi['nama'])->delete();
+        return redirect()->to("/auditor/form-1/$uuid")->with('sukses', 'Berhasil menghapus data kop kelengkapan dokumen');
     }
     public function kelengkapanDokumen($uuid2)
     {
         $uuid = session()->get('uuid');
         $user = $this->users->where('uuid', $uuid)->first();
         $auditor = $this->auditor->where('id_user', $user['id'])->first();
-        $penugasan_auditor = $this->penugasanAuditor->where('id_auditor', $auditor['id'])->first();
+        $prodi = $this->prodi->where('uuid', $uuid2)->first();
+        
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id')
+                                                    ->join('prodi', 'prodi.id = id_prodi')->where('id_auditor', $auditor['id'])->where('prodi.uuid', $uuid2)->first();
+        // $penugasan_auditor = $this->penugasanAuditor->findAll();
+        // dd($penugasan_auditor);
+
         $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.kode_kriteria as kode_kriteria, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot, catatan')
             ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
             ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
@@ -237,13 +297,15 @@ class Form1 extends BaseController
             'currentPage' => 'form-1',
             'form_ed' => $form_ed,
             'id_penugasanAuditor' => $penugasan_auditor,
-            'uuid2' => $uuid2
+            'uuid2' => $uuid2,
+            'prodi' => $prodi
         ];
         return view("auditor/form1/kelengkapandokumen/createKelengkapanDokumen", $data);
     }
 
-    public function kelengkapanDokumenPost()
+    public function kelengkapanDokumenPost($uuid2)
     {
+
 
         $data = [
             "uuid" => service('uuid')->uuid4()->toString(),
@@ -255,13 +317,15 @@ class Form1 extends BaseController
         ];
         // dd($data);
         $this->kelengkapanDokumen->insert($data);
-        return redirect()->to("/auditor/form-1")->with('sukses', 'Berhasil menyimpan data kelengkapan dokumen');
+        return redirect()->to("/auditor/form-1/$uuid2")->with('sukses', 'Berhasil menyimpan data kelengkapan dokumen');
     }
 
     public function kelengkapanDokumenUpdate($uuid)
     {
+
         // Fetch the current document data to be updated
         $kelengkapanDokumen = $this->kelengkapanDokumen->where('uuid', $uuid)->first();
+        // dd($kelengkapanDokumen);
 
         if (!$kelengkapanDokumen) {
             // Handle case when the document is not found
@@ -269,8 +333,10 @@ class Form1 extends BaseController
         }
 
         // Fetch the penugasan auditor using id_penugasan_auditor from kelengkapanDokumen
-        $penugasan_auditor = $this->penugasanAuditor->where('id', $kelengkapanDokumen['id_penugasan_auditor'])->first();
-
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+                                                    ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+                                                    ->where('penugasan_auditor.id', $kelengkapanDokumen['id_penugasan_auditor'])->first();
+        // dd($penugasan_auditor);
         if (!$penugasan_auditor) {
             // Handle case when the penugasan auditor is not found
             throw new \CodeIgniter\Exceptions\PageNotFoundException("Penugasan Auditor not found");
@@ -278,6 +344,8 @@ class Form1 extends BaseController
 
         // Get id_prodi from penugasan_auditor
         $id_prodi = $penugasan_auditor['id_prodi'];
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
+        // dd($penugasan_auditor);
 
         // Fetch form_ed data using id_prodi
         $form_ed = $this->kriteriaProdi->select('kriteria.id as id_kriteria, kriteria.kode_kriteria')
@@ -292,7 +360,9 @@ class Form1 extends BaseController
             'currentPage' => 'form-1',
             'kelengkapanDokumen' => $kelengkapanDokumen,
             'form_ed' => $form_ed,
-            'uuid' => $uuid
+            'uuid' => $uuid,
+            'uuid_prodi' => $uuid_prodi
+
         ];
 
         return view("auditor/form1/kelengkapandokumen/updateKelengkapanDokumen", $data);
@@ -308,15 +378,28 @@ class Form1 extends BaseController
             'nama_dokumen' => $this->request->getPost('nama_dokumen'),
             'keterangan' => $this->request->getPost('keterangan'),
         ];
-
-
         $this->kelengkapanDokumen->set($data)->where('uuid', $uuid)->update();
-        return redirect()->to("/auditor/form-1")->with('sukses', 'Berhasil mengedit data kelengkapan dokumen');
+
+        $kelengkapanDokumen = $this->kelengkapanDokumen->where('uuid', $uuid)->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+                                                    ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+                                                    ->where('penugasan_auditor.id', $kelengkapanDokumen['id_penugasan_auditor'])->first();
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
+
+        return redirect()->to("/auditor/form-1/$uuid_prodi")->with('sukses', 'Berhasil mengedit data kelengkapan dokumen');
     }
 
     public function kelengkapanDokumenDelete($uuid)
     {
+        
+        $kelengkapanDokumen = $this->kelengkapanDokumen->where('uuid', $uuid)->first();
+        $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
+        ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+        ->where('penugasan_auditor.id', $kelengkapanDokumen['id_penugasan_auditor'])->first();
+        $uuid_prodi = $penugasan_auditor['uuid_prodi'];
+        
         $this->kelengkapanDokumen->where('uuid', $uuid)->delete();
-        return redirect()->to("/auditor/form-1")->with('sukses', 'Berhasil menghapus data kelengkapan dokumen');
+        
+        return redirect()->to("/auditor/form-1/$uuid_prodi")->with('sukses', 'Berhasil menghapus data kelengkapan dokumen');
     }
 }

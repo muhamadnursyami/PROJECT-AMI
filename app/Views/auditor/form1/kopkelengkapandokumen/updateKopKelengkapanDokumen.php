@@ -10,7 +10,7 @@
 
                         <h4 class="card-title">FORM Edit Kop Kelengkapan Dokumen</h4>
                     </div>
-                    <a href="/auditor/form-1" class=" text-end btn bg-warning">Kembali</a>
+                    <a href="/auditor/form-1/<?= $uuid ?>" class=" text-end btn bg-warning">Kembali</a>
                 </div>
                 <div class="card-body">
                     <form action="/auditor/form-1/kop-kelengkapan-dokumen/ubah/<?= $uuid ?>" method="POST">
@@ -40,7 +40,9 @@
                             </div>
                             <div class="col-12 col-lg-4">
                                 <label for="auditor_anggota" class="h6">Auditor Anggota</label>
-                                <input type="text" class="form-control" name="auditor_anggota" value="<?= $kopkelengkapanDokumen['auditor_anggota'] ?>" disabled>
+                                <?php foreach ($anggota as $key => $value) { ?>
+                                    <input type="text" class="form-control mt-2" name="auditor_anggota" value="<?= $value ?>" disabled>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="row justify-content-center mt-5">
