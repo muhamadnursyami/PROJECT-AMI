@@ -16,11 +16,6 @@ class CatatanAudit extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'id_kriteria' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
-            ],
             'id_penugasan_auditor' => [
                 'type' => 'INT',
                 'constraint' => 11,
@@ -50,7 +45,6 @@ class CatatanAudit extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_kriteria', 'kriteria_prodi', 'id', 'CASCADE', 'CASCADE', 'fk_catatan_audit_berdasarkan_kriteriaProdi');
         $this->forge->addForeignKey('id_penugasan_auditor', 'penugasan_auditor', 'id', 'CASCADE', 'CASCADE', 'fk_catatan_audit_berdasarkan_penugasanAuditor');
         $this->forge->createTable('catatan_audit');
     }

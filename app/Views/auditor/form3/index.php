@@ -11,7 +11,8 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
         <div class="header-title">
-            <h4 class="card-title">Form 3 - Catatan Audit</h4>
+            <h4 class="card-title">Form 3 - Catatan Audit <?= $prodi['nama'] ?></h4>
+            <a href="/auditor/form-3" class="btn btn-warning mt-3">Kembali</a>
         </div>
     </div>
     <div class="card-body">
@@ -19,14 +20,14 @@
         <div class="mb-3">
             <small class="text-danger">Catatan Audit Hanya bisa di isi 1 kali saja !</small>
         </div>
-        <?php if ($isKetua['ketua'] == 1) : ?>
-            <?php if (empty($dataCatatanAuditPositifBerdasakanProdi)) : ?>
-                <a href="/auditor/form-3/catatan-audit/tambah/positif/<?= $uuidProdi[0] ?>" class="btn btn-primary mb-3">Catatan Audit Positif</a>
-            <?php endif; ?>
-            <?php if (empty($dataCatatanAuditNegatifBerdasakanProdi)) : ?>
-                <a href="/auditor/form-3/catatan-audit/tambah/negatif/<?= $uuidProdi[0] ?>" class="btn btn-primary mb-3">Catatan Audit Negatif</a>
-            <?php endif; ?>
+
+        <?php if (empty($dataCatatanAuditPositifBerdasakanProdi)) : ?>
+            <a href="/auditor/form-3/catatan-audit/tambah/positif/<?= $uuid2 ?>" class="btn btn-primary mb-3">Catatan Audit Positif</a>
         <?php endif; ?>
+        <?php if (empty($dataCatatanAuditNegatifBerdasakanProdi)) : ?>
+            <a href="/auditor/form-3/catatan-audit/tambah/negatif/<?= $uuid2 ?>" class="btn btn-primary mb-3">Catatan Audit Negatif</a>
+        <?php endif; ?>
+
 
         <div class="row">
             <div class="card-body">
@@ -41,20 +42,20 @@
                                 <textarea class="form-control" disabled rows="10"><?= $catatan['catatan_audit'] ?></textarea>
                             </div>
 
-                            <?php if ($isKetua['ketua'] == 1) : ?>
-                                <div class="col-12 col-lg-1 mt-3 mt-lg-0 d-flex justify-content-center align-items-center">
-                                    <div class="row">
-                                        <div class="col-12 mb-2">
-                                            <a href="/auditor/form-3/catatan-audit/ubah/positif/<?= $catatan['uuid'] ?>" class="btn btn-primary btn-block">Ubah</a>
-                                        </div>
-                                        <div class="col-12">
-                                            <form action="/auditor/form-3/catatan-audit/positif/hapus/<?= $catatan['uuid'] ?>" method="post" class="d-inline">
-                                                <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
-                                            </form>
-                                        </div>
+
+                            <div class="col-12 col-lg-1 mt-3 mt-lg-0 d-flex justify-content-center align-items-center">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <a href="/auditor/form-3/catatan-audit/ubah/positif/<?= $catatan['uuid'] ?>" class="btn btn-primary btn-block">Ubah</a>
+                                    </div>
+                                    <div class="col-12">
+                                        <form action="/auditor/form-3/catatan-audit/positif/hapus/<?= $catatan['uuid'] ?>" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
+                                        </form>
                                     </div>
                                 </div>
-                            <?php endif; ?>
+                            </div>
+
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -73,20 +74,20 @@
                             <div class="col-12 col-lg-11">
                                 <textarea class="form-control" disabled rows="10"><?= $catatan['catatan_audit'] ?></textarea>
                             </div>
-                            <?php if ($isKetua['ketua'] == 1) : ?>
-                                <div class="col-12 col-lg-1 mt-3 mt-lg-0 d-flex justify-content-center align-items-center">
-                                    <div class="row">
-                                        <div class="col-12 mb-2">
-                                            <a href="/auditor/form-3/catatan-audit/ubah/negatif/<?= $catatan['uuid'] ?>" class="btn btn-primary btn-block">Ubah</a>
-                                        </div>
-                                        <div class="col-12">
-                                            <form action="/auditor/form-3/catatan-audit/negatif/hapus/<?= $catatan['uuid'] ?>" method="post" class="d-inline">
-                                                <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
-                                            </form>
-                                        </div>
+
+                            <div class="col-12 col-lg-1 mt-3 mt-lg-0 d-flex justify-content-center align-items-center">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <a href="/auditor/form-3/catatan-audit/ubah/negatif/<?= $catatan['uuid'] ?>" class="btn btn-primary btn-block">Ubah</a>
+                                    </div>
+                                    <div class="col-12">
+                                        <form action="/auditor/form-3/catatan-audit/negatif/hapus/<?= $catatan['uuid'] ?>" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
+                                        </form>
                                     </div>
                                 </div>
-                            <?php endif; ?>
+                            </div>
+
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>

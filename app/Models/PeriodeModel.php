@@ -20,6 +20,7 @@ class PeriodeModel extends Model
         "ruang_lingkup",
         "tanggal_mulai",
         "tanggal_selesai",
+        "penjaminan_mutu_audit"
 
 
     ];
