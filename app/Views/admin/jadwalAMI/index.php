@@ -37,7 +37,7 @@
                                 <th class="text-center">Penjaminan Audit Mutu</th>
                                 <th class="text-center">Tanggal Mulai</th>
                                 <th class="text-center">Tanggal Selesai</th>
-                                <th class="text-center" style="min-width: 100px">Action</th>
+                                <th class="text-center" style="min-width: 100px">Aksi</th>
                             </tr>
                         </thead>
                         <?php $i = 1 ?>

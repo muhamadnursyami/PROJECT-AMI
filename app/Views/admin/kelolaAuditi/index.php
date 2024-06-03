@@ -28,7 +28,7 @@
                             </button>
                         </div>
                     <?php endif ?>
-                    <div class="table-responsive">
+                    <div class="table-responsive text-center">
                         <table id="datatable" class="table data-table table-striped">
                             <thead>
                                 <tr>
@@ -36,6 +36,7 @@
                                     <th scope="col">Nama User</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Prodi</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
