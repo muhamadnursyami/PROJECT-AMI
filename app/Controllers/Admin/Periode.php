@@ -61,6 +61,12 @@ class Periode extends BaseController
                     'required' => 'ruang lingkup Mulai harus diisi !'
                 ]
             ],
+            'penjaminan_mutu_audit' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'penjaminan mutu audit harus diisi !'
+                ]
+            ],
             'tanggal_mulai' => [
                 'rules' => 'required',
                 'errors' => [
@@ -90,6 +96,7 @@ class Periode extends BaseController
             'tahun' => $this->request->getVar('tahun'),
             'ruang_lingkup' => $this->request->getVar('ruang_lingkup'),
             'tanggal_mulai' => $this->request->getVar('tanggal_mulai'),
+            'penjaminan_mutu_audit' => $this->request->getVar('penjaminan_mutu_audit'),
             'tanggal_selesai' => $this->request->getVar('tanggal_selesai'),
 
         ]);
@@ -140,6 +147,12 @@ class Periode extends BaseController
                     'required' => 'Tanggal Mulai harus diisi !'
                 ]
             ],
+            'penjaminan_mutu_audit' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'penjaminan mutu audit harus diisi !'
+                ]
+            ],
             'tanggal_mulai' => [
                 'rules' => 'required',
                 'errors' => [
@@ -164,6 +177,7 @@ class Periode extends BaseController
             'tahun' => $this->request->getVar('tahun'),
             'ruang_lingkup' => $this->request->getVar('ruang_lingkup'),
             'tanggal_mulai' => $this->request->getVar('tanggal_mulai'),
+            'penjaminan_mutu_audit' => $this->request->getVar('penjaminan_mutu_audit'),
             'tanggal_selesai' => $this->request->getVar('tanggal_selesai'),
         ]);
 

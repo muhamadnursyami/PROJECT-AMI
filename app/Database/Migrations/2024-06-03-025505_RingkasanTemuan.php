@@ -4,11 +4,10 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CatatanAudit extends Migration
+class RingkasanTemuan extends Migration
 {
     public function up()
     {
-        // Definisi struktur tabel catatan_audit
         $this->forge->addField([
             'id' => [
                 'type' => 'INT',
@@ -20,19 +19,27 @@ class CatatanAudit extends Migration
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
+                'null' => true,
+            ],
+            'id_kriteria' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
+                'null' => true,
             ],
             'uuid' => [
                 'type' => 'VARCHAR',
-                'constraint' => 100,
+                'constraint' => 40,
                 'unique' => true,
             ],
-            'catatan_audit' => [
+            'deskripsi' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
-            'label' => [
-                'type' => "ENUM('+', '-')",
-                'null' => false,
+            'kategori' => [
+                'type' => 'ENUM',
+                'constraint' => ['kts', 'ob'],
+                'default' => 'kts',
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -45,13 +52,15 @@ class CatatanAudit extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_penugasan_auditor', 'penugasan_auditor', 'id', 'CASCADE', 'CASCADE', 'fk_catatan_audit_berdasarkan_penugasanAuditor');
-        $this->forge->createTable('catatan_audit');
+        $this->forge->addForeignKey('id_penugasan_auditor', 'penugasan_auditor', 'id', 'CASCADE', 'CASCADE', 'fk_ringkasan_temuan_berdasarkan_penugasanAuditor');
+        $this->forge->addForeignKey('id_kriteria', 'kriteria', 'id', 'CASCADE', 'CASCADE', 'fk_ringkasan_temuan_berdasarkanKriteria');
+
+
+        $this->forge->createTable('ringkasan_temuan');
     }
 
     public function down()
     {
-
-        $this->forge->dropTable('catatan_audit');
+        $this->forge->dropTable('ringkasan_temuan');
     }
 }

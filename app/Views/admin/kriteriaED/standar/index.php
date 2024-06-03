@@ -30,7 +30,7 @@
                     <?php endif ?>
                     <a href="/admin/dashboard" class="btn btn-danger mb-3">Kembali</a>
                     <a href="/admin/kriteria-ed/tambah/standar/tambah" class="btn btn-primary mb-3">Tambah Standar</a>
-                    <div class="table-responsive">
+                    <div class="table-responsive text-center">
                         <table id="datatable" class="table data-table table-striped">
                             <thead>
                                 <tr>

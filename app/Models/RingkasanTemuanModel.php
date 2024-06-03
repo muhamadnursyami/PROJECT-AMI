@@ -4,25 +4,20 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PeriodeModel extends Model
+class RingkasanTemuanModel extends Model
 {
-
-    protected $table            = 'periode';
+    protected $table            = 'ringkasan_temuan';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
+        "id_penugasan_auditor",
+        "id_kriteria",
         "uuid",
-        "nama_periode",
-        "tahun",
-        "ruang_lingkup",
-        "tanggal_mulai",
-        "tanggal_selesai",
-        "penjaminan_mutu_audit"
-
-
+        "deskripsi",
+        "kategori",
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -54,13 +49,4 @@ class PeriodeModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public  function getPeriode($uuid = false)
-    {
-        if ($uuid == false) {
-            return $this->findAll();
-        }
-
-        return $this->where('uuid', $uuid)->first();
-    }
 }
