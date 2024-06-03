@@ -29,7 +29,7 @@
                         </div>
                     <?php endif ?>
                     <a href="/admin/penugasan-auditor/tambah" class="btn btn-primary mb-3">Tambah</a>
-                    <div class="table-responsive">
+                    <div class="table-responsive text-center">
                         <table id="datatable" class="table data-table table-striped">
                             <thead>
                                 <tr>
