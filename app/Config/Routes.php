@@ -131,3 +131,4 @@ $routes->post('auditor/form-4/ringkasan-temuan/tambah/(:segment)', 'Auditor\Form
 $routes->get('auditor/form-4/ringkasan-temuan/ubah/(:segment)', 'Auditor\Form4::ringkasanTemuanUpdate/$1');
 $routes->post('auditor/form-4/ringkasan-temuan/ubah/(:segment)', 'Auditor\Form4::ringkasanTemuanUpdatePost/$1');
 $routes->post('auditor/form-4/ringkasan-temuan/hapus/(:segment)', 'Auditor\Form4::ringkasanTemuanDelete/$1');
+$routes->get('auditor/form-4/ringkasan-temuan/pdf/(:segment)', 'Auditor\Form4::PDFRingkasanTemuan/$1');

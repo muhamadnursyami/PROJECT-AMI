@@ -13,6 +13,8 @@
         <div class="header-title">
             <h4 class="card-title">Form 4 - Ringkasan Temuan <?= $prodi['nama'] ?></h4>
             <a href="/auditor/form-4" class="btn btn-warning mt-3">Kembali</a>
+            <a href="/auditor/form-4/ringkasan-temuan/pdf/<?= $uuid2 ?>" target="_blank" class="btn btn-primary mt-3"><i class="las la-file-download"></i>PDF</a>
+
         </div>
     </div>
     <div class="card-body">
