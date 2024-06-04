@@ -141,3 +141,4 @@ $routes->get('auditor/form-5/kelola/(:segment)', 'Auditor\Form5::kelola/$1');
 $routes->get('auditor/form-5/kelola/(:segment)/(:segment)', 'Auditor\Form5::kelolaUbah/$1/$2');
 $routes->post('auditor/form-5/kelola/(:segment)/(:segment)', 'Auditor\Form5::kelolaUbahPost/$1/$2');
 $routes->post('auditor/form-5/kelola/(:segment)/(:segment)/hapus', 'Auditor\Form5::kelolaDeletePost/$1/$2');
+$routes->get('auditor/form-4/ringkasan-temuan/pdf/(:segment)', 'Auditor\Form4::PDFRingkasanTemuan/$1');

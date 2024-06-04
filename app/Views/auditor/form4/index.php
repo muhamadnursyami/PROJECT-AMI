@@ -10,13 +10,16 @@
 <?php endif ?>
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <div class="header-title">
-            <h4 class="card-title">Form 4 - Ringkasan Temuan <?= $prodi['nama'] ?></h4>
-            <a href="/auditor/form-4" class="btn btn-warning mt-3">Kembali</a>
-        </div>
+        <h4 class="card-title">Form 4 - Ringkasan Temuan <?= $prodi['nama'] ?></h4>
+        <a href="/auditor/form-4" class="btn btn-warning ">Kembali</a>
+
+
+    </div>
+    <div class="card-header d-flex justify-content-between">
+        <a href="/auditor/form-4/ringkasan-temuan/<?= $uuid2 ?>" class="btn btn-primary">Ringkasan Temuan</a>
+        <a href="/auditor/form-4/ringkasan-temuan/pdf/<?= $uuid2 ?>" target="_blank" class="btn btn-primary"><i class="las la-file-download"></i>PDF</a>
     </div>
     <div class="card-body">
-
         <div class="row text-center">
             <table id="datatable" class="table table-striped">
                 <thead>
@@ -61,8 +64,7 @@
                 </tbody>
             </table>
         </div>
-        <hr class="mt-5">
-        <a href="/auditor/form-4/ringkasan-temuan/<?= $uuid2 ?>" class="btn btn-primary mb-3">Ringkasan Temuan</a>
+        <hr class="mt-2">
         <div class="row text-center">
             <div class="card-body">
                 <div class="table-responsive">
