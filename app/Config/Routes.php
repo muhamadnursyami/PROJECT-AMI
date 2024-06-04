@@ -128,6 +128,16 @@ $routes->get('auditor/form-4', 'Auditor\Form4::beranda');
 $routes->get('auditor/form-4/(:segment)', 'Auditor\Form4::index/$1');
 $routes->get('auditor/form-4/ringkasan-temuan/(:segment)', 'Auditor\Form4::ringkasanTemuan/$1');
 $routes->post('auditor/form-4/ringkasan-temuan/tambah/(:segment)', 'Auditor\Form4::ringkasanTemuanPost/$1');
-$routes->get('auditor/form-4/ringkasan-temuan/ubah/(:segment)', 'Auditor\Form4::ringkasanTemuanUpdate/$1');
+$routes->get('auditor/form-4/ringkasan-temuan/ubah/(:segment)/(:segment)', 'Auditor\Form4::ringkasanTemuanUpdate/$1/$2');
 $routes->post('auditor/form-4/ringkasan-temuan/ubah/(:segment)', 'Auditor\Form4::ringkasanTemuanUpdatePost/$1');
-$routes->post('auditor/form-4/ringkasan-temuan/hapus/(:segment)', 'Auditor\Form4::ringkasanTemuanDelete/$1');
+$routes->post('auditor/form-4/ringkasan-temuan/hapus/(:segment)/(:segment)', 'Auditor\Form4::ringkasanTemuanDelete/$1/$2');
+
+
+// FORM 5 Deskripsi Temuan Audit
+$routes->get('auditor/form-5', 'Auditor\Form5::beranda');
+$routes->get('auditor/form-5/(:segment)', 'Auditor\Form5::index/$1');
+$routes->post('auditor/form-5/(:segment)', 'Auditor\Form5::create/$1');
+$routes->get('auditor/form-5/kelola/(:segment)', 'Auditor\Form5::kelola/$1');
+$routes->get('auditor/form-5/kelola/(:segment)/(:segment)', 'Auditor\Form5::kelolaUbah/$1/$2');
+$routes->post('auditor/form-5/kelola/(:segment)/(:segment)', 'Auditor\Form5::kelolaUbahPost/$1/$2');
+$routes->post('auditor/form-5/kelola/(:segment)/(:segment)/hapus', 'Auditor\Form5::kelolaDeletePost/$1/$2');

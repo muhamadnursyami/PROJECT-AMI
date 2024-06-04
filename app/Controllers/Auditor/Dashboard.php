@@ -49,6 +49,15 @@ class Dashboard extends BaseController
         // tanggal selesai
         $tanggal_string = $this->periode_Model->getPeriode();
         
+        if(count($tanggal_string) == 0){
+            return "Jadwal AMI Belum Dibuat 
+                <br>
+                <a href='/logout'>Logout</a>
+            
+            ";
+            
+        }
+
         $sekarang = time();
         $tanggal_selesai = strtotime($tanggal_string[0]['tanggal_selesai']);
         

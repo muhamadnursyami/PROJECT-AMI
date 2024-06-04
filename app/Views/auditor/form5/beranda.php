@@ -16,7 +16,15 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Form 4 - Ringkasan Temuan Audit</h4>
+                            <h4 class="card-title">Form 5 - Deskripsi Temuan Audit</h4>
+                            <?php if (isset($error)) : ?>
+                                <div class="alert bg-danger mt-3" role="alert">
+                                    <div class="iq-alert-text"> <small> <?= $error; ?> </small></div>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <i class="ri-close-line"></i>
+                                    </button>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <div class="card-body">
@@ -42,7 +50,7 @@
                                                     Anggota
                                                 <?php } ?>
                                             </td>
-                                            <td><a href="/auditor/form-4/<?= $value['uuid_prodi'] ?>" class="btn btn-primary"><?= $value['nama_prodi'] ?></a></td>
+                                            <td><a href="/auditor/form-5/<?= $value['uuid_prodi'] ?>" class="btn btn-primary"><?= $value['nama_prodi'] ?></a></td>
                                         </tr>
                                     <?php $no++;
                                         $i++;

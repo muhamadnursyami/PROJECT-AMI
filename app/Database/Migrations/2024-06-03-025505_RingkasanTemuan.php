@@ -38,8 +38,8 @@ class RingkasanTemuan extends Migration
             ],
             'kategori' => [
                 'type' => 'ENUM',
-                'constraint' => ['kts', 'ob'],
-                'default' => 'kts',
+                'constraint' => ['KTS', 'OB'],
+                'default' => 'KTS',
             ],
             'created_at' => [
                 'type' => 'DATETIME',

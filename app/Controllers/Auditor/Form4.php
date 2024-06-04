@@ -193,9 +193,8 @@ class Form4 extends BaseController
         return redirect()->to("/auditor/form-4/$uuid2")->with('sukses', 'Berhasil menyimpan data ringkasan temuan');
     }
 
-    public function ringkasanTemuanUpdate($uuid)
+    public function ringkasanTemuanUpdate($uuid, $uuid2)
     {
-
 
         $ringkasanTemuan = $this->ringkasanTemuan->where('uuid', $uuid)->first();
 
@@ -233,6 +232,7 @@ class Form4 extends BaseController
             'ringkasanTemuan' => $ringkasanTemuan,
             'form_ed' => $form_ed,
             'uuid' => $uuid,
+            'uuid2' => $uuid2,
             'uuid_prodi' => $uuid_prodi
 
         ];

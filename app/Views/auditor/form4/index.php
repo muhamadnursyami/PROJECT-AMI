@@ -89,8 +89,8 @@
                                         <td><?= $value['deskripsi'] ?></td>
                                         <td><?= $value['kategori'] ?></td>
                                         <td>
-                                            <a href="/auditor/form-4/ringkasan-temuan/ubah/<?= $value['uuid'] ?>" class="btn btn-primary ">Ubah</a>
-                                            <form action="/auditor/form-4/ringkasan-temuan/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                            <a href="/auditor/form-4/ringkasan-temuan/ubah/<?= $value['uuid'] ?>/<?= $uuid2 ?>" class="btn btn-primary ">Ubah</a>
+                                            <form action="/auditor/form-4/ringkasan-temuan/hapus/<?= $value['uuid'] ?>/<?= $uuid2 ?>" method="post" class="d-inline">
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                             </form>
                                         </td>

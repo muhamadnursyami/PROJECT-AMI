@@ -90,7 +90,7 @@ class ViewEDController extends BaseController
     public function view($uuid)
     {
 
-        $form_ed = $this->kriteriaProdi->select('standar, is_aktif, kriteria_prodi.uuid as uuid, id_kriteria, catatan ,kriteria_prodi.id_prodi, capaian, capaian_auditi, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('prodi.uuid', $uuid)->findAll();
+        $form_ed = $this->kriteriaProdi->select('standar, is_aktif, kriteria_prodi.uuid as uuid, id_kriteria, catatan ,kriteria_prodi.id_prodi, capaian, capaian_auditi, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, kode_kriteria, bobot')->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')->where('prodi.uuid', $uuid)->findAll();
 
         if (count($form_ed) == 0) {
             return redirect()->to('admin/kriteria-ed/view')->with('gagal', 'Data form kriteria prodi belum ada');

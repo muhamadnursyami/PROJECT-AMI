@@ -8,7 +8,7 @@
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title d-flex">
 
-                        <h4 class="card-title">FORM Edit Kop Kelengkapan Dokumen</h4>
+                        <h4 class="card-title">FORM Edit Data Kelengkapan Dokumen</h4>
                     </div>
                     <a href="/auditor/form-1/<?= $uuid ?>" class=" text-end btn bg-warning">Kembali</a>
                 </div>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center mt-5">
-                            <button type="submit" class="btn btn-primary mr-3">Edit Kop Kelengkapan Dokumen</button>
+                            <button type="submit" class="btn btn-primary mr-3">Edit Data Kelengkapan Dokumen</button>
                         </div>
                     </form>
                 </div>

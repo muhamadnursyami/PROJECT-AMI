@@ -175,6 +175,8 @@ class Form1 extends BaseController
         $auditor_ketua = [];
         $auditor_anggota = [];
 
+        // dd($penugasan_auditor_with_same_prodi);
+
         foreach ($penugasan_auditor_with_same_prodi as $pa) {
             $auditor_name = $this->auditor->getAuditorNameById($pa['id_auditor']);
             if ($pa['ketua'] == 1) {
@@ -184,8 +186,15 @@ class Form1 extends BaseController
             }
         }
         $periode_Model = $this->periode_Model->first();
-        // dd($auditor_anggota);
         $prodi = $this->prodi->where('uuid', $uuid2)->first();
+        // dd($prodi);
+        
+        if(count($auditor_ketua) == 0){
+            return redirect()->to("/auditor/dashboard")->with('gagal', 'Prodi belum memiliki ketua auditor, silahkan hubungi admin');
+        }
+        if(count($auditor_anggota) == 0){
+            return redirect()->to("/auditor/dashboard")->with('gagal', 'Prodi belum memiliki anggota auditor, silahkan hubungi admin');
+        }
 
         $data = [
             'title' => 'Kop Kelengkapan Dokumen',
