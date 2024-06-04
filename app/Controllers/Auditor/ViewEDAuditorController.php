@@ -207,6 +207,7 @@ class ViewEDAuditorController extends BaseController
                 'currentPage' => 'form-ed',
                 'form_ed' => $form_ed,
                 'persentase' => $persentase_terisi,
+                "currentPage" => "lihat-form-ed",
                 'prodi' => $form_ed[0]['nama'],
                 'uuid' => $uuid2,
                 'formTerkunci' => $formTerkunci,

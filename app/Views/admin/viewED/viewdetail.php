@@ -20,7 +20,8 @@
                                 <tr>
                                     <th scope="col" style="width: 5%;">#</th>
                                     <th scope="col" style="width: 10%;">Standar</th>
-                                    <th scope="col" style="width: 30%;">Kriteria</th>
+                                    <th scope="col" style="width: 5%;">Kode Kriteria</th>
+                                    <th scope="col" style="width: 25%;">Kriteria</th>
                                     <th scope="col" style="width: 15%;">Akar Penyebab</th>
                                     <th scope="col" style="width: 15%;">Tautan Bukti</th>
                                     <th scope="col" style="width: 5%;">Capaian Auditi</th>
@@ -36,6 +37,7 @@
                                         <tr>
                                             <td scope="row"><?= $no; ?></td>
                                             <td><?= $form_ed[$i]['standar']; ?></td>
+                                            <td><?= $form_ed[$i]['kode_kriteria']; ?></td>
                                             <td><?= $form_ed[$i]['kriteria']; ?></td>
                                             <td>
                                                 <?php if (!is_null($form_ed[$i]['akar_penyebab'])) { ?>
@@ -80,6 +82,7 @@
                                         <tr>
                                             <td scope="row"><?= $no; ?></td>
                                             <td><?= $form_ed[$i]['standar']; ?> <b>(Tidak aktif)</b></td>
+                                            <td><?= $form_ed[$i]['kode_kriteria']; ?></td>
                                             <td><?= $form_ed[$i]['kriteria']; ?></td>
                                             <td>
                                                 <?php if (!is_null($form_ed[$i]['akar_penyebab'])) { ?>

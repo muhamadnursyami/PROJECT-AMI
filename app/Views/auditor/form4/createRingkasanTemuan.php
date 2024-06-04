@@ -33,8 +33,8 @@
                                 <label for="kategori" class="h6">Kategori (OB/KTS)</label>
                                 <select class="form-control mb-3" name="kategori" required>
                                     <option value="">Pilih Kategori</option>
-                                    <option value="kts">kts</option>
-                                    <option value="ob">ob</option>
+                                    <option value="KTS">KTS</option>
+                                    <option value="OB">OB</option>
                                 </select>
                             </div>
 

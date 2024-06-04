@@ -39,6 +39,7 @@
                                 <div class="progress-bar" role="progressbar" style="width: <?= $persentase ?>%;" aria-valuenow="<?= $persentase ?>" aria-valuemin="0" aria-valuemax="100"><?= $persentase ?>%</div>
                             </div>
                         <?php } ?>
+                        <a href="/auditor/form-ed/view" class="btn btn-warning mb-3">Kembali</a>
                         <form action="/auditor/form-ed/view/<?= $uuid ?>" method="POST">
                             <?= csrf_field() ?>
                             <div class="table-responsive">
@@ -79,7 +80,7 @@
                                                 </td>
                                                 <td>
                                                     <label for="validationCustom04">Capaian</label>
-                                                    <select class="custom-select" id="validationCustom04" name="<?= $form_ed[$i]['uuid'] ?>" <?= $penugasanAuditor['ketua'] == 0 ? 'disabled' : '' ?>>
+                                                    <select class="custom-select" id="validationCustom04" name="<?= $form_ed[$i]['uuid'] ?>">
                                                         <?php if ($form_ed[$i]['capaian'] != 0) { ?>
                                                             <option selected value="<?= $form_ed[$i]['capaian'] ?>"><?= $form_ed[$i]['capaian'] ?></option>
                                                             <option value="1">1</option>
@@ -97,7 +98,7 @@
                                                 </td>
                                                 <td>
                                                     <label for="catatan">Catatan</label>
-                                                    <textarea class="form-control" id="catatan" rows="3" name="catatan<?= $form_ed[$i]['uuid'] ?>" <?= $penugasanAuditor['ketua'] == 0 ? 'disabled' : '' ?>><?= $form_ed[$i]['catatan'] ?></textarea>
+                                                    <textarea class="form-control" id="catatan" rows="3" name="catatan<?= $form_ed[$i]['uuid'] ?>"><?= $form_ed[$i]['catatan'] ?></textarea>
                                                 </td>
                                             </tr>
                                             <?php $no++; ?>
@@ -105,12 +106,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <?php if ($penugasanAuditor['ketua'] == 1) : ?>
-                                <div class="row justify-content-center mt-5">
-                                    <button type="submit" class="btn btn-primary mr-3">Simpan</button>
-                                    <a href="/auditor/form-ed/view" class="btn bg-danger">Batal</a>
-                                </div>
-                            <?php endif; ?>
+                            <div class="row justify-content-center mt-5">
+                                <button type="submit" class="btn btn-primary mr-3">Simpan</button>
+                                <a href="/auditor/form-ed/view" class="btn bg-danger">Batal</a>
+                            </div>
                         </form>
                     </div>
                 </div>
