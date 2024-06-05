@@ -186,6 +186,8 @@ class Form5 extends BaseController
             return view('auditor/form5/beranda', $data);
         }
 
+        // dd(count($deskripsiTemuan));
+
         $data = [
             'title' => 'Form 5',
             'currentPage' => 'form-5',
