@@ -14,6 +14,8 @@ use App\Models\RingkasanTemuanModel;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use PDO;
+use App\Libraries\Pdf;
+use App\Libraries\MY_TCPDF as TCPDF;
 
 class Form5 extends BaseController
 {
@@ -148,7 +150,7 @@ class Form5 extends BaseController
                 "title" => "Form 5",
                 "currentPage" => "form-5",
                 'penugasan_auditor' => $penugasan_auditor,
-                'error' => "Form 4 - Ringkasan Temuan Audit pada prodi " . $prodi['nama'] ." belum dibuat, silahkan buat terlebih dahulu",
+                'error' => "Form 4 - Ringkasan Temuan Audit pada prodi " . $prodi['nama'] . " belum dibuat, silahkan buat terlebih dahulu",
                 'formTerkunci' => false
             ];
 
@@ -167,7 +169,7 @@ class Form5 extends BaseController
         // }
 
 
-        if($dataKopKelengkapanDokumen == null){
+        if ($dataKopKelengkapanDokumen == null) {
             $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id,penugasan_auditor.uuid, prodi.uuid as uuid_prodi, ketua, auditor.nama as nama_auditor, fakultas, kode_auditor, prodi.nama as nama_prodi')
                 ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
                 ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
@@ -177,7 +179,7 @@ class Form5 extends BaseController
                 "title" => "Form 5",
                 "currentPage" => "form-5",
                 'penugasan_auditor' => $penugasan_auditor,
-                'error' => "Form 1 - Data kelengkapan dokumen pada prodi " . $prodi['nama'] ." belum dibuat, silahkan buat terlebih dahulu",
+                'error' => "Form 1 - Data kelengkapan dokumen pada prodi " . $prodi['nama'] . " belum dibuat, silahkan buat terlebih dahulu",
                 'formTerkunci' => false
             ];
 
@@ -245,7 +247,7 @@ class Form5 extends BaseController
 
 
         $data = [
-            'title' => 'form - 5',
+            'title' => 'Form 5',
             'currentPage' => 'form-5',
             'uuid' => $uuid,
             'deskripsiTemuan' => $deskripsiTemuan
@@ -266,12 +268,12 @@ class Form5 extends BaseController
             ->where('deskripsi_temuan.uuid', $uuid_deskripsi_temuan)
             ->first();
 
-            
+
         // dd($deskripsiTemuan);
 
 
         $data = [
-            "title" => 'form - 5',
+            "title" => 'Form 5',
             'currentPage' => 'form-5',
             'uuid' => $uuid,
             'uuid_deskripsi_temuan' => $uuid_deskripsi_temuan,
@@ -281,13 +283,12 @@ class Form5 extends BaseController
         return view('auditor/form5/kelolaUpdate', $data);
     }
 
-    public function kelolaUbahPost($uuid, $uuid_deskripsi_temuan){
+    public function kelolaUbahPost($uuid, $uuid_deskripsi_temuan)
+    {
 
         // dd($uuid_deskripsi_temuan);
 
         $data = [
-            'kriteria' => $this->request->getVar('kriteria'),
-            'deskripsi_temuan' => $this->request->getVar('deskripsiTemuan'),
             'akibat' => $this->request->getVar('akibat'),
             'akar_penyebab' => $this->request->getVar('akarPenyebab'),
             'rekomendasi' => $this->request->getVar('rekomendasiDisepakati'),
@@ -305,15 +306,118 @@ class Form5 extends BaseController
         // dd($data);
         $this->deskripsiTemuan->set($data)->where('uuid', $uuid_deskripsi_temuan)->update();
         return redirect()->to("/auditor/form-5/kelola/$uuid/$uuid_deskripsi_temuan")->with('sukses', 'Berhasil mengubah data deskripsi temuan');
-
     }
 
 
-    public function kelolaDeletePost($uuid, $uuid_deskripsi_temuan){
+    public function kelolaDeletePost($uuid, $uuid_deskripsi_temuan)
+    {
 
         $this->deskripsiTemuan->where('uuid', $uuid_deskripsi_temuan)->delete();
         return redirect()->to("/auditor/form-5/$uuid")->with('sukses', 'Berhasil menghapus data deskripsi temuan');
-
     }
 
+    public function PDFDeskripsiTemuan($uuid2)
+    {
+        $id_user = session()->get('id');
+        $auditor = $this->auditor->where('id_user', $id_user)->first();
+        if (!$auditor) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Auditor not found");
+        }
+        $prodiIds = $this->penugasanAuditor->select('id_prodi')
+            ->where('id_auditor', $auditor['id'])
+            ->findColumn('id_prodi');
+
+        if (empty($prodiIds)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("No prodi found for the auditor");
+        }
+
+        $dataKopKelengkapanDokumen = $this->kopkelengkapanDokumen
+            ->join('prodi', 'prodi.nama = lokasi')
+            ->where('prodi.uuid', $uuid2)->first();
+
+        $anggota = [];
+        if (!is_null($dataKopKelengkapanDokumen)) {
+
+            $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];
+            $anggota = explode(',', $anggota);
+        }
+        $prodi = $this->prodi->where('uuid', $uuid2)->first();
+        $namaprodi = $prodi['nama'];
+        $ringkasanTemuan = $this->ringkasanTemuan
+            ->select('kode_kriteria, ringkasan_temuan.id as id, deskripsi,kategori, kriteria, ringkasan_temuan.uuid as uuid, prodi.nama as nama_prodi')
+            ->join('penugasan_auditor', 'penugasan_auditor.id = id_penugasan_auditor')
+            ->join('kriteria', 'kriteria.id = id_kriteria')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('prodi.uuid', $uuid2)
+            ->where('kategori', 'kts')
+            ->findAll();
+
+        $periode = $this->periodeModel->first();
+
+        $deskripsiTemuan = $this->deskripsiTemuan
+            ->select('
+        deskripsi_temuan.id,
+        deskripsi_temuan.deskripsi_temuan AS deskripsi_temuan,
+        deskripsi_temuan.kriteria AS kriteria,
+        deskripsi_temuan.akibat AS akibat,
+        deskripsi_temuan.akar_penyebab AS akar_penyebab,
+        deskripsi_temuan.rekomendasi AS rekomendasi,
+        deskripsi_temuan.tanggapan_auditi AS tanggapan_auditi,
+        deskripsi_temuan.rencana_perbaikan AS rencana_perbaikan,
+        deskripsi_temuan.jadwal_perbaikan AS jadwal_perbaikan,
+        deskripsi_temuan.penanggung_jawab_perbaikan AS penanggung_jawab_perbaikan,
+        deskripsi_temuan.rencana_pencegahan AS rencana_pencegahan,
+        deskripsi_temuan.jadwal_pencegahan AS jadwal_pencegahan,
+        deskripsi_temuan.penanggung_jawab_pencegahan AS penanggung_jawab_pencegahan,
+        kriteria.kode_kriteria
+    ')
+            ->join('ringkasan_temuan', 'deskripsi_temuan.id_ringkasan_temuan = ringkasan_temuan.id')
+            ->join('kriteria', 'ringkasan_temuan.id_kriteria = kriteria.id')
+            ->findAll();
+        // dd($deskripsiTemuan);
+        $imagePath = FCPATH . 'assets/images/logo-title.jpg';
+
+        $data = [
+            'title' => "deskripsi-temuan-$namaprodi",
+            'uuid2' => $uuid2,
+            'prodi' => $prodi,
+            'dataKopKelengkapanDokumen' => $dataKopKelengkapanDokumen,
+            'ringkasanTemuan' => $ringkasanTemuan,
+            'anggota' => $anggota,
+            'periode' => $periode,
+            'deskripsiTemuan' => $deskripsiTemuan,
+            'image_path' => $imagePath
+        ];
+        // ========================================================
+        // GENERATE PDFNYA 
+        $view = view('auditor/form5/PDFDeskripsiTemuan', $data);
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT);
+
+        // Set document information
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('AMI UMRAH');
+        $pdf->SetTitle('Deskripsi Temuan PDF');
+        $pdf->SetSubject('PDF Tutorial');
+        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+        // Remove default header/footer
+        $pdf->setPrintHeader(false);
+        $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
+        // Set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+        // Set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+        // set auto page breaks
+        $customBottomMargin = 34; // Ganti dengan nilai margin bawah yang Anda inginkan
+        $pdf->SetAutoPageBreak(TRUE, $customBottomMargin);
+        // set image scale factor
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        // Add a callback for the footer
+
+        $pdf->AddPage();
+        $pdf->writeHTML($view);
+        $this->response->setContentType('application/pdf');
+        $pdf->Output("deskripsi-temuan-$namaprodi.pdf", "I");
+    }
 }

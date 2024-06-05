@@ -10,18 +10,20 @@
 <?php endif ?>
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <div class="header-title">
-            <h4 class="card-title">Form 5 - Deskripsi Temuan <?= $prodi['nama'] ?></h4>
-            <a href="/auditor/form-5" class="btn btn-warning mt-3">Kembali</a>
-        </div>
+
+        <h4 class="card-title">Form 5 - Deskripsi Temuan <?= $prodi['nama'] ?></h4>
+        <a href="/auditor/form-5" class="btn btn-warning ">Kembali</a>
+
+    </div>
+    <div class="card-header d-flex justify-content-between">
+        <a href="/auditor/form-5/kelola/<?= $uuid2 ?>" class="btn btn-primary">Kelola Deskripsi Temuan</a>
+        <a href="/auditor/form-5/deskripsi-temuan/pdf/<?= $uuid2 ?>" target="_blank" class="btn btn-primary"><i class="las la-file-download"></i>PDF</a>
     </div>
     <div class="card-body">
-
         <div class="row text-center">
             <table id="datatable" class="table table-striped">
                 <thead>
                     <tr>
-                        <!-- <th>Kode Kriteria</th> -->
                         <th>Lokasi</th>
                         <th>Ruang Lingkup</th>
                         <th>Tanggal Audit</th>
@@ -29,25 +31,16 @@
                         <th>Auditor Ketua</th>
                         <th>Auditor Anggota</th>
                         <th>Penjamin Mutu Audit</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (!is_null($dataKopKelengkapanDokumen)) { ?>
                         <tr>
-                            <!-- <td>
-                                <ol>
-                                    <?php foreach ($form_ed as $value) { ?>
-                                        <li><?= $value['kode_kriteria']; ?></li>
-                                    <?php } ?>
-                                </ol>
-                            </td> -->
                             <td><?= $dataKopKelengkapanDokumen['lokasi'] ?></td>
                             <td><?= $dataKopKelengkapanDokumen['ruang_lingkup'] ?></td>
                             <td><?= $dataKopKelengkapanDokumen['tanggal_audit'] ?></td>
                             <td><?= $dataKopKelengkapanDokumen['wakil_auditi'] ?></td>
                             <td><?= $dataKopKelengkapanDokumen['auditor_ketua'] ?></td>
-
                             <td>
                                 <ol>
                                     <?php foreach ($anggota as $key => $value) { ?>
@@ -61,49 +54,40 @@
                 </tbody>
             </table>
         </div>
-        <hr class="mt-5">
+        <hr>
         <div class="row text-center">
             <div class="card-body">
-
-                <a href="/auditor/form-5/kelola/<?= $uuid2 ?>" class="btn btn-primary">Kelola Deskripsi Temuan</a>
-                <div class="container mt-5">
+                <div class="container mt-1">
                     <div class="form-group">
                         <label for="dropdown">Pilih Kode Kriteria:</label>
                         <select id="dropdown" class="form-control">
                             <option value="">--Pilih Kode Kriteria--</option>
                             <?php foreach ($ringkasanTemuan as $key => $value) { ?>
-                                <?php $found = false; ?>
-                                <?php foreach ($deskripsiTemuan as $item) { ?>
-                                    <?php if ($item['kode_kriteria'] == $value['kode_kriteria']) {
-                                        $found = true;
-                                        break;
-                                    } ?>
-                                <?php } ?>
-                                    <?php if(!$found){ ?>
-                                        <option value="<?= $value['kode_kriteria'] ?>"><?= $value['kode_kriteria']; ?></option>
-                                    <?php } ?>
+                                <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
+                                <option value="<?= $uniqueKey ?>"><?= $value['kode_kriteria']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <?php foreach ($ringkasanTemuan as $key => $value) { ?>
-                        <div id="<?= $value['kode_kriteria'] ?>" class="hidden">
+                        <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
+                        <div id="<?= $uniqueKey ?>" class="hidden form-temuan">
                             <h2>Form Deskripsi Temuan</h2>
                             <p>Kode kriteria - <?= $value['kode_kriteria'] ?></p>
                             <form action="/auditor/form-5/<?= $uuid2 ?>" method="post">
-
                                 <input type="text" name="id_ringkasan_temuan" value="<?= $value['id'] ?>" hidden>
                                 <input type="text" name="penjaminMutuAudit" value="<?= $penjaminMutuAudit ?>" hidden>
                                 <input type="text" name="pimpinanAuditi" value="<?= $wakil_auditi ?>" hidden>
 
                                 <div class="form-group">
                                     <label for="deskripsiTemuan">Deskripsi Temuan</label>
-                                    <textarea class="form-control" id="deskripsiTemuan" name="deskripsiTemuan" rows="3" required></textarea>
+                                    <textarea class="form-control" id="deskripsiTemuan-visible-<?= $uniqueKey ?>" rows="3" disabled></textarea>
+                                    <textarea class="form-control hidden-textarea" id="deskripsiTemuan-<?= $uniqueKey ?>" name="deskripsiTemuan" rows="3" style="display: none;"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="kriteria">Kriteria</label>
-                                    <textarea class="form-control" id="kriteria" name="kriteria" rows="3" required></textarea>
+                                    <textarea class="form-control" id="kriteria-visible-<?= $uniqueKey ?>" rows="3" disabled></textarea>
+                                    <textarea class="form-control hidden-textarea" id="kriteria-<?= $uniqueKey ?>" name="kriteria" rows="3" style="display: none;"></textarea>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="akibat">akibat</label>
                                     <textarea class="form-control" id="akibat" name="akibat" rows="3" required></textarea>
@@ -140,43 +124,58 @@
                                     <label for="jadwalPencegahan" id="jadwalPencegahan">Jadwal Pencegahan</label>
                                     <input type="date" class="form-control" id="jadwalPencegahan" name="jadwalPencegahan" required>
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </form>
                         </div>
-
                     <?php } ?>
-
                 </div>
-
-
-                <!--  -->
             </div>
         </div>
-
-
     </div>
 </div>
+
+<!-- Include the ringkasanTemuan and kriteria data as JSON -->
 <script>
+    const ringkasanTemuan = <?= json_encode($ringkasanTemuan) ?>;
+    const kriteriaData = <?= json_encode($form_ed) ?>;
+
     document.addEventListener('DOMContentLoaded', function() {
         // Hide all forms on page load
         document.querySelectorAll('.hidden').forEach(function(form) {
             form.style.display = 'none';
         });
-    });
 
-    document.getElementById('dropdown').addEventListener('change', function() {
-        // Hide all forms
-        document.querySelectorAll('.hidden').forEach(function(form) {
-            form.style.display = 'none';
+        document.getElementById('dropdown').addEventListener('change', function() {
+            // Hide all forms
+            document.querySelectorAll('.hidden').forEach(function(form) {
+                form.style.display = 'none';
+            });
+
+            // Show the selected form
+            var selectedForm = this.value;
+            if (selectedForm) {
+                document.getElementById(selectedForm).style.display = 'block';
+
+                // Fill the Deskripsi Temuan and Kriteria fields automatically
+                const [selectedKodeKriteria, selectedId] = selectedForm.split('-');
+                const selectedTemuan = ringkasanTemuan.find(item => item.kode_kriteria === selectedKodeKriteria && item.id == selectedId);
+                const selectedKriteria = kriteriaData.find(item => item.kode_kriteria === selectedKodeKriteria);
+
+                if (selectedTemuan) {
+                    document.getElementById(`deskripsiTemuan-visible-${selectedForm}`).value = selectedTemuan.deskripsi;
+                    document.getElementById(`deskripsiTemuan-${selectedForm}`).value = selectedTemuan.deskripsi;
+                }
+                if (selectedKriteria) {
+                    document.getElementById(`kriteria-visible-${selectedForm}`).value = selectedKriteria.kriteria;
+                    document.getElementById(`kriteria-${selectedForm}`).value = selectedKriteria.kriteria;
+                }
+            }
         });
-
-        // Show the selected form
-        var selectedForm = this.value;
-        if (selectedForm) {
-            document.getElementById(selectedForm).style.display = 'block';
-        }
     });
 </script>
-
+<style>
+    .hidden-textarea {
+        display: none;
+    }
+</style>
 <?= $this->endSection() ?>
