@@ -61,13 +61,25 @@
                     <h4 class="text-left">Tambah Deskripsi Temuan</h4>
                     <div class="form-group">
                         <label for="dropdown">Pilih Kode Kriteria:</label>
+                        <!--  -->
                         <select id="dropdown" class="form-control">
                             <option value="">--Pilih Kode Kriteria--</option>
                             <?php foreach ($ringkasanTemuan as $key => $value) { ?>
-                                <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
-                                <option value="<?= $uniqueKey ?>"><?= $value['kode_kriteria']; ?></option>
+                                <?php $found = false ?>;
+
+                                <?php foreach($deskripsiTemuan as $item) { ?>
+                                    <?php if ($item['kode_kriteria'] == $value['kode_kriteria']) { ?>
+                                        <?php $found = true; ?>
+                                    <?php } ?>
+                                <?php } ?>
+
+                                <?php if (!$found) { ?>
+                                    <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
+                                    <option value="<?= $uniqueKey ?>"><?= $value['kode_kriteria']; ?></option>
+                                <?php } ?>
                             <?php } ?>
                         </select>
+                        <!--  -->
                     </div>
                     <?php foreach ($ringkasanTemuan as $key => $value) { ?>
                         <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
