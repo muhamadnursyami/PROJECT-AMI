@@ -68,7 +68,7 @@
                             <h5 class="mb-3">Pelaksanaan Audit Mutu Internal </h5>
                             <?php foreach ($jadwalAMI as $jdwlAMI) : ?>
                                 <div class="row align-items-center">
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <div class="mt-3 mt-md-0">
                                             <h6 class="mb-1">Nama Periode :</h6>
                                             <p class="mb-0"><?= $jdwlAMI['nama_periode'] ?></p>
@@ -80,7 +80,7 @@
                                             <p class="mb-0"><?= $jdwlAMI['tahun'] ?></p>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="mt-3 mt-md-0">
                                             <h6 class="mb-1">Ruang Lingkup :</h6>
                                             <p class="mb-0"><?= $jdwlAMI['ruang_lingkup'] ?></p>
@@ -92,7 +92,7 @@
                                             <p class="mb-0"><?= $jdwlAMI['tanggal_mulai'] ?></p>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="mt-3 mt-md-0">
                                             <h6 class="mb-1">Tanggal Selesai :</h6>
                                             <p class="mb-0"><?= $jdwlAMI['tanggal_selesai'] ?></p>

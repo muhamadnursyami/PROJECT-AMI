@@ -131,6 +131,7 @@ $routes->post('auditor/form-4/ringkasan-temuan/tambah/(:segment)', 'Auditor\Form
 $routes->get('auditor/form-4/ringkasan-temuan/ubah/(:segment)/(:segment)', 'Auditor\Form4::ringkasanTemuanUpdate/$1/$2');
 $routes->post('auditor/form-4/ringkasan-temuan/ubah/(:segment)', 'Auditor\Form4::ringkasanTemuanUpdatePost/$1');
 $routes->post('auditor/form-4/ringkasan-temuan/hapus/(:segment)/(:segment)', 'Auditor\Form4::ringkasanTemuanDelete/$1/$2');
+$routes->get('auditor/form-4/ringkasan-temuan/pdf/(:segment)', 'Auditor\Form4::PDFRingkasanTemuan/$1');
 
 
 // FORM 5 Deskripsi Temuan Audit
@@ -141,3 +142,4 @@ $routes->get('auditor/form-5/kelola/(:segment)', 'Auditor\Form5::kelola/$1');
 $routes->get('auditor/form-5/kelola/(:segment)/(:segment)', 'Auditor\Form5::kelolaUbah/$1/$2');
 $routes->post('auditor/form-5/kelola/(:segment)/(:segment)', 'Auditor\Form5::kelolaUbahPost/$1/$2');
 $routes->post('auditor/form-5/kelola/(:segment)/(:segment)/hapus', 'Auditor\Form5::kelolaDeletePost/$1/$2');
+$routes->get('auditor/form-5/deskripsi-temuan/pdf/(:segment)', 'Auditor\Form5::PDFDeskripsiTemuan/$1');

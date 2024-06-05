@@ -1,31 +1,29 @@
 <?= $this->extend('auditor/layout') ?>
 <?= $this->section('content') ?>
+<?php if (isset($error)) : ?>
+    <div class="alert bg-danger mt-3" role="alert">
+        <div class="iq-alert-text"> <small> <?= $error; ?> </small></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+<?php endif ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-lg-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <div class="header-title">
-                        <h4 class="card-title">Form 5 - Kelola Deskripsi Temuan</h4>
-                        <?php if (isset($error)) : ?>
-                            <div class="alert bg-danger mt-3" role="alert">
-                                <div class="iq-alert-text"> <small> <?= $error; ?> </small></div>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <i class="ri-close-line"></i>
-                                </button>
-                            </div>
-                        <?php endif ?>
-                    </div>
+
+                    <h4 class="card-title">Form 5 - Kelola Deskripsi Temuan</h4>
+                    <a href="/auditor/form-5/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
                 </div>
                 <div class="card-body">
-                    <a href="/auditor/form-5/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
-
-                    <div class="mt-5">
+                    <div>
                         <?php if (count($deskripsiTemuan) == 0) { ?>
                             <p>Data Deskripsi Temuan Belum Ada</p>
                         <?php } else { ?>
 
-                            <div class="mt-5">
+                            <div>
                                 <input type="text" id="customDropdownSearch" class="form-control mb-2" placeholder="Cari Kode Kriteria">
                                 <div id="customDropdownMenu" class="list-group">
                                     <?php foreach ($deskripsiTemuan as $key => $value) { ?>
