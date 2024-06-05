@@ -16,7 +16,7 @@
 
     </div>
     <div class="card-header d-flex justify-content-between">
-        <a href="/auditor/form-4/ringkasan-temuan/<?= $uuid2 ?>" class="btn btn-primary">Ringkasan Temuan</a>
+        <a href="/auditor/form-4/ringkasan-temuan/<?= $uuid2 ?>" class="btn btn-primary">Tambah Ringkasan Temuan</a>
         <a href="/auditor/form-4/ringkasan-temuan/pdf/<?= $uuid2 ?>" target="_blank" class="btn btn-primary"><i class="las la-file-download"></i>PDF</a>
     </div>
     <div class="card-body">

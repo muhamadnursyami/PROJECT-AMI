@@ -8,31 +8,29 @@
         </button>
     </div>
 <?php endif ?>
+<?php if (isset($error)) : ?>
+    <div class="alert bg-danger mt-3" role="alert">
+        <div class="iq-alert-text"> <small> <?= $error; ?> </small></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+<?php endif ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-lg-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <div class="header-title">
-                        <h4 class="card-title">Form 5 - Kelola Deskripsi Temuan</h4>
-                        <?php if (isset($error)) : ?>
-                            <div class="alert bg-danger mt-3" role="alert">
-                                <div class="iq-alert-text"> <small> <?= $error; ?> </small></div>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <i class="ri-close-line"></i>
-                                </button>
-                            </div>
-                        <?php endif ?>
-                    </div>
+
+                    <h4 class="card-title">Form 5 - Kelola Edit Deskripsi Temuan - <?= $deskripsiTemuan['kode_kriteria'] ?></h4>
+                    <a href="/auditor/form-5/kelola/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
+
                 </div>
                 <div class="card-body">
-                    <a href="/auditor/form-5/kelola/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
-                    <form action="/auditor/form-5/kelola/<?= $uuid ?>/<?= $uuid_deskripsi_temuan ?>/hapus" method="post">
+                    <form class="text-right" action="/auditor/form-5/kelola/<?= $uuid ?>/<?= $uuid_deskripsi_temuan ?>/hapus" method="post">
                         <button type="submit" class="btn btn-danger mb-3" onclick="return confirm('Apakah ingin menghapus?')">Hapus <?= $deskripsiTemuan['kode_kriteria'] ?></button>
                     </form>
                     <div class="container">
-                        <h2>Edit Deskripsi Temuan</h2>
-                        <p>Data deskripsi temuan - <?= $deskripsiTemuan['kode_kriteria'] ?></p>
                         <form action="/auditor/form-5/kelola/<?= $uuid ?>/<?= $uuid_deskripsi_temuan ?>" method="post">
 
                             <input type="text" name="id_ringkasan_temuan" value="<?= $deskripsiTemuan['id'] ?>" hidden>
@@ -49,7 +47,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="akibat">akibat</label>
+                                <label for="akibat">Akibat</label>
                                 <textarea class="form-control" id="akibat" name="akibat" rows="3" required><?= $deskripsiTemuan['akibat'] ?></textarea>
                             </div>
                             <div class="form-group">
@@ -84,8 +82,10 @@
                                 <label for="jadwalPencegahan" id="jadwalPencegahan">Jadwal Pencegahan</label>
                                 <input type="date" class="form-control" id="jadwalPencegahan" name="jadwalPencegahan" value="<?= $deskripsiTemuan['jadwal_pencegahan'] ?>" required>
                             </div>
+                            <div class="text-center">
 
-                            <button type="submit" class="btn btn-primary">Edit Data Deskripsi Temuan</button>
+                                <button type="submit" class="btn btn-primary">Edit Data Deskripsi Temuan</button>
+                            </div>
                         </form>
                     </div>
 
