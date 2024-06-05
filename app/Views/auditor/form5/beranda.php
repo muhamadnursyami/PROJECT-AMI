@@ -10,6 +10,14 @@
     </div>
     <p></p>
 <?php else : ?>
+    <?php if (isset($error)) : ?>
+        <div class="alert bg-danger mt-3" role="alert">
+            <div class="iq-alert-text"> <small> <?= $error; ?> </small></div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+    <?php endif ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-lg-12">
@@ -17,14 +25,7 @@
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
                             <h4 class="card-title">Form 5 - Deskripsi Temuan Audit</h4>
-                            <?php if (isset($error)) : ?>
-                                <div class="alert bg-danger mt-3" role="alert">
-                                    <div class="iq-alert-text"> <small> <?= $error; ?> </small></div>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <i class="ri-close-line"></i>
-                                    </button>
-                                </div>
-                            <?php endif ?>
+
                         </div>
                     </div>
                     <div class="card-body">

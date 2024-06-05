@@ -337,16 +337,17 @@ class Form5 extends BaseController
 
         $anggota = [];
         if (!is_null($dataKopKelengkapanDokumen)) {
-
             $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];
             $anggota = explode(',', $anggota);
         }
+
         $prodi = $this->prodi->where('uuid', $uuid2)->first();
         $namaprodi = $prodi['nama'];
+
         $ringkasanTemuan = $this->ringkasanTemuan
-            ->select('kode_kriteria, ringkasan_temuan.id as id, deskripsi,kategori, kriteria, ringkasan_temuan.uuid as uuid, prodi.nama as nama_prodi')
-            ->join('penugasan_auditor', 'penugasan_auditor.id = id_penugasan_auditor')
-            ->join('kriteria', 'kriteria.id = id_kriteria')
+            ->select('kode_kriteria, ringkasan_temuan.id as id, deskripsi, kategori, kriteria, ringkasan_temuan.uuid as uuid, prodi.nama as nama_prodi')
+            ->join('penugasan_auditor', 'penugasan_auditor.id = ringkasan_temuan.id_penugasan_auditor')
+            ->join('kriteria', 'kriteria.id = ringkasan_temuan.id_kriteria')
             ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
             ->where('prodi.uuid', $uuid2)
             ->where('kategori', 'kts')
@@ -356,25 +357,27 @@ class Form5 extends BaseController
 
         $deskripsiTemuan = $this->deskripsiTemuan
             ->select('
-        deskripsi_temuan.id,
-        deskripsi_temuan.deskripsi_temuan AS deskripsi_temuan,
-        deskripsi_temuan.kriteria AS kriteria,
-        deskripsi_temuan.akibat AS akibat,
-        deskripsi_temuan.akar_penyebab AS akar_penyebab,
-        deskripsi_temuan.rekomendasi AS rekomendasi,
-        deskripsi_temuan.tanggapan_auditi AS tanggapan_auditi,
-        deskripsi_temuan.rencana_perbaikan AS rencana_perbaikan,
-        deskripsi_temuan.jadwal_perbaikan AS jadwal_perbaikan,
-        deskripsi_temuan.penanggung_jawab_perbaikan AS penanggung_jawab_perbaikan,
-        deskripsi_temuan.rencana_pencegahan AS rencana_pencegahan,
-        deskripsi_temuan.jadwal_pencegahan AS jadwal_pencegahan,
-        deskripsi_temuan.penanggung_jawab_pencegahan AS penanggung_jawab_pencegahan,
-        kriteria.kode_kriteria
-    ')
+            deskripsi_temuan.id,
+            deskripsi_temuan.deskripsi_temuan AS deskripsi_temuan,
+            deskripsi_temuan.kriteria AS kriteria,
+            deskripsi_temuan.akibat AS akibat,
+            deskripsi_temuan.akar_penyebab AS akar_penyebab,
+            deskripsi_temuan.rekomendasi AS rekomendasi,
+            deskripsi_temuan.tanggapan_auditi AS tanggapan_auditi,
+            deskripsi_temuan.rencana_perbaikan AS rencana_perbaikan,
+            deskripsi_temuan.jadwal_perbaikan AS jadwal_perbaikan,
+            deskripsi_temuan.penanggung_jawab_perbaikan AS penanggung_jawab_perbaikan,
+            deskripsi_temuan.rencana_pencegahan AS rencana_pencegahan,
+            deskripsi_temuan.jadwal_pencegahan AS jadwal_pencegahan,
+            deskripsi_temuan.penanggung_jawab_pencegahan AS penanggung_jawab_pencegahan,
+            kriteria.kode_kriteria
+        ')
             ->join('ringkasan_temuan', 'deskripsi_temuan.id_ringkasan_temuan = ringkasan_temuan.id')
             ->join('kriteria', 'ringkasan_temuan.id_kriteria = kriteria.id')
+            ->join('penugasan_auditor', 'ringkasan_temuan.id_penugasan_auditor = penugasan_auditor.id')
+            ->where('penugasan_auditor.id_prodi', $prodi['id'])
             ->findAll();
-        // dd($deskripsiTemuan);
+
         $imagePath = FCPATH . 'assets/images/logo-title.jpg';
 
         $data = [
@@ -388,8 +391,9 @@ class Form5 extends BaseController
             'deskripsiTemuan' => $deskripsiTemuan,
             'image_path' => $imagePath
         ];
+
         // ========================================================
-        // GENERATE PDFNYA 
+        // GENERATE PDF
         $view = view('auditor/form5/PDFDeskripsiTemuan', $data);
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT);
 
