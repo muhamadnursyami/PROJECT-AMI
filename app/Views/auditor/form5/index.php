@@ -65,18 +65,8 @@
                         <select id="dropdown" class="form-control">
                             <option value="">--Pilih Kode Kriteria--</option>
                             <?php foreach ($ringkasanTemuan as $key => $value) { ?>
-                                <?php $found = false ?>;
-
-                                <?php foreach($deskripsiTemuan as $item) { ?>
-                                    <?php if ($item['kode_kriteria'] == $value['kode_kriteria']) { ?>
-                                        <?php $found = true; ?>
-                                    <?php } ?>
-                                <?php } ?>
-
-                                <?php if (!$found) { ?>
-                                    <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
-                                    <option value="<?= $uniqueKey ?>"><?= $value['kode_kriteria']; ?></option>
-                                <?php } ?>
+                                <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
+                                <option value="<?= $uniqueKey ?>"><?= $value['kode_kriteria']; ?></option>
                             <?php } ?>
                         </select>
                         <!--  -->

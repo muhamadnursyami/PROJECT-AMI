@@ -86,6 +86,11 @@ $routes->get('auditi/form-ed/ubah', 'Auditi\FormEDController::ubah');
 $routes->post('auditi/form-ed/ubah', 'Auditi\FormEDController::ubahPost');
 
 
+// lihat berkas AUDIII
+$routes->get('auditi/lihat-berkas', 'Auditi\LihatBerkas::index');
+
+
+
 // FITUR ROLE AUDITOR
 // lihat form ed
 $routes->get('auditor/form-ed/view', 'Auditor\ViewEDAuditorController::index');
@@ -143,3 +148,17 @@ $routes->get('auditor/form-5/kelola/(:segment)/(:segment)', 'Auditor\Form5::kelo
 $routes->post('auditor/form-5/kelola/(:segment)/(:segment)', 'Auditor\Form5::kelolaUbahPost/$1/$2');
 $routes->post('auditor/form-5/kelola/(:segment)/(:segment)/hapus', 'Auditor\Form5::kelolaDeletePost/$1/$2');
 $routes->get('auditor/form-5/deskripsi-temuan/pdf/(:segment)', 'Auditor\Form5::PDFDeskripsiTemuan/$1');
+
+// UPLOAD BERKAS
+$routes->get('auditor/upload-berkas', 'Auditor\UploadBerkas::beranda');
+$routes->get('auditor/upload-berkas/(:segment)', 'Auditor\UploadBerkas::index/$1');
+$routes->get('auditor/upload-berkas/form-upload/(:segment)', 'Auditor\UploadBerkas::formUpload/$1');
+$routes->post('auditor/upload-berkas/form-upload/tambah/(:segment)', 'Auditor\UploadBerkas::formUploadPost/$1');
+
+$routes->get('auditor/upload-berkas/form-upload/(:segment)/ubah/(:segment)', 'Auditor\UploadBerkas::formUploadUpdate/$1/$2');
+$routes->post('auditor/upload-berkas/form-upload/(:segment)/ubah/(:segment)', 'Auditor\UploadBerkas::formUploadUpdatePost/$1/$2');
+$routes->post('auditor/upload-berkas/(:segment)/delete/(:segment)', 'Auditor\UploadBerkas::formUploadDelete/$1/$2');
+
+
+// PIMPINAN
+$routes->get('pimpinan/lihat-berkas', 'Pimpinan\LihatBerkas::index');

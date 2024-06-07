@@ -64,54 +64,56 @@
                 </tbody>
             </table>
         </div>
-        <hr class="mt-2">
-        <div class="row text-center">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="datatable" class="table data-table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Kode Kriteria</th>
-                                <th>No</th>
-
-                                <th>Deskripsi Temuan</th>
-                                <th>Kategori</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1; ?>
-                            <?php $i = 0; ?>
-                            <?php if (!is_null($ringkasanTemuan)) { ?>
-                                <?php foreach ($ringkasanTemuan as $key => $value) { ?>
-
-                                    <tr>
-                                        <td><?= $value['kode_kriteria'] ?></td>
-                                        <td><?= $no; ?></td>
-                                        <td><?= $value['deskripsi'] ?></td>
-                                        <td><?= $value['kategori'] ?></td>
-                                        <td>
-                                            <a href="/auditor/form-4/ringkasan-temuan/ubah/<?= $value['uuid'] ?>/<?= $uuid2 ?>" class="btn btn-primary ">Ubah</a>
-                                            <form action="/auditor/form-4/ringkasan-temuan/hapus/<?= $value['uuid'] ?>/<?= $uuid2 ?>" method="post" class="d-inline">
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-
-                                <?php $no++;
-                                    $i++;
-                                } ?>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-
-                </div>
-                <!--  -->
-            </div>
-        </div>
-
-
     </div>
+    <hr class="mt-2">
+
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="table-responsive">
+                <table id="user-list-table" class="table table-striped dataTable mt-2" role="grid" aria-describedby="user-list-page-info">
+                    <thead>
+                        <tr>
+                            <th>Kode Kriteria</th>
+                            <th>No</th>
+
+                            <th>Deskripsi Temuan</th>
+                            <th>Kategori</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-break">
+                        <?php $no = 1; ?>
+                        <?php $i = 0; ?>
+                        <?php if (!is_null($ringkasanTemuan)) { ?>
+                            <?php foreach ($ringkasanTemuan as $key => $value) { ?>
+
+                                <tr>
+                                    <td><?= $value['kode_kriteria'] ?></td>
+                                    <td><?= $no; ?></td>
+                                    <td><?= $value['deskripsi'] ?></td>
+                                    <td><?= $value['kategori'] ?></td>
+                                    <td>
+                                        <a href="/auditor/form-4/ringkasan-temuan/ubah/<?= $value['uuid'] ?>/<?= $uuid2 ?>" class="btn btn-primary ">Ubah</a>
+                                        <form action="/auditor/form-4/ringkasan-temuan/hapus/<?= $value['uuid'] ?>/<?= $uuid2 ?>" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                            <?php $no++;
+                                $i++;
+                            } ?>
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            </div>
+            <!--  -->
+        </div>
+    </div>
+
+
+
 </div>
 
 <?= $this->endSection() ?>

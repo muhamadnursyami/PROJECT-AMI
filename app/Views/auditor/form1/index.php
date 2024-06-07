@@ -10,10 +10,10 @@
 <?php endif ?>
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <div class="header-title">
-            <h4 class="card-title">Form 1 - Kelengkapan Dokumen <?= $prodi['nama'] ?></h4>
-            <a href="/auditor/form-1" class="btn btn-warning mt-3">Kembali</a>
-        </div>
+
+        <h4 class="card-title">Form 1 - Kelengkapan Dokumen <?= $prodi['nama'] ?></h4>
+        <a href="/auditor/form-1" class="btn btn-warning">Kembali</a>
+
     </div>
     <div class="card-body">
         <?php if (empty($dataKopKelengkapanDokumen)) : ?>
@@ -64,10 +64,10 @@
         </div>
 
         <hr class="mt-5">
-        <div class="row mt-5 text-center">
-            <div class="card-body">
+        <div class="card-body">
+            <div class="row mt-5 text-center">
                 <div class="table-responsive">
-                    <table id="datatable" class="table data-table table-striped">
+                    <table id="user-list-table" class="table table-striped dataTable mt-2" role="grid" aria-describedby="user-list-page-info">
                         <thead>
                             <tr>
                                 <th>Kode Kriteria</th>
@@ -77,7 +77,7 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-break">
                             <?php if (!is_null($dataKelengkapanDokumen)) { ?>
                                 <?php foreach ($dataKelengkapanDokumen as $key => $value) { ?>
 
