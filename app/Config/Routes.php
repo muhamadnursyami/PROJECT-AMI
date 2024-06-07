@@ -86,7 +86,7 @@ $routes->get('auditi/form-ed/ubah', 'Auditi\FormEDController::ubah');
 $routes->post('auditi/form-ed/ubah', 'Auditi\FormEDController::ubahPost');
 
 
-// lihat berkas
+// lihat berkas AUDIII
 $routes->get('auditi/lihat-berkas', 'Auditi\LihatBerkas::index');
 
 
@@ -158,3 +158,7 @@ $routes->post('auditor/upload-berkas/form-upload/tambah/(:segment)', 'Auditor\Up
 $routes->get('auditor/upload-berkas/form-upload/(:segment)/ubah/(:segment)', 'Auditor\UploadBerkas::formUploadUpdate/$1/$2');
 $routes->post('auditor/upload-berkas/form-upload/(:segment)/ubah/(:segment)', 'Auditor\UploadBerkas::formUploadUpdatePost/$1/$2');
 $routes->post('auditor/upload-berkas/(:segment)/delete/(:segment)', 'Auditor\UploadBerkas::formUploadDelete/$1/$2');
+
+
+// PIMPINAN
+$routes->get('pimpinan/lihat-berkas', 'Pimpinan\LihatBerkas::index');
