@@ -38,12 +38,12 @@
                             <table id="datatable" class="table data-table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="width: 5%;">#</th>
-                                        <th scope="col" style="width: 15%;">Standar</th>
-                                        <th scope="col" style="width: 40%;">Kriteria</th>
-                                        <th scope="col" style="width: 15%;">Akar Penyebab</th>
-                                        <th scope="col" style="width: 15%;">Tautan Bukti</th>
-                                        <th scope="col" style="width: 10%;">Capaian</th>
+                                        <th>#</th>
+                                        <th>Standar</th>
+                                        <th>Kriteria</th>
+                                        <th class="text-center">Akar Penyebab</th>
+                                        <th class="text-center">Tautan Bukti</th>
+                                        <th class="text-center">Capaian</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,34 +54,34 @@
                                             <td scope="row"><?= $no; ?></td>
                                             <td><?= $form_ed[$i]['standar']; ?></td>
                                             <td><?= $form_ed[$i]['kriteria']; ?></td>
-                                            <td>
+                                            <td class="text-center" style="width: 25%;">
                                                 <?php if (!is_null($form_ed[$i]['akar_penyebab'])) { ?>
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <label for="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" class="h6">Akar Penyebab</label>
+
                                                         <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['akar_penyebab'] ?>">
                                                     </div>
                                                 <?php } else { ?>
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <label for="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" class="h6">Akar Penyebab</label>
+
                                                         <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="">
                                                     </div>
                                                 <?php } ?>
                                             </td>
-                                            <td>
+                                            <td class="text-center" style="width: 25%;">
                                                 <?php if (!is_null($form_ed[$i]['tautan_bukti'])) { ?>
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <label for="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" class="h6">Tautan Bukti</label>
+
                                                         <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>">
                                                     </div>
                                                 <?php } else { ?>
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <label for="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" class="h6">Tautan Bukti</label>
+
                                                         <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="">
                                                     </div>
                                                 <?php } ?>
 
                                             </td>
-                                            <td>
+                                            <td class="text-center" style="width: 10%;">
                                                 <select class="custom-select" id="validationCustom04" name="capaian_auditi<?= $form_ed[$i]['uuid'] ?>">
                                                     <?php if ($form_ed[$i]['capaian_auditi'] != 0) { ?>
                                                         <option selected value="<?= $form_ed[$i]['capaian_auditi'] ?>"><?= $form_ed[$i]['capaian_auditi'] ?></option>
