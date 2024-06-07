@@ -86,6 +86,11 @@ $routes->get('auditi/form-ed/ubah', 'Auditi\FormEDController::ubah');
 $routes->post('auditi/form-ed/ubah', 'Auditi\FormEDController::ubahPost');
 
 
+// lihat berkas
+$routes->get('auditi/lihat-berkas', 'Auditi\LihatBerkas::index');
+
+
+
 // FITUR ROLE AUDITOR
 // lihat form ed
 $routes->get('auditor/form-ed/view', 'Auditor\ViewEDAuditorController::index');
