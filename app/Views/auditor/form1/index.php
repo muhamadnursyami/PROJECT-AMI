@@ -10,10 +10,10 @@
 <?php endif ?>
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <div class="header-title">
-            <h4 class="card-title">Form 1 - Kelengkapan Dokumen <?= $prodi['nama'] ?></h4>
-            <a href="/auditor/form-1" class="btn btn-warning mt-3">Kembali</a>
-        </div>
+
+        <h4 class="card-title">Form 1 - Kelengkapan Dokumen <?= $prodi['nama'] ?></h4>
+        <a href="/auditor/form-1" class="btn btn-warning">Kembali</a>
+
     </div>
     <div class="card-body">
         <?php if (empty($dataKopKelengkapanDokumen)) : ?>

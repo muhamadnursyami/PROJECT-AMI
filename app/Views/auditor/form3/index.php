@@ -10,10 +10,10 @@
 <?php endif ?>
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <div class="header-title">
-            <h4 class="card-title">Form 3 - Catatan Audit <?= $prodi['nama'] ?></h4>
-            <a href="/auditor/form-3" class="btn btn-warning mt-3">Kembali</a>
-        </div>
+
+        <h4 class="card-title">Form 3 - Catatan Audit <?= $prodi['nama'] ?></h4>
+        <a href="/auditor/form-3" class="btn btn-warning">Kembali</a>
+
     </div>
     <div class="card-body">
 
