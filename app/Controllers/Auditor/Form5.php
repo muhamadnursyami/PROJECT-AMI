@@ -391,7 +391,7 @@ class Form5 extends BaseController
             'anggota' => $anggota,
             'periode' => $periode,
             'deskripsiTemuan' => $deskripsiTemuan,
-            'image_path' => $imagePath
+            'image_path' => $imagePath,
         ];
 
         // ========================================================

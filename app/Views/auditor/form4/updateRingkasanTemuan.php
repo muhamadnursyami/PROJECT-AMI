@@ -32,8 +32,8 @@
                                 <label for="kategori" class="h6">Kategori (OB/KTS)</label>
                                 <select class="form-control mb-3" name="kategori" required>
                                     <option value="">Pilih Kategori</option>
-                                    <option value="kts" <?= $ringkasanTemuan['kategori'] == 'kts' ? 'selected' : '' ?>>kts</option>
-                                    <option value="ob" <?= $ringkasanTemuan['kategori'] == 'ob' ? 'selected' : '' ?>>ob</option>
+                                    <option value="KTS" <?= $ringkasanTemuan['kategori'] == 'KTS' ? 'selected' : '' ?>>KTS</option>
+                                    <option value="OB" <?= $ringkasanTemuan['kategori'] == 'OB' ? 'selected' : '' ?>>OB</option>
                                 </select>
                             </div>
 
