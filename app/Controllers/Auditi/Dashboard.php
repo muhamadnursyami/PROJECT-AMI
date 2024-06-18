@@ -24,7 +24,7 @@ class Dashboard extends BaseController
 
         // error buat nangani jadwal periode ed belum dibuat
         if(count($jadwalPeriodeED) == 0){
-            return "Jadwal Periode ED Belum dibuat";
+            return "Jadwal Periode Evaluasi Diri Belum dibuat <br> <a href='/logout'>Logout</a>";
         }
 
         // buat warning jika dekat masa waktu

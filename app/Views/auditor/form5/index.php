@@ -74,7 +74,6 @@
                     <?php foreach ($ringkasanTemuan as $key => $value) { ?>
                         <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
                         <div id="<?= $uniqueKey ?>" class="hidden form-temuan">
-
                             <p>Kode kriteria - <?= $value['kode_kriteria'] ?></p>
                             <form class="row text-center" action="/auditor/form-5/<?= $uuid2 ?>" method="post">
                                 <input type="text" name="id_ringkasan_temuan" value="<?= $value['id'] ?>" hidden>
@@ -88,7 +87,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6 form-group">
                                     <label for="kriteria">Kriteria</label>
-                                    <textarea class="form-control" id="kriteria-visible-<?= $uniqueKey ?>" rows="3" disabled></textarea>
+                                    <div class="form-control-static" id="kriteria-visible-<?= $uniqueKey ?>" style="height: auto; padding: 10px; background: #f1f1f1; border-radius: 5px;"></div>
                                     <textarea class="form-control hidden-textarea" id="kriteria-<?= $uniqueKey ?>" name="kriteria" rows="3" style="display: none;"></textarea>
                                 </div>
                                 <div class="col-12 col-lg-6 form-group">
@@ -103,7 +102,7 @@
                                     <label for="rekomendasiDisepakati">Rekomendasi disepakati dengan audit</label>
                                     <textarea class="form-control" id="rekomendasiDisepakati" name="rekomendasiDisepakati" rows="3" required></textarea>
                                 </div>
-                                <div class="col-12 col-lg-6  form-group">
+                                <div class="col-12 col-lg-6 form-group">
                                     <label for="tanggapanAuditi">Tanggapan Auditi</label>
                                     <select id="dropdown" class="form-control" name="tanggapanAuditi" required>
                                         <option value="">Tanggapan Auditi</option>
@@ -130,7 +129,6 @@
                                 <div class="col-12 mt-5">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </div>
-
                             </form>
                         </div>
                     <?php } ?>
@@ -172,7 +170,7 @@
                     document.getElementById(`deskripsiTemuan-${selectedForm}`).value = selectedTemuan.deskripsi;
                 }
                 if (selectedKriteria) {
-                    document.getElementById(`kriteria-visible-${selectedForm}`).value = selectedKriteria.kriteria;
+                    document.getElementById(`kriteria-visible-${selectedForm}`).innerHTML = selectedKriteria.kriteria;
                     document.getElementById(`kriteria-${selectedForm}`).value = selectedKriteria.kriteria;
                 }
             }
@@ -182,6 +180,13 @@
 <style>
     .hidden-textarea {
         display: none;
+    }
+
+    .form-control-static {
+        padding: 10px;
+        background: #f1f1f1;
+        border-radius: 5px;
+        height: auto;
     }
 </style>
 <?= $this->endSection() ?>
