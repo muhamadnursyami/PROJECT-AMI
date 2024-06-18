@@ -121,7 +121,7 @@ class ViewEDAuditorController extends BaseController
 
             // dd($capaian);
             if ($total[$i] != 0) {
-                $persentase_terisi[$i] = ($capaian[$i] / $total[$i]) * 100;
+                $persentase_terisi[$i] = floor(($capaian[$i] / $total[$i]) * 100);
             } else {
 
                 $persentase_terisi[$i] = 100;
@@ -186,7 +186,7 @@ class ViewEDAuditorController extends BaseController
 
             if ($total != 0) {
 
-                $persentase_terisi = ($capaian / $total) * 100;
+                $persentase_terisi = floor(($capaian / $total) * 100);
             } else {
                 $persentase_terisi = 100;
             }
@@ -267,7 +267,7 @@ class ViewEDAuditorController extends BaseController
 
         if ($total != 0) {
 
-            $persentase_terisi = ($capaian / $total) * 100;
+            $persentase_terisi = floor(($capaian / $total) * 100);
         } else {
             $persentase_terisi = 100;
         }

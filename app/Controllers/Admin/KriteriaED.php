@@ -74,6 +74,24 @@ class KriteriaED extends BaseController
         return view('admin/kriteriaED/create', $data);
     }
 
+    public function createUniv()
+    {
+
+        $prodi = $this->prodi->findAll();
+        $lembaga_akreditasi = $this->lembaga_akreditasi->findAll();
+        $kriteriaStandar = $this->kriteriaStandar->findAll();
+
+        $data = [
+            'title' => 'Tambah Kriteria ED',
+            'currentPage' => 'kriteria-ed',
+            'lembaga_akreditasi' => $lembaga_akreditasi,
+            'prodi' => $prodi,
+            'kriteria_standar' => $kriteriaStandar,
+        ];
+
+        return view('admin/kriteriaED/universitas/createUniv', $data);
+    }
+
     // create kriteria post
     public function save()
     {
@@ -156,6 +174,95 @@ class KriteriaED extends BaseController
         ];
 
         $this->perubahanKriteria->insert($data_perubahanKriteria);
+
+        return redirect()->to('/admin/kriteria-ed')->with('sukses', 'Berhasil menambah ED');
+    }
+
+    public function saveUniv()
+    {
+
+
+        if (!$this->validate([
+            'standar' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ]
+            ],
+            'lembaga_akreditasi' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ]
+            ],
+            'kriteria' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ],
+            ],
+            'kode_kriteria' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus diisi'
+                ],
+            ],
+            'bobot' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} Harus diisi',
+                    'numeric' => '{field} Harus berupa angka'
+                ]
+            ],
+
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->back()->withInput()->with('validation', $validation);
+        }
+
+        $prodi = $this->prodi->findAll();
+        foreach ($prodi as $key => $value) {
+
+            $data = [
+
+                "uuid" => service('uuid')->uuid4()->toString(),
+                'id_prodi' => $value['id'],
+                'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
+                "kriteria" => $this->request->getPost('kriteria'),
+                "kode_kriteria" => $this->request->getPost('kode_kriteria'),
+                'bobot' => $this->request->getPost('bobot'),
+                'id_kriteria_standar' => $this->request->getPost('standar'),
+
+            ];
+
+            $this->kriteria->insert($data);
+        
+            $dat = $this->kriteria->where("uuid", $data['uuid'])->first();
+    
+            // input ke kriteria prodi
+            $data_kriteriaProdi = [
+                'uuid' => service('uuid')->uuid4()->toString(),
+                'id_kriteria' => $dat['id'],
+                'id_prodi' => $data['id_prodi'],
+            ];
+    
+            $this->kriteriaProdi->insert($data_kriteriaProdi);
+
+
+            $kriteriaProdi = $this->kriteriaProdi->where('uuid', $data_kriteriaProdi['uuid'])->first();
+    
+            // input ke perubahan kriteria
+            $data_perubahanKriteria = [
+                'id_kriteria_prodi' => $kriteriaProdi['id'],
+                'uuid' => service('uuid')->uuid4()->toString(),
+            ];
+    
+            $this->perubahanKriteria->insert($data_perubahanKriteria);
+            
+        }
+
+
+
 
         return redirect()->to('/admin/kriteria-ed')->with('sukses', 'Berhasil menambah ED');
     }

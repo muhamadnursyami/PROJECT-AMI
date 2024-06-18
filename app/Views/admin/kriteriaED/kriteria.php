@@ -28,7 +28,9 @@
                             </button>
                         </div>
                     <?php endif ?>
-                    <a href="/admin/kriteria-ed/tambah" class="btn btn-primary mb-3">Tambah Kriteria</a>
+                    <a href="/admin/kriteria-ed" class="btn btn-warning mb-3">Kembali</a>
+                    <a href="/admin/kriteria-ed/tambah" class="btn btn-primary mb-3">Tambah Kriteria Satu Prodi</a>
+                    <a href="/admin/kriteria-ed/universitas/tambah" class="btn btn-primary mb-3">Tambah Kriteria Semua Prodi</a>
                     <div class="table-responsive">
                         <table id="datatable" class="table data-table table-striped">
                             <thead>

@@ -66,7 +66,7 @@ class FormEDController extends BaseController
 
             if ($total != 0) {
 
-                $persentase_terisi = ($capaian / $total) * 100;
+                $persentase_terisi = floor(($capaian / $total) * 100);
             } else {
                 $persentase_terisi = 100;
             }
@@ -162,7 +162,7 @@ class FormEDController extends BaseController
 
         if ($total != 0) {
 
-            $persentase_terisi = ($capaian / $total) * 100;
+            $persentase_terisi = floor(($capaian / $total) * 100);
         } else {
             $persentase_terisi = 100;
         }
@@ -209,7 +209,7 @@ class FormEDController extends BaseController
 
             if ($total != 0) {
 
-                $persentase_terisi = ($capaian / $total) * 100;
+                $persentase_terisi = floor(($capaian / $total) * 100);
             } else {
                 $persentase_terisi = 100;
             }
@@ -286,7 +286,7 @@ class FormEDController extends BaseController
 
         if ($total != 0) {
 
-            $persentase_terisi = ($capaian / $total) * 100;
+            $persentase_terisi = floor(($capaian / $total) * 100);
         } else {
             $persentase_terisi = 100;
         }

@@ -39,11 +39,15 @@
 
                             <div class="form-group">
                                 <label for="deskripsiTemuan">Deskripsi Temuan</label>
-                                <textarea class="form-control" id="deskripsiTemuan" name="deskripsiTemuan" rows="3" disabled><?= $deskripsiTemuan['deskripsi_temuan'] ?></textarea>
+                                <div>
+                                    <?= $deskripsiTemuan['deskripsi_temuan']; ?>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="kriteria">Kriteria</label>
-                                <textarea class="form-control" id="kriteria" name="kriteria" rows="3" disabled><?= $deskripsiTemuan['kriteria'] ?></textarea>
+                                <div>
+                                    <?= $deskripsiTemuan['kriteria'] ?>
+                                </div>
                             </div>
 
                             <div class="form-group">

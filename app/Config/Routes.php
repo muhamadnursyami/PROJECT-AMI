@@ -28,13 +28,17 @@ $routes->post('admin/jadwal-periode/save', 'Admin\JadwalED::save');
 $routes->post('admin/jadwal-periode/update/(:num)', 'Admin\JadwalED::update/$1');
 $routes->get('admin/jadwal-periode/edit/(:segment)', 'Admin\JadwalED::edit/$1');
 $routes->delete('admin/jadwal-periode/(:num)', 'Admin\JadwalED::delete/$1');
-// kelola kriteria ed admin
+// kelola kriteria ed admin untuk prodi
 $routes->get('admin/kriteria-ed', 'Admin\KriteriaED::index');
 $routes->get('admin/kriteria-ed/tambah', 'Admin\KriteriaED::create');
 $routes->post('admin/kriteria-ed/tambah', 'Admin\KriteriaED::save');
 $routes->get('admin/kriteria-ed/ubah/(:segment)', 'Admin\KriteriaED::update/$1');
 $routes->post('admin/kriteria-ed/ubah/(:segment)', 'Admin\KriteriaED::updatePost/$1');
 $routes->post('admin/kriteria-ed/hapus/(:segment)', 'Admin\KriteriaED::delete/$1');
+// kelola kriteria ed admin untuk semua prodi
+$routes->get('admin/kriteria-ed/universitas/tambah', 'Admin\KriteriaED::createUniv');
+$routes->post('admin/kriteria-ed/universitas/tambah', 'Admin\KriteriaED::saveUniv');
+
 // lihat ed admin
 $routes->get('admin/kriteria-ed/view', 'Admin\ViewEDController::index');
 $routes->get('admin/kriteria-ed/view/(:segment)', 'Admin\ViewEDController::view/$1');
