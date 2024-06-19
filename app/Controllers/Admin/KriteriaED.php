@@ -128,13 +128,6 @@ class KriteriaED extends BaseController
                     'required' => '{field} Harus diisi'
                 ],
             ],
-            'bobot' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => '{field} Harus diisi',
-                    'numeric' => '{field} Harus berupa angka'
-                ]
-            ],
 
         ])) {
             $validation = \Config\Services::validation();
@@ -147,7 +140,6 @@ class KriteriaED extends BaseController
             'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
             "kriteria" => $this->request->getPost('kriteria'),
             "kode_kriteria" => $this->request->getPost('kode_kriteria'),
-            'bobot' => $this->request->getPost('bobot'),
             'id_kriteria_standar' => $this->request->getPost('standar'),
         ];
 
@@ -207,13 +199,6 @@ class KriteriaED extends BaseController
                     'required' => '{field} Harus diisi'
                 ],
             ],
-            'bobot' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => '{field} Harus diisi',
-                    'numeric' => '{field} Harus berupa angka'
-                ]
-            ],
 
         ])) {
             $validation = \Config\Services::validation();
@@ -230,35 +215,33 @@ class KriteriaED extends BaseController
                 'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
                 "kriteria" => $this->request->getPost('kriteria'),
                 "kode_kriteria" => $this->request->getPost('kode_kriteria'),
-                'bobot' => $this->request->getPost('bobot'),
                 'id_kriteria_standar' => $this->request->getPost('standar'),
 
             ];
 
             $this->kriteria->insert($data);
-        
+
             $dat = $this->kriteria->where("uuid", $data['uuid'])->first();
-    
+
             // input ke kriteria prodi
             $data_kriteriaProdi = [
                 'uuid' => service('uuid')->uuid4()->toString(),
                 'id_kriteria' => $dat['id'],
                 'id_prodi' => $data['id_prodi'],
             ];
-    
+
             $this->kriteriaProdi->insert($data_kriteriaProdi);
 
 
             $kriteriaProdi = $this->kriteriaProdi->where('uuid', $data_kriteriaProdi['uuid'])->first();
-    
+
             // input ke perubahan kriteria
             $data_perubahanKriteria = [
                 'id_kriteria_prodi' => $kriteriaProdi['id'],
                 'uuid' => service('uuid')->uuid4()->toString(),
             ];
-    
+
             $this->perubahanKriteria->insert($data_perubahanKriteria);
-            
         }
 
 
@@ -325,13 +308,6 @@ class KriteriaED extends BaseController
                     'required' => '{field} Harus diisi'
                 ],
             ],
-            'bobot' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => '{field} Harus diisi',
-                    'numeric' => '{field} Harus berupa angka'
-                ]
-            ],
 
         ])) {
             $validation = \Config\Services::validation();
@@ -344,7 +320,6 @@ class KriteriaED extends BaseController
             'id_lembaga_akreditasi' => $this->request->getPost('lembaga_akreditasi'),
             "kriteria" => $this->request->getPost('kriteria'),
             "kode_kriteria" => $this->request->getPost('kode_kriteria'),
-            'bobot' => $this->request->getPost('bobot'),
             'id_kriteria_standar' => $this->request->getPost('standar'),
         ];
 
