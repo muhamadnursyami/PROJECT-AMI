@@ -50,6 +50,11 @@ $routes->get('admin/kriteria-ed/tambah/standar/edit/(:segment)', 'Admin\StandarC
 $routes->post('admin/kriteria-ed/tambah/standar/edit/(:segment)', 'Admin\StandarController::editPost/$1');
 $routes->post('admin/kriteria-ed/tambah/standar/hapus/(:segment)', 'Admin\StandarController::hapusPost/$1');
 
+// admin kelola data pengguna
+$routes->get('admin/kelola-data', 'Admin\KelolaUserController::index');
+$routes->get('admin/kelola-data/(:segment)', 'Admin\KelolaUserController::detail/$1');
+$routes->post('admin/kelola-data/(:segment)', 'Admin\KelolaUserController::savePassword/$1');
+
 // jadwal AMI
 $routes->get('admin/jadwal-ami', 'Admin\Periode::index');
 $routes->get('admin/jadwal-ami/create', 'Admin\Periode::create');
@@ -93,6 +98,9 @@ $routes->post('auditi/form-ed/ubah', 'Auditi\FormEDController::ubahPost');
 // lihat berkas AUDIII
 $routes->get('auditi/lihat-berkas', 'Auditi\LihatBerkas::index');
 
+// Kelola data auditi
+$routes->get('auditi/kelola-data', 'Auditi\KelolaAuditiController::index');
+$routes->post('auditi/kelola-data', 'Auditi\KelolaAuditiController::savePassword');
 
 
 // FITUR ROLE AUDITOR
@@ -165,6 +173,14 @@ $routes->get('auditor/upload-berkas/form-upload/(:segment)/ubah/(:segment)', 'Au
 $routes->post('auditor/upload-berkas/form-upload/(:segment)/ubah/(:segment)', 'Auditor\UploadBerkas::formUploadUpdatePost/$1/$2');
 $routes->post('auditor/upload-berkas/(:segment)/delete/(:segment)', 'Auditor\UploadBerkas::formUploadDelete/$1/$2');
 
+// ubah data auditor
+$routes->get('auditor/kelola-data', 'Auditor\KelolaAuditorController::index');
+$routes->post('auditor/kelola-data', 'Auditor\KelolaAuditorController::savePassword');
+
 
 // PIMPINAN
 $routes->get('pimpinan/lihat-berkas', 'Pimpinan\LihatBerkas::index');
+// ubah data pimpinan
+$routes->get('pimpinan/kelola-data', 'Pimpinan\KelolaPimpinanController::index');
+$routes->post('pimpinan/kelola-data', 'Pimpinan\KelolaPimpinanController::savePassword');
+

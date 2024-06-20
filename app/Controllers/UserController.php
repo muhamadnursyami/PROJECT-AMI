@@ -40,6 +40,11 @@ class UserController extends BaseController
         $uuid4 = $uuid->uuid4();
         $uuid4String = $uuid4->toString();
 
+        if(!(($this->request->getPost('password')) == ($this->request->getPost('confirmpassword')))){
+            $validation = \Config\Services::validation();
+            return redirect()->back()->withInput()->with('gagal', "Password dan konfirmasi password tidak sesuai");
+        }
+
         // validasi register
         if (!$this->validate([
             'name' => [
@@ -57,6 +62,12 @@ class UserController extends BaseController
                 ]
             ],
             'password' => [
+                'rules' => 'required|matches[password]',
+                'errors' => [
+                    'required' => '{field} harus diisi'
+                ]
+            ],
+            'confirmpassword' => [
                 'rules' => 'required|matches[password]',
                 'errors' => [
                     'required' => '{field} harus diisi'
