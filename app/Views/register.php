@@ -37,6 +37,14 @@
                                         <div class="p-3">
                                             <h2 class="mb-2 text-white">Sign Up</h2>
                                             <p>Create your account.</p>
+                                            <?php if (!empty(session()->getFlashdata('gagal'))) : ?>
+                                                <div class="alert bg-danger" role="alert">
+                                                    <div class="iq-alert-text"> <small><?= session()->getFlashdata('gagal') ?> </small></div>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <i class="ri-close-line"></i>
+                                                    </button>
+                                                </div>
+                                            <?php endif ?>
                                             <?php if (session('validation')) { ?>
                                                 <div class="alert bg-danger" role="alert">
                                                     <ul>
@@ -64,8 +72,15 @@
 
                                                     <div class="col-12">
                                                         <div class="floating-label form-group">
-                                                            <input class="floating-input form-control" type="password" placeholder=" " name="password" value="<?= old('password') ?>" required />
+                                                            <input class="floating-input form-control" type="password" placeholder=" " name="password" required />
                                                             <label>Password</label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="floating-label form-group">
+                                                            <input class="floating-input form-control" type="password" placeholder=" " name="confirmpassword" required />
+                                                            <label>Confirm Password</label>
                                                         </div>
 
                                                     </div>
