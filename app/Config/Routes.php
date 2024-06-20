@@ -118,6 +118,8 @@ $routes->get('auditor/form-1/kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form
 $routes->post('auditor/form-1/kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kelengkapanDokumenUpdatePost/$1');
 $routes->post('auditor/form-1/kelengkapan-dokumen/hapus/(:segment)', 'Auditor\Form1::kelengkapanDokumenDelete/$1');
 
+// FORM 2
+$routes->get('auditor/form-2', 'Auditor\Form2::index');
 // FORM 3 - catatan audit
 $routes->get('auditor/form-3', 'Auditor\Form3::beranda');
 $routes->get('auditor/form-3/(:segment)', 'Auditor\Form3::index/$1');

@@ -44,9 +44,9 @@
                             </button>
                         </div>
                     <?php endif ?>
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                         <p class="text-danger font-weight-bold">Perhatikan Prodi Tujuan tidak boleh sama dengan Prodi Asal !!!</p>
-                    </div>
+                    </div> -->
                     <!-- Dropdown "Auditor" di luar dari form -->
                     <div class="col-12">
                         <label for="auditor" class="h6">Auditor</label>
