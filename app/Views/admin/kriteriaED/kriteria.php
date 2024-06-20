@@ -39,7 +39,7 @@
                                     <th scope="col">Standar</th>
                                     <th scope="col">Kode Kriteria</th>
                                     <th scope="col">Kriteria</th>
-                                    <th scope="col">bobot</th>
+
                                     <th scope="col">Nama Prodi</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
@@ -52,7 +52,7 @@
                                         <td><?= $value['standar']; ?></td>
                                         <td><?= $value['kode_kriteria']; ?></td>
                                         <td><?= $value['kriteria']; ?></td>
-                                        <td><?= $value['bobot']; ?></td>
+
                                         <td><?= $value['nama_prodi']; ?></td>
                                         <td>
                                             <a href="/admin/kriteria-ed/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>

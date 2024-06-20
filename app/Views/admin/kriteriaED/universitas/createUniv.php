@@ -46,17 +46,7 @@
                                 <label for="kode_kriteria" class="h6">Kode Kriteria </label>
                                 <input type="text" class="form-control" id="kode_kriteria" name="kode_kriteria" value="<?= old('kode_kriteria'); ?>">
                             </div>
-
-                            <!-- <div class="col-12 mt-3">
-                                <label for="kriteria" class="h6">Kriteria </label>
-                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= old('kriteria'); ?></textarea>
-                            </div> -->
-                            <div class="col-12 mt-3">
-                                <label for="kriteria" class="form-label">Kriteria</label>
-                                <input id="kriteria" type="hidden" name="kriteria" value="<?= old('kriteria');?>">
-                                <trix-editor input="kriteria"></trix-editor>
-                            </div>
-                            <div class="col-12 col-lg-6 mt-3">
+                            <div class="col-12 col-lg-4">
                                 <label for="lembaga_akreditasi" class="h6">Lembaga Akreditasi </label>
                                 <select class="form-control" name="lembaga_akreditasi" required>
                                     <option value="">Pilih Lembaga Akreditasi</option>
@@ -65,11 +55,21 @@
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-6 mt-3">
+                            <!-- <div class="col-12 mt-3">
+                                <label for="kriteria" class="h6">Kriteria </label>
+                                <textarea class="form-control" id="kriteria" rows="3" name="kriteria"><?= old('kriteria'); ?></textarea>
+                            </div> -->
+                            <div class="col-12 mt-3">
+                                <label for="kriteria" class="form-label">Kriteria</label>
+                                <input id="kriteria" type="hidden" name="kriteria" value="<?= old('kriteria'); ?>">
+                                <trix-editor input="kriteria"></trix-editor>
+                            </div>
+
+                            <!-- <div class="col-12 col-lg-6 mt-3">
                                 <label for="bobot" class="h6">Bobot</label>
                                 <input type="text" class="form-control" id="bobot" name="bobot" value="<?= old('bobot'); ?>">
                                 <small></small>
-                            </div>
+                            </div> -->
 
 
                         </div>
