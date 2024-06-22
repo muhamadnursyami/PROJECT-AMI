@@ -5,7 +5,7 @@
     <div class="card-header d-flex justify-content-between">
 
 
-        <h4 class="card-title">Berkas Yang Udah di TTD Jurusan <?= $prodi['nama'] ?></h4>
+        <h4 class="card-title">Berkas untuk Jurusan <?= $prodi['nama'] ?></h4>
 
 
     </div>
@@ -15,8 +15,8 @@
                 <thead>
                     <tr class="ligth">
                         <th>No</th>
-                        <th>Link Form 4</th>
-                        <th>Link Form 5</th>
+                        <th>Berkas Ringkasan Temuan</th>
+                        <th>Berkas Deskripsi Temuan</th>
                     </tr>
                 </thead>
                 <tbody>

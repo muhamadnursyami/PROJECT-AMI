@@ -8,7 +8,7 @@
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title d-flex">
 
-                        <h4 class="card-title">FORM Tambah Data Kelengkapan Dokumen <?= $prodi['nama'] ?></h4>
+                        <h4 class="card-title">FORM Kop Kelengkapan Dokumen <?= $prodi['nama'] ?></h4>
                     </div>
                     <a href="/auditor/form-1/<?= $uuid2 ?>" class=" text-end btn bg-warning">Kembali</a>
                 </div>

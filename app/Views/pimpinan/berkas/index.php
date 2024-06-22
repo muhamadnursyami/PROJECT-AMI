@@ -5,7 +5,7 @@
     <div class="card-header d-flex justify-content-between">
 
 
-        <h4 class="card-title">Semua Berkas Yang Udah di TTD</h4>
+        <h4 class="card-title">Semua Berkas Berdasarkan Prodi</h4>
 
 
     </div>
