@@ -104,6 +104,17 @@ $routes->get('admin/kelola-lembaga-akreditasi/edit/(:segment)', 'Admin\KelolaLem
 $routes->post('admin/kelola-lembaga-akreditasi/edit/(:segment)', 'Admin\KelolaLembagaAkreditasi::editPost/$1');
 $routes->post('admin/kelola-lembaga-akreditasi/hapus/(:segment)', 'Admin\KelolaLembagaAkreditasi::hapus/$1');
 
+// admin kelola akses akun pengguna
+$routes->get('admin/kelola-akses', 'Admin\KelolaAkunController::index');
+$routes->post('admin/kelola-akses/terima/(:segment)', 'Admin\KelolaAkunController::terima/$1');
+$routes->post('admin/kelola-akses/tolak/(:segment)', 'Admin\KelolaAkunController::tolak/$1');
+
+// admin kelola akun pengguna (role dan prodi)
+$routes->get('admin/kelola-akun-pengguna', 'Admin\KelolaAkunPengguna::index');
+$routes->get('admin/kelola-akun-pengguna/kelola/(:segment)', 'Admin\KelolaAkunPengguna::update/$1');
+$routes->post('admin/kelola-akun-pengguna/kelola/(:segment)', 'Admin\KelolaAkunPengguna::updatePost/$1');
+$routes->post('admin/kelola-akun-pengguna/hapus/(:segment)', 'Admin\KelolaAkunPengguna::hapus/$1');
+
 // FITUR ROLE AUDITI
 // isi form ed
 $routes->get('auditi/form-ed', 'Auditi\FormEDController::create');

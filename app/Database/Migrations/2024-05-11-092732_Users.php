@@ -47,6 +47,10 @@ class Users extends Migration
                 'constraint' => ['auditor', 'auditi', 'pimpinan', 'admin'],
                 'null' => true,
             ],
+            'akses' => [
+                'type' => 'BOOLEAN',
+                'default' => 0,
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
