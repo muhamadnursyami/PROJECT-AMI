@@ -15,7 +15,8 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => password_hash('123', PASSWORD_BCRYPT),
-            'role' => 'admin'
+            'role' => 'admin',
+            'akses' => 1
         ]);
 
         // buat auditi

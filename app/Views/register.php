@@ -84,16 +84,6 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <select class="form-control mb-3" name="role" required>
-                                                                <option value="">Pilih Role</option>
-                                                                <option value="auditi">Auditi</option>
-                                                                <option value="auditor">Auditor</option>
-                                                                <option value="pimpinan">Pimpinan</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
                                                     <div class="col-12 text-center">
                                                         <button type=" submit" class="btn btn-white w-100">
                                                             <small>

@@ -63,6 +63,12 @@ class Login extends BaseController
             // yang bernama pesan yang isi messagenya: Email atau password anda salah dan arahkan 
             // balik ke halaman login
             if ($cekEmail) {
+
+                if ($cekEmail['akses'] == 0) {
+                    session()->setFlashdata('pesan', 'Akun anda belum memiliki akses ke aplikasi, silahkan hubungi admin');
+                    session()->setFlashdata('alert_type', 'danger');
+                    return redirect()->to('/')->withInput();
+                }
                 // jika email benar maka akan cek passwordnya
                 // ambil password dari database yang kita paramter nya itu kita ambil dari email yang
                 // sudah kita cek, dan kita ambil data passwordnya
@@ -133,7 +139,7 @@ class Login extends BaseController
                         default:
                             // menambahkan session dengan mengguakan function setFlashdata
                             // yang namanya itu adalah pesan dan isi pesanya itu adalah anda belum terdafatr
-                            $session->setFlashdata('pesan', 'Anda belum terdaftar !!!');
+                            $session->setFlashdata('pesan', 'Anda belum memiliki role, silahkan hubungi admin');
                             // menambahkan session juga, dengan nama alert type dan isi nya itu danger
                             session()->setFlashdata('alert_type', 'danger');
                             return redirect()->to('/');
