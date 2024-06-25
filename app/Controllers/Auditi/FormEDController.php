@@ -73,6 +73,10 @@ class FormEDController extends BaseController
 
 
             $jadwalPeriodeED = $this->jadwal_periode_ED_Model->first();
+            if(is_null($jadwalPeriodeED) || !isset($jadwalPeriodeED)){
+                return redirect()->to('admin/dashboard')->with('gagal', 'Jadwal Periode ED Belum dibuat');
+            }
+
             $tanggalSelesai = $jadwalPeriodeED['tanggal_selesai'];
             // Mengonversi tanggal selesai ke format yang dapat dibandingkan
             $tanggalSelesaiTimestamp = strtotime($tanggalSelesai);

@@ -87,12 +87,12 @@
                                             <td>
                                                 <?php if (!is_null($form_ed[$i]['akar_penyebab'])) { ?>
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <label for="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" class="h6">Akar Penyebab</label>
+                                                        <label for="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" class="h6">Akar Penyebab <b>(Tidak aktif)</b></label>
                                                         <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['akar_penyebab'] ?>" disabled>
                                                     </div>
                                                 <?php } else { ?>
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <label for="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" class="h6">Akar Penyebab</label>
+                                                        <label for="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" class="h6">Akar Penyebab <b>(Tidak aktif)</b></label>
                                                         <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="" disabled>
                                                     </div>
                                                 <?php } ?>
@@ -100,12 +100,12 @@
                                             <td>
                                                 <?php if (!is_null($form_ed[$i]['tautan_bukti'])) { ?>
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <label for="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" class="h6">Tautan Bukti</label>
+                                                        <label for="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" class="h6">Tautan Bukti <b>(Tidak Aktif)</b></label>
                                                         <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>" disabled>
                                                     </div>
                                                 <?php } else { ?>
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <label for="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" class="h6">Tautan Bukti</label>
+                                                        <label for="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" class="h6">Tautan Bukti <b>(Tidak Aktif)</b></label>
                                                         <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="" disabled>
                                                     </div>
                                                 <?php } ?>

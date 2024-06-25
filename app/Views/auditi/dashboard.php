@@ -9,7 +9,7 @@
         </button>
     </div>
 <?php endif ?>
-<h4 class="mb-5">Selamat Datang di Dashboard Auditi</h4>
+<h4 class="mb-5">Dashboard Prodi Auditi</h4>
 <?php if ($waktu <= 3 and $waktu > 0) : ?>
     <div class="alert bg-warning" role="alert">
         <div class="iq-alert-text"> Waktu pengisian ED tersisa <?= $waktu; ?> hari lagi.</small></div>
@@ -58,6 +58,14 @@
 
 
 </div>
+<?php if (isset($belumDibuat)) { ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <?= $belumDibuat; ?>
+        </div>
+    </div>
+<?php } ?>
+
 <div class="row">
     <div class="col-lg-12">
         <?php if (!empty($jadwalAMI)) : ?>

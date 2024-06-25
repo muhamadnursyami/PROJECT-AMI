@@ -50,11 +50,17 @@ class Dashboard extends BaseController
         $tanggal_string = $this->periode_Model->getPeriode();
         
         if(count($tanggal_string) == 0){
-            return "Jadwal AMI Belum Dibuat 
-                <br>
-                <a href='/logout'>Logout</a>
-            
-            ";
+            $data = [
+                'title' => 'Dashboard',
+                'currentPage' => 'dashboard',
+                'prodi' => $prodi,
+                'jadwalPeriodeED' => null,
+                'jadwalAMI' => null,
+                'waktu' => null,
+                'belumDibuat' => 'Jadwal AMI Belum dibuat',
+            ];
+
+            return view('auditor/dashboard', $data);
             
         }
 

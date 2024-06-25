@@ -49,6 +49,9 @@ class Form1 extends BaseController
     {
 
         $jadwalPeriode = $this->periode_Model->first();
+        if(is_null($jadwalPeriode) || !isset($jadwalPeriode)){
+            return redirect()->to('auditor/dashboard')->with('gagal', 'Jadwal AMI Belum dibuat');;
+        }
         $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
         // Mengonversi tanggal selesai ke format yang dapat dibandingkan
         $tanggalSelesaiTimestamp = strtotime($tanggalSelesai);
