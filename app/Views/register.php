@@ -89,7 +89,6 @@
                                                             <select class="form-control mb-3" name="role" required>
                                                                 <option value="">Pilih Role</option>
                                                                 <option value="auditi">Auditi</option>
-                                                                <option value="admin">Admin</option>
                                                                 <option value="auditor">Auditor</option>
                                                                 <option value="pimpinan">Pimpinan</option>
                                                             </select>
