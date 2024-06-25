@@ -23,8 +23,18 @@ class Dashboard extends BaseController
         $periode = $this->periode_Model->getPeriode();
 
         // error buat nangani jadwal periode ed belum dibuat
+        
         if(count($jadwalPeriodeED) == 0){
-            return "Jadwal Periode Evaluasi Diri Belum dibuat <br> <a href='/logout'>Logout</a>";
+            $data = [
+                'title' => 'Dashoard',
+                'currentPage' => 'dashboard',
+                'jadwalPeriodeED' => null,
+                'jadwalAMI' => null,
+                'waktu' => null,
+                'belumDibuat' => "Jadwal Pengisian Form Evaluasi Diri Belum dibuat"
+            ];
+
+            return view('auditi/dashboard', $data);
         }
 
         // buat warning jika dekat masa waktu

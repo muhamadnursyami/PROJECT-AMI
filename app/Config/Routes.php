@@ -87,6 +87,23 @@ $routes->get('admin/kelola-auditi', 'Admin\KelolaAuditi::index');
 $routes->get('admin/kelola-auditi/kelola/(:segment)', 'Admin\KelolaAuditi::kelola/$1');
 $routes->post('admin/kelola-auditi/kelola/(:segment)', 'Admin\KelolaAuditi::kelolaPost/$1');
 $routes->post('admin/kelola-auditi/hapus/(:segment)', 'Admin\KelolaAuditi::delete/$1');
+
+// admin kelola prodi
+$routes->get('admin/kelola-prodi', 'Admin\KelolaProdi::index');
+$routes->get('admin/kelola-prodi/tambah', 'Admin\KelolaProdi::tambah');
+$routes->post('admin/kelola-prodi/tambah', 'Admin\KelolaProdi::tambahPost');
+$routes->get('admin/kelola-prodi/edit/(:segment)', 'Admin\KelolaProdi::edit/$1');
+$routes->post('admin/kelola-prodi/edit/(:segment)', 'Admin\KelolaProdi::editPost/$1');
+$routes->post('admin/kelola-prodi/hapus/(:segment)', 'Admin\KelolaProdi::hapus/$1');
+
+// admin kelola lembaga akreditasi
+$routes->get('admin/kelola-lembaga-akreditasi', 'Admin\KelolaLembagaAkreditasi::index');
+$routes->get('admin/kelola-lembaga-akreditasi/tambah', 'Admin\KelolaLembagaAkreditasi::tambah');
+$routes->post('admin/kelola-lembaga-akreditasi/tambah', 'Admin\KelolaLembagaAkreditasi::tambahPost');
+$routes->get('admin/kelola-lembaga-akreditasi/edit/(:segment)', 'Admin\KelolaLembagaAkreditasi::edit/$1');
+$routes->post('admin/kelola-lembaga-akreditasi/edit/(:segment)', 'Admin\KelolaLembagaAkreditasi::editPost/$1');
+$routes->post('admin/kelola-lembaga-akreditasi/hapus/(:segment)', 'Admin\KelolaLembagaAkreditasi::hapus/$1');
+
 // FITUR ROLE AUDITI
 // isi form ed
 $routes->get('auditi/form-ed', 'Auditi\FormEDController::create');

@@ -11,7 +11,7 @@
     </div>
 <?php } else { ?>
 
-    <h4 class="mb-5">Selamat Datang di Dashboard Auditor dari Prodi <?= $prodi["nama"] ?></h4>
+    <h4 class="mb-5">Dashboard Auditor Prodi <?= $prodi["nama"] ?></h4>
 
 
     <?php if (!empty(session()->getFlashdata('gagal'))) : ?>
@@ -71,6 +71,13 @@
 
 
     </div>
+    <?php if (isset($belumDibuat)) { ?>
+        <div class="row">
+            <div class="col-lg-12">
+                <?= $belumDibuat; ?>
+            </div>
+        </div>
+    <?php } ?>
     <div class="row">
         <div class="col-lg-12">
             <?php if (!empty($jadwalAMI)) : ?>
