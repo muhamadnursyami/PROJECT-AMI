@@ -20,6 +20,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
 
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+
     <!-- font awesome  -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
 
@@ -43,7 +45,7 @@
                     <img src="<?= base_url('assets/images/logo-umrah.png') ?>" alt="logo">
                 </a>
                 <div class="iq-menu-bt-sidebar ml-0">
-                    <i class="las la-bars wrapper-menu"></i>
+                    <i class="ri-menu-line  wrapper-menu"></i>
                 </div>
             </div>
 
@@ -140,7 +142,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light p-0">
                     <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
                         <i class="ri-menu-line wrapper-menu"></i>
-                        <a href="../backend/index.html" class="header-logo">
+                        <a href="/" class="header-logo">
                             <h4 class="logo-title text-uppercase">AMI UMRAH</h4>
 
                         </a>
@@ -154,6 +156,9 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto navbar-list align-items-center">
+                                <li class="d-flex align-items-center">
+                                    <a href="<?= base_url('logout') ?>" class="text-red  rounded">Logout</a>
+                                </li>
                                 <li class="nav-item nav-icon dropdown caption-content">
                                     <a href="#" class="search-toggle dropdown-toggle  d-flex align-items-center" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <img src="<?= base_url('assets/images/user/user.png') ?>" class="img-fluid rounded-circle" alt="user">
@@ -161,16 +166,7 @@
                                             <small class="mb-0 line-height text-uppercase"><?= session()->get('name') ?><i class="las la-angle-down ml-2 w-50%"></i></small>
                                             <p><?= session()->get('role_id') ?></p>
                                         </div>
-
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-right border-none" aria-labelledby="dropdownMenuButton">
-                                        <li class="dropdown-item  d-flex svg-icon">
-                                            <svg class="svg-icon mr-0 text-primary" id="h-05-p" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                            </svg>
-                                            <a href="<?= base_url('logout') ?>">Logout</a>
-                                        </li>
-                                    </ul>
                                 </li>
                             </ul>
                         </div>
