@@ -81,8 +81,7 @@
                                                 <td class="text-center" style="width: 25%;">
                                                     <?php if (!is_null($form_ed[$i]['tautan_bukti'])) { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">
-
-                                                            <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>" disabled>
+                                                            <a href="<?= $form_ed[$i]['tautan_bukti'] ?>">Klik disini untuk melihat tautan bukti</a>
                                                         </div>
                                                     <?php } else { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">

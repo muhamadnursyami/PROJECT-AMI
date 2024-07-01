@@ -69,7 +69,12 @@
                                                 </td>
                                                 <td style="width: 30%;">
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>" disabled>
+                                                        <?php if($form_ed[$i]['tautan_bukti'] == ""){ ?>
+                                                            
+                                                            <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>" disabled>
+                                                        <?php }else{ ?>
+                                                            <a href="<?= $form_ed[$i]['tautan_bukti'] ?>"><?= $form_ed[$i]['tautan_bukti'] ?></a>
+                                                        <?php } ?>
                                                     </div>
                                                 </td>
                                                 <td>

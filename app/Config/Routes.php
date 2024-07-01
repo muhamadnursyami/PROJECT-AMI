@@ -38,6 +38,9 @@ $routes->post('admin/kriteria-ed/hapus/(:segment)', 'Admin\KriteriaED::delete/$1
 // kelola kriteria ed admin untuk semua prodi
 $routes->get('admin/kriteria-ed/universitas/tambah', 'Admin\KriteriaED::createUniv');
 $routes->post('admin/kriteria-ed/universitas/tambah', 'Admin\KriteriaED::saveUniv');
+// admin hapus kriteria ed multiple
+$routes->post('admin/kriteria-ed/hapus-multiple', 'Admin\KriteriaED::deleteMultiple');
+
 
 // lihat ed admin
 $routes->get('admin/kriteria-ed/view', 'Admin\ViewEDController::index');
