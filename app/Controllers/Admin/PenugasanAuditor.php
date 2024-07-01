@@ -118,38 +118,40 @@ class PenugasanAuditor extends BaseController
         $dataProdi = array_unique($dataProdi);
         $uuidProdi = array_unique($uuidProdi);
 
-        $capaian = [];
-        $total = [];
-        $persentase_terisi = [];
 
-        $i = 0;
+        // jika form evaluasi belum terisi 100% tidak bisa melakukan penguasan auditor
+        // $capaian = [];
+        // $total = [];
+        // $persentase_terisi = [];
+
+        // $i = 0;
         // progress capaian per masing-masing prodi
 
         // pake nama prodi
-        $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-            ->where('akar_penyebab IS NOT null')
-            ->where('tautan_bukti IS NOT null')
-            ->where('kriteria_standar.is_aktif', 1)
-            ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
-        $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-            ->where('kriteria_standar.is_aktif', 1)
-            ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
+        // $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+        //     ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+        //     ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+        //     ->where('akar_penyebab IS NOT null')
+        //     ->where('tautan_bukti IS NOT null')
+        //     ->where('kriteria_standar.is_aktif', 1)
+        //     ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
+        // $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+        //     ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+        //     ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+        //     ->where('kriteria_standar.is_aktif', 1)
+        //     ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
 
-        if ($total != 0) {
-            $persentase_terisi = ($capaian / $total) * 100;
-        } else {
+        // if ($total != 0) {
+        //     $persentase_terisi = ($capaian / $total) * 100;
+        // } else {
 
-            $persentase_terisi = 100;
-        }
-        // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
-        if ($persentase_terisi < 100) {
-            session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
-            return redirect()->back()->withInput();
-        }
+        //     $persentase_terisi = 100;
+        // }
+        // // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
+        // if ($persentase_terisi < 100) {
+        //     session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
+        //     return redirect()->back()->withInput();
+        // }
         // 
 
         // // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
@@ -158,9 +160,9 @@ class PenugasanAuditor extends BaseController
         //     return redirect()->back()->withInput();
         // }
         // Check apakah prodi asal dan prodi tujuan sama
-        $auditorProdi = $this->request->getPost('id_auditor');
+        // $auditorProdi = $this->request->getPost('id_auditor');
         // dapatin id_prodi dari auditor
-        $auditor = $this->auditor->where('id', $auditorProdi)->first();
+        // $auditor = $this->auditor->where('id', $auditorProdi)->first();
 
         // dd($auditorProdi);
         // if ($prodiId == $auditor['id_prodi']) {
@@ -226,56 +228,56 @@ class PenugasanAuditor extends BaseController
         $prodiId = $this->request->getPost('prodi');
 
         // check yang kubuat
-        $kriteriaProdi = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
-            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-            ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-            ->join('users', 'users.id_prodi = prodi.id')
-            ->findAll();
-        $dataProdi = [];
-        $dataAuditi = [];
-        $uuidProdi = [];
+        // $kriteriaProdi = $this->kriteriaProdi->select('capaian, akar_penyebab, tautan_bukti, kriteria, bobot, prodi.nama as nama, prodi.uuid as uuid_prodi, fakultas, users.name as nama_user, users.id_prodi as id_prodi')
+        //     ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+        //     ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+        //     ->join('users', 'users.id_prodi = prodi.id')
+        //     ->findAll();
+        // $dataProdi = [];
+        // $dataAuditi = [];
+        // $uuidProdi = [];
 
-        foreach ($kriteriaProdi as $key => $value) {
-            array_push($dataProdi, $value['nama']);
-            array_push($dataAuditi, $value['nama_user']);
-            array_push($uuidProdi, $value['uuid_prodi']);
-        }
-        $dataAuditi = array_unique($dataAuditi);
-        $dataProdi = array_unique($dataProdi);
-        $uuidProdi = array_unique($uuidProdi);
+        // foreach ($kriteriaProdi as $key => $value) {
+        //     array_push($dataProdi, $value['nama']);
+        //     array_push($dataAuditi, $value['nama_user']);
+        //     array_push($uuidProdi, $value['uuid_prodi']);
+        // }
+        // $dataAuditi = array_unique($dataAuditi);
+        // $dataProdi = array_unique($dataProdi);
+        // $uuidProdi = array_unique($uuidProdi);
 
-        $capaian = [];
-        $total = [];
-        $persentase_terisi = [];
+        // $capaian = [];
+        // $total = [];
+        // $persentase_terisi = [];
 
-        $i = 0;
-        // progress capaian per masing-masing prodi
+        // $i = 0;
+        // // progress capaian per masing-masing prodi
 
-        // pake nama prodi
-        $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-            ->where('akar_penyebab IS NOT null')
-            ->where('tautan_bukti IS NOT null')
-            ->where('kriteria_standar.is_aktif', 1)
-            ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
-        $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
-            ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
-            ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
-            ->where('kriteria_standar.is_aktif', 1)
-            ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
+        // // pake nama prodi
+        // $capaian = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+        //     ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+        //     ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+        //     ->where('akar_penyebab IS NOT null')
+        //     ->where('tautan_bukti IS NOT null')
+        //     ->where('kriteria_standar.is_aktif', 1)
+        //     ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
+        // $total = count($this->kriteriaProdi->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
+        //     ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
+        //     ->join('kriteria_standar', 'kriteria.id_kriteria_standar = kriteria_standar.id')
+        //     ->where('kriteria_standar.is_aktif', 1)
+        //     ->where('prodi.id', $this->request->getVar('prodi'))->findAll());
 
-        if ($total != 0) {
-            $persentase_terisi = ($capaian / $total) * 100;
-        } else {
+        // if ($total != 0) {
+        //     $persentase_terisi = ($capaian / $total) * 100;
+        // } else {
 
-            $persentase_terisi = 100;
-        }
+        //     $persentase_terisi = 100;
+        // }
         // Jika kriteria prodi belum diisi, tampilkan pesan peringatan
-        if ($persentase_terisi < 100) {
-            session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
-            return redirect()->back()->withInput();
-        }
+        // if ($persentase_terisi < 100) {
+        //     session()->setFlashdata('warning', 'Prodi harus menyelesaikan Form Evaluasi Diri sebelum menugaskan auditor.');
+        //     return redirect()->back()->withInput();
+        // }
         // // Check apakah prodi asal dan prodi tujuan sama
         // $id_auditor = $this->request->getPost('id_auditor');
         // $auditorProdiBerdasakanIDAuditor = $this->penugasanAuditor

@@ -355,4 +355,19 @@ class KriteriaED extends BaseController
             return redirect()->back()->with('gagal', 'Gagal menambah indikator ED');
         }
     }
+
+    public function deleteMultiple(){
+
+        if(is_null($this->request->getVar('selectedItems'))){
+            return redirect()->back()->with('gagal', 'Gagal menghapus kriteria, tidak ada kriteria yang terpilih');
+        }
+        
+        foreach ($this->request->getVar('selectedItems') as $key => $value) {
+            $this->kriteria->where('uuid', $value)->delete();  
+        }
+        
+        return redirect()->back()->with('sukses', 'Berhasil menghapus kriteria yang dipilih');
+
+    }
+
 }
