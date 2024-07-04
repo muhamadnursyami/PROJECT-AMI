@@ -79,13 +79,13 @@ class UserController extends BaseController
         }
 
         // hash password menggunakan bcrypt
-        $password = password_hash($this->request->getVar('password'), PASSWORD_BCRYPT);
+        $password = password_hash(htmlspecialchars($this->request->getVar('password')), PASSWORD_BCRYPT);
 
         // save password
         $isSave = $this->userModel->save([
             'uuid' => $uuid4String,
-            'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
+            'name' => htmlspecialchars($this->request->getVar('name')),
+            'email' => htmlspecialchars($this->request->getVar('email')),
             'password' => $password,
         ]);
 
