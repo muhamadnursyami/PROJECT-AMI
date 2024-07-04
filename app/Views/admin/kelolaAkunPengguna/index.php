@@ -11,6 +11,7 @@
                 </div>
                 <div class="card-body">
                     <p>Data akun akan muncul jika sudah mendapatkan akses masuk ke aplikasi</p>
+                    <small class="mb-5">Catatan: Jika data yang ditambahkan adalah role auditor, maka harap tambahkan lagi data auditor pada <b>Kelola Auditor</b> yang terdapat di menu sidebar</small>
                     <?php if (session('validation')) { ?>
                         <div class="alert bg-danger" role="alert">
                             <ul>
@@ -48,10 +49,14 @@
                                         <td><?= $value['name']; ?></td>
                                         <td><?= $value['email']; ?></td>
                                         <td>
-                                            <?php if(isset($value['id_prodi']) || isset($value['role'])){ ?>
-                                                Sudah memiliki prodi atau role
+                                            <?php if(isset($value['id_prodi']) && isset($value['role'])){ ?>
+                                                Sudah memiliki prodi <?= $value['id_prodi'] ?> dan role <?= $value['role']; ?>
+                                            <?php }else if(isset($value['id_prodi'])){ ?>
+                                                Sudah memiliki prodi <?= $value['id_prodi']; ?>
+                                            <?php }else if(isset($value['role'])){ ?>
+                                                Sudah memiliki role <?= $value['role']; ?>, Namun belum memiliki prodi
                                             <?php }else{ ?>
-                                                Belum Memiliki prodi atau role
+                                                Belum memiliki role dan prodi
                                             <?php } ?>
                                         </td>
                                         <td>
