@@ -44,7 +44,6 @@
                         <form action="/auditi/form-ed" method="POST">
                             <?= csrf_field() ?>
                             <a href="/auditi/form-ed/ubah" class="btn btn-primary mb-3">Ubah Data</a>
-                            <small class="text-danger d-block mb-2">Form Tambah Data Evaluasi Diri hanya dapat di tambahkan 1 kali saja, pastikan cek kembali data yang diinputkan</small>
                             <div class="table-responsive">
                                 <table id="datatable" class="table data-table table-striped">
                                     <thead>
@@ -69,7 +68,7 @@
                                                     <?php if (!is_null($form_ed[$i]['akar_penyebab'])) { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">
 
-                                                            <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['akar_penyebab'] ?>" disabled>
+                                                            <?= $form_ed[$i]['akar_penyebab']; ?>
                                                         </div>
                                                     <?php } else { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">
@@ -81,7 +80,7 @@
                                                 <td class="text-center" style="width: 25%;">
                                                     <?php if (!is_null($form_ed[$i]['tautan_bukti'])) { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">
-                                                            <a href="<?= $form_ed[$i]['tautan_bukti'] ?>">Klik disini untuk melihat tautan bukti</a>
+                                                            <p><?= $form_ed[$i]['tautan_bukti']; ?></p>
                                                         </div>
                                                     <?php } else { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">
@@ -92,13 +91,7 @@
                                                 </td>
                                                 <td class="text-center" style="width: 10%;">
                                                     <?php if ($form_ed[$i]['capaian_auditi'] != 0) { ?>
-                                                        <select class="custom-select" id="validationCustom04" name="capaian_auditi<?= $form_ed[$i]['uuid'] ?>" disabled>
-                                                            <option selected value="<?= $form_ed[$i]['capaian_auditi'] ?>"><?= $form_ed[$i]['capaian_auditi'] ?></option>
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                        </select>
+                                                        <?= $form_ed[$i]['capaian_auditi'] ?>
                                                     <?php } else { ?>
                                                         <select class="custom-select" id="validationCustom04" name="capaian_auditi<?= $form_ed[$i]['uuid'] ?>">
                                                             <option selected disabled value="">Pilih Capaian</option>

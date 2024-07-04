@@ -60,20 +60,25 @@
                                         <?php $no = 1; ?>
                                         <?php for ($i = 0; $i < count($form_ed); $i++) { ?>
                                             <tr>
-                                                <td><?= $form_ed[$i]['standar']; ?></td>
-                                                <td><?= $form_ed[$i]['kriteria']; ?></td>
-                                                <td style="width: 30%;">
+                                                <td style="width: 10%;"><?= $form_ed[$i]['standar']; ?></td>
+                                                <td style="width: 20%;"><?= $form_ed[$i]['kriteria']; ?></td>
+                                                <td style="width: 15%;">
                                                     <div class="col-12 col-lg-12 mt-auto">
-                                                        <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['akar_penyebab'] ?>" disabled>
+                                                        <?php if($form_ed[$i]['akar_penyebab'] == ""){ ?>
+                                                            <input type="text" class="form-control" id="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" name="akarpenyebab<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['akar_penyebab'] ?>" disabled>
+
+                                                        <?php }else{ ?>
+                                                            <p><?= $form_ed[$i]['akar_penyebab']; ?></p>
+                                                        <?php } ?>
                                                     </div>
                                                 </td>
-                                                <td style="width: 30%;">
+                                                <td style="width: 15%;">
                                                     <div class="col-12 col-lg-12 mt-auto">
                                                         <?php if($form_ed[$i]['tautan_bukti'] == ""){ ?>
                                                             
                                                             <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>" disabled>
                                                         <?php }else{ ?>
-                                                            <a href="<?= $form_ed[$i]['tautan_bukti'] ?>"><?= $form_ed[$i]['tautan_bukti'] ?></a>
+                                                            <p><?= $form_ed[$i]['tautan_bukti'] ?></p>
                                                         <?php } ?>
                                                     </div>
                                                 </td>
