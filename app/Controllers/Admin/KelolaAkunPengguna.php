@@ -22,11 +22,24 @@ class KelolaAkunPengguna extends BaseController
     {
         
         $user = $this->user->where('akses', 1)->findAll();
-        // dd($user);
+        // d($user);
+        $datauser = [];
+        foreach ($user as $key => $value) {
+            // d($value['id_prodi']);
+
+            if(!is_null($value['id_prodi'])){
+                $prodi = $this->prodi->where('id', $value['id_prodi'])->first();
+                $value['id_prodi'] = $prodi['nama'];
+            }
+
+            array_push($datauser, $value);
+        }
+        // dd($datauser);
+
         $data = [
             'title' => "Kelola Data Akun",
             'currentPage' => 'kelola-akun-pengguna',
-            'users' => $user,
+            'users' => $datauser,
         ];
 
         return view('admin/kelolaAkunPengguna/index', $data);
