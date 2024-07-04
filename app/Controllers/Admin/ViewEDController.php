@@ -132,4 +132,27 @@ class ViewEDController extends BaseController
         ];
         return view('admin/viewED/viewdetail', $data);
     }
+
+    public function delete(){
+        $data = $this->request->getVar('selectedItems');
+        if(is_null($data)){
+            return redirect()->back()->with('gagal', "Gagal menghapus ED, tidak ada data yang terpilih");
+        }
+
+        $updated = [
+            "capaian_auditi" => 0,
+            "capaian" => 0,
+            "akar_penyebab" => null,
+            "tautan_bukti" => null,
+            "catatan" => null,
+        ];
+
+        foreach ($data as $key => $value) {
+            // d($value);
+            $this->kriteriaProdi->set($updated)->where('uuid', $value)->update();
+        }
+        return redirect()->back()->with('sukses', "Sukses menghapus ED");
+        
+    }
+
 }

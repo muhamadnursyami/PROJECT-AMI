@@ -45,6 +45,9 @@ $routes->post('admin/kriteria-ed/hapus-multiple', 'Admin\KriteriaED::deleteMulti
 // lihat ed admin
 $routes->get('admin/kriteria-ed/view', 'Admin\ViewEDController::index');
 $routes->get('admin/kriteria-ed/view/(:segment)', 'Admin\ViewEDController::view/$1');
+// admin delete kriteria ed
+$routes->post('admin/kriteria-ed/view/delete', 'Admin\ViewEDController::delete');
+
 // admin kelola standar
 $routes->get('admin/kriteria-ed/tambah/standar', 'Admin\StandarController::index');
 $routes->get('admin/kriteria-ed/tambah/standar/tambah', 'Admin\StandarController::create');
