@@ -45,7 +45,7 @@ class Form4 extends BaseController
     {
 
         $jadwalPeriode = $this->periode_Model->first();
-        if(is_null($jadwalPeriode) || !isset($jadwalPeriode)){
+        if (is_null($jadwalPeriode) || !isset($jadwalPeriode)) {
             return redirect()->to('auditor/dashboard')->with('gagal', 'Jadwal AMI Belum dibuat');;
         }
         $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
@@ -113,9 +113,10 @@ class Form4 extends BaseController
 
         $anggota = [];
         if (!is_null($dataKopKelengkapanDokumen)) {
-
             $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];
-            $anggota = explode(',', $anggota);
+            // Gunakan regex untuk memisahkan nama auditor
+            preg_match_all('/(?:[^,]+, [^,]+(?:, [^,]+)?)/', $anggota, $matches);
+            $anggota = $matches[0];
         }
 
 
@@ -294,9 +295,10 @@ class Form4 extends BaseController
 
         $anggota = [];
         if (!is_null($dataKopKelengkapanDokumen)) {
-
             $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];
-            $anggota = explode(',', $anggota);
+            // Gunakan regex untuk memisahkan nama auditor
+            preg_match_all('/(?:[^,]+, [^,]+(?:, [^,]+)?)/', $anggota, $matches);
+            $anggota = $matches[0];
         }
 
 

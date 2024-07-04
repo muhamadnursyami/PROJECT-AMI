@@ -46,7 +46,7 @@ class Form5 extends BaseController
     public function beranda()
     {
         $jadwalPeriode = $this->periodeModel->first();
-        if(is_null($jadwalPeriode) || !isset($jadwalPeriode)){
+        if (is_null($jadwalPeriode) || !isset($jadwalPeriode)) {
             return redirect()->to('auditor/dashboard')->with('gagal', 'Jadwal AMI Belum dibuat');;
         }
         $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
@@ -115,11 +115,11 @@ class Form5 extends BaseController
 
         $anggota = [];
         if (!is_null($dataKopKelengkapanDokumen)) {
-
             $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];
-            $anggota = explode(',', $anggota);
+            // Gunakan regex untuk memisahkan nama auditor
+            preg_match_all('/(?:[^,]+, [^,]+(?:, [^,]+)?)/', $anggota, $matches);
+            $anggota = $matches[0];
         }
-
 
         $ringkasanTemuan = $this->ringkasanTemuan
             ->select('kode_kriteria, ringkasan_temuan.id as id, deskripsi,kategori, kriteria, ringkasan_temuan.uuid as uuid, prodi.nama as nama_prodi')
@@ -343,7 +343,9 @@ class Form5 extends BaseController
         $anggota = [];
         if (!is_null($dataKopKelengkapanDokumen)) {
             $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];
-            $anggota = explode(',', $anggota);
+            // Gunakan regex untuk memisahkan nama auditor
+            preg_match_all('/(?:[^,]+, [^,]+(?:, [^,]+)?)/', $anggota, $matches);
+            $anggota = $matches[0];
         }
 
         $prodi = $this->prodi->where('uuid', $uuid2)->first();
