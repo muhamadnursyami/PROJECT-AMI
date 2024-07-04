@@ -49,7 +49,7 @@ class Form1 extends BaseController
     {
 
         $jadwalPeriode = $this->periode_Model->first();
-        if(is_null($jadwalPeriode) || !isset($jadwalPeriode)){
+        if (is_null($jadwalPeriode) || !isset($jadwalPeriode)) {
             return redirect()->to('auditor/dashboard')->with('gagal', 'Jadwal AMI Belum dibuat');;
         }
         $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
@@ -98,8 +98,6 @@ class Form1 extends BaseController
 
     public function index($uuid2)
     {
-        // dd($uuid2);
-
         $id_user = session()->get('id');
         $auditor = $this->auditor->where('id_user', $id_user)->first();
         if (!$auditor) {
@@ -126,15 +124,14 @@ class Form1 extends BaseController
             ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
             ->where('prodi.uuid', $uuid2)
             ->findAll();
-        // dd($dataKelengkapanDokumen);
 
         $anggota = [];
         if (!is_null($dataKopKelengkapanDokumen)) {
-
             $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];
-            $anggota = explode(',', $anggota);
+            // Gunakan regex untuk memisahkan nama auditor
+            preg_match_all('/(?:[^,]+, [^,]+(?:, [^,]+)?)/', $anggota, $matches);
+            $anggota = $matches[0];
         }
-
 
         $prodi = $this->prodi->where('uuid', $uuid2)->first();
         $data = [
@@ -248,9 +245,10 @@ class Form1 extends BaseController
         $kopkelengkapanDokumen = $this->kopkelengkapanDokumen->join('prodi', 'prodi.nama = lokasi')
             ->where('prodi.uuid', $uuid)->first();
         $anggota = $kopkelengkapanDokumen['auditor_anggota'];
-        // dd($anggota);
-        $anggota = explode(',', $anggota);
-        // dd($anggota);
+
+        // Gunakan regex untuk memisahkan nama auditor
+        preg_match_all('/(?:[^,]+, [^,]+(?:, [^,]+)?)/', $anggota, $matches);
+        $anggota = $matches[0];
 
         $data = [
             'title' => 'Ubah Kop Kelengkapan Dokumen',
@@ -262,6 +260,7 @@ class Form1 extends BaseController
 
         return view("auditor/form1/kopkelengkapandokumen/updateKopKelengkapanDokumen", $data);
     }
+
 
     public function kopkelengkapanDokumenUpdatePost($uuid)
     {

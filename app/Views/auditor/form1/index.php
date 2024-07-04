@@ -46,7 +46,7 @@
                             <td><?= $dataKopKelengkapanDokumen['auditor_ketua'] ?></td>
                             <td>
                                 <ol>
-                                    <?php foreach ($anggota as $key => $value) { ?>
+                                    <?php foreach ($anggota as $value) { ?>
                                         <li><?= $value; ?></li>
                                     <?php } ?>
                                 </ol>
