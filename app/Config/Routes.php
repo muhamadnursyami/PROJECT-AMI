@@ -48,6 +48,12 @@ $routes->get('admin/kriteria-ed/view/(:segment)', 'Admin\ViewEDController::view/
 // admin delete kriteria ed
 $routes->post('admin/kriteria-ed/view/delete', 'Admin\ViewEDController::delete');
 
+// lihat FORM 3 admin
+$routes->get('admin/form3/view', 'Admin\ViewForm3Controller::index');
+$routes->get('admin/form3/view/(:segment)', 'Admin\ViewForm3Controller::view/$1');
+// admin delete FORM 3
+$routes->post('admin/form3/view/delete', 'Admin\ViewForm3Controller::delete');
+
 // admin kelola standar
 $routes->get('admin/kriteria-ed/tambah/standar', 'Admin\StandarController::index');
 $routes->get('admin/kriteria-ed/tambah/standar/tambah', 'Admin\StandarController::create');
@@ -217,4 +223,3 @@ $routes->get('pimpinan/lihat-berkas', 'Pimpinan\LihatBerkas::index');
 // ubah data pimpinan
 $routes->get('pimpinan/kelola-data', 'Pimpinan\KelolaPimpinanController::index');
 $routes->post('pimpinan/kelola-data', 'Pimpinan\KelolaPimpinanController::savePassword');
-
