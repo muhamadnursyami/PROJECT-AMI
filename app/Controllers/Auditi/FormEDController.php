@@ -36,7 +36,7 @@ class FormEDController extends BaseController
             return redirect()->to('auditi/dashboard')->with('gagal', 'Akun anda belum memiliki prodi, silahkan hubungi admin');
         } else {
 
-            $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, capaian_auditi, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi, kriteria, bobot')
+            $form_ed = $this->kriteriaProdi->select('kriteria_prodi.uuid as uuid, standar, is_aktif, kriteria.id_kriteria_standar as id_standar, id_kriteria, prodi.id as id_prodi, capaian, capaian_auditi, akar_penyebab, tautan_bukti, nama, id_lembaga_akreditasi,kode_kriteria ,kriteria, bobot')
                 ->join('prodi', 'prodi.id = kriteria_prodi.id_prodi')
                 ->join('kriteria', 'kriteria.id = kriteria_prodi.id_kriteria')
                 ->join('kriteria_standar', 'kriteria_standar.id = kriteria.id_kriteria_standar')
@@ -73,7 +73,7 @@ class FormEDController extends BaseController
 
 
             $jadwalPeriodeED = $this->jadwal_periode_ED_Model->first();
-            if(is_null($jadwalPeriodeED) || !isset($jadwalPeriodeED)){
+            if (is_null($jadwalPeriodeED) || !isset($jadwalPeriodeED)) {
                 return redirect()->to('admin/dashboard')->with('gagal', 'Jadwal Periode ED Belum dibuat');
             }
 
@@ -87,7 +87,7 @@ class FormEDController extends BaseController
             if ($tanggalSelesaiTimestamp < $tanggalSekarangTimestamp) {
                 $formTerkunci = true;
             }
-
+            // dd($form_ed);
             $data = [
                 'title' => 'Isi Form ED',
                 'currentPage' => 'form-ed',

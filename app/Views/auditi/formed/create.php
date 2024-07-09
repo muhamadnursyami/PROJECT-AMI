@@ -50,6 +50,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Standar</th>
+                                            <th>Kode Kriteria</th>
                                             <th>Kriteria</th>
                                             <th class="text-center">Akar Penyebab</th>
                                             <th class="text-center">Tautan Bukti</th>
@@ -63,6 +64,7 @@
                                             <tr>
                                                 <td scope="row"><?= $no; ?></td>
                                                 <td><?= $form_ed[$i]['standar']; ?></td>
+                                                <td><?= $form_ed[$i]['kode_kriteria']; ?></td>
                                                 <td><?= $form_ed[$i]['kriteria']; ?></td>
                                                 <td class="text-center" style="width: 25%;">
                                                     <?php if (!is_null($form_ed[$i]['akar_penyebab'])) { ?>
