@@ -78,7 +78,7 @@
                                                             
                                                             <input type="text" class="form-control" id="tautan_bukti<?= $form_ed[$i]['uuid'] ?>" name="tautanbukti<?= $form_ed[$i]['uuid'] ?>" value="<?= $form_ed[$i]['tautan_bukti'] ?>" disabled>
                                                         <?php }else{ ?>
-                                                            <p><?= $form_ed[$i]['tautan_bukti'] ?></p>
+                                                            <a href="<?= $form_ed[$i]['tautan_bukti'] ?>" target="_blank"><?= substr($form_ed[$i]['tautan_bukti'], 0, 40) ?>....</a>
                                                         <?php } ?>
                                                     </div>
                                                 </td>

@@ -82,7 +82,7 @@
                                                 <td class="text-center" style="width: 25%;">
                                                     <?php if (!is_null($form_ed[$i]['tautan_bukti'])) { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">
-                                                            <p><?= $form_ed[$i]['tautan_bukti']; ?></p>
+                                                            <a href="<?= $form_ed[$i]['tautan_bukti'] ?>" target="_blank"><?= substr($form_ed[$i]['tautan_bukti'], 0, 40) ?>....</a>
                                                         </div>
                                                     <?php } else { ?>
                                                         <div class="col-12 col-lg-12 mt-auto">
