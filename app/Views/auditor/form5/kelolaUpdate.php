@@ -28,11 +28,12 @@
                 </div>
                 <div class="card-body">
                     <form class="text-right" action="/auditor/form-5/kelola/<?= $uuid ?>/<?= $uuid_deskripsi_temuan ?>/hapus" method="post">
+                        <?= csrf_field() ?>
                         <button type="submit" class="btn btn-danger mb-3" onclick="return confirm('Apakah ingin menghapus?')">Hapus <?= $deskripsiTemuan['kode_kriteria'] ?></button>
                     </form>
                     <div class="container">
                         <form action="/auditor/form-5/kelola/<?= $uuid ?>/<?= $uuid_deskripsi_temuan ?>" method="post">
-
+                            <?= csrf_field() ?>
                             <input type="text" name="id_ringkasan_temuan" value="<?= $deskripsiTemuan['id'] ?>" hidden>
                             <input type="text" name="penjaminMutuAudit" value="<?= $deskripsiTemuan['reviewer'] ?>" hidden>
                             <input type="text" name="pimpinanAuditi" value="<?= $deskripsiTemuan['pimpinan_auditi'] ?>" hidden>

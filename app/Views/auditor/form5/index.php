@@ -76,6 +76,7 @@
                         <div id="<?= $uniqueKey ?>" class="hidden form-temuan">
                             <p>Kode kriteria - <?= $value['kode_kriteria'] ?></p>
                             <form class="row text-center" action="/auditor/form-5/<?= $uuid2 ?>" method="post">
+                                <?= csrf_field() ?>
                                 <input type="text" name="id_ringkasan_temuan" value="<?= $value['id'] ?>" hidden>
                                 <input type="text" name="penjaminMutuAudit" value="<?= $penjaminMutuAudit ?>" hidden>
                                 <input type="text" name="pimpinanAuditi" value="<?= $wakil_auditi ?>" hidden>

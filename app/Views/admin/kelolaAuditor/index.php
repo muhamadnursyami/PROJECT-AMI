@@ -53,6 +53,7 @@
                                         <td>
                                             <a href="/admin/kelola-auditor/ubah/<?= $value['uuid'] ?>" class="btn  btn-primary">Ubah</a>
                                             <form action="/admin/kelola-auditor/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                                <?= csrf_field() ?>
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                             </form>
                                         </td>

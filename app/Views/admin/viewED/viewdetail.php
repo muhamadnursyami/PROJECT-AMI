@@ -32,6 +32,7 @@
                     </div>
                     <div class="table-responsive">
                         <form action="/admin/kriteria-ed/view/delete" method="post">
+                            <?= csrf_field() ?>
                             <button class="btn btn-danger mb-1" type="submit" onclick="return confirm('Yakin ingin menghapus?')">Hapus Kriteria Terpilih</button>
                             <small class="d-block mb-4 text-red">Hanya menghapus data yang sudah diisi oleh auditi dan auditor</small>
                             <table id="datatable" class="table data-table table-striped">

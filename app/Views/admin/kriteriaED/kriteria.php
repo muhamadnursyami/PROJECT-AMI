@@ -42,6 +42,7 @@
                     <a href="/admin/kriteria-ed/universitas/tambah" class="btn btn-primary mb-3">Tambah Kriteria Semua Prodi</a>
                     <div class="table-responsive">
                         <form id="deleteForm" action="/admin/kriteria-ed/hapus-multiple" method="POST">
+                            <?= csrf_field() ?>
                             <button type="submit" class="btn btn-danger delete-selected-button mb-3" onclick="return confirm('Apakah anda ingin menghapus data yang dipilih?')" id="deleteSelectedButton">Hapus Data Terpilih</button>
                             <table id="datatable" class="table data-table table-striped">
                                 <thead>
@@ -70,6 +71,7 @@
                                             <td>
                                                 <a href="/admin/kriteria-ed/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>
                                                 <form action="/admin/kriteria-ed/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                                    <?= csrf_field() ?>
                                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                                 </form>
                                             </td>

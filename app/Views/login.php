@@ -50,6 +50,7 @@
 
 
                                             <form method="POST" action="<?= base_url('/') ?>">
+                                                <?= csrf_field() ?>
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="floating-label form-group">

@@ -62,6 +62,7 @@
                                         <td>
                                             <a href="/admin/kelola-akun-pengguna/kelola/<?= $value['uuid'] ?>" class="btn  btn-primary">Kelola</a>
                                             <form action="/admin/kelola-akun-pengguna/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                                <?= csrf_field() ?>
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                             </form>
                                         </td>

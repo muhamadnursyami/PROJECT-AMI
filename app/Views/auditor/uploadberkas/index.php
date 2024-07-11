@@ -53,6 +53,7 @@ if (!empty(session()->getFlashdata('sukses'))) : ?>
                                 <div class="flex align-items-center list-user-action">
                                     <a href="/auditor/upload-berkas/form-upload/<?= $uuid2 ?>/ubah/<?= $uploadBerkas['uuid'] ?>" class="btn  btn-primary">Edit</a>
                                     <form action="/auditor/upload-berkas/<?= $uuid2 ?>/delete/<?= $uploadBerkas['uuid'] ?>" method="post" class="d-inline">
+                                        <?= csrf_field() ?>
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                     </form>
                                 </div>

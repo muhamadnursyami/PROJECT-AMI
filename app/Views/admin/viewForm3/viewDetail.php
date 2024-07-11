@@ -13,6 +13,7 @@
                 <div class="card-body">
                     <a href="/admin/form3/view" class="btn bg-warning">Kembali</a>
                     <form action="/admin/form3/view/delete" method="post">
+                        <?= csrf_field() ?>
                         <input type="hidden" name="id_penugasan_auditor" value="<?= $catatanAuditDetail[0]['id_penugasan_auditor'] ?>">
                         <button class="btn btn-danger mt-4" type="submit" onclick="return confirm('Yakin ingin menghapus?')">Hapus Catatan Audit Form 3</button>
                         <small class="d-block mt-2 text-red">Hanya menghapus data yang sudah diisi oleh auditor</small>

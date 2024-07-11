@@ -57,6 +57,7 @@
                                         <td>
                                             <a href="/admin/penugasan-auditor/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>
                                             <form action="/admin/penugasan-auditor/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                                <?= csrf_field() ?>
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                             </form>
                                         </td>

@@ -95,6 +95,7 @@
                                     <td>
                                         <a href="/auditor/form-4/ringkasan-temuan/ubah/<?= $value['uuid'] ?>/<?= $uuid2 ?>" class="btn btn-primary ">Ubah</a>
                                         <form action="/auditor/form-4/ringkasan-temuan/hapus/<?= $value['uuid'] ?>/<?= $uuid2 ?>" method="post" class="d-inline">
+                                            <?= csrf_field() ?>
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                         </form>
                                     </td>

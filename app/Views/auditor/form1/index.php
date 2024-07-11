@@ -54,6 +54,7 @@
                             <td>
                                 <a href="/auditor/form-1/kop-kelengkapan-dokumen/ubah/<?= $uuid2 ?>" class="btn btn-primary">Ubah</a>
                                 <form action="/auditor/form-1/kop-kelengkapan-dokumen/hapus/<?= $uuid2 ?>" method="post" class="d-inline">
+                                    <?= csrf_field() ?>
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                 </form>
                             </td>
@@ -89,6 +90,7 @@
                                         <td>
                                             <a href="/auditor/form-1/kelengkapan-dokumen/ubah/<?= $value['uuid'] ?>" class="btn btn-primary">Ubah</a>
                                             <form action="/auditor/form-1/kelengkapan-dokumen/hapus/<?= $value['uuid'] ?>" method="post" class="d-inline">
+                                                <?= csrf_field() ?>
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                             </form>
                                         </td>

@@ -50,6 +50,7 @@
                                     </div>
                                     <div class="col-12">
                                         <form action="/auditor/form-3/catatan-audit/positif/hapus/<?= $catatan['uuid'] ?>" method="post" class="d-inline">
+                                            <?= csrf_field() ?>
                                             <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                         </form>
                                     </div>
@@ -82,6 +83,7 @@
                                     </div>
                                     <div class="col-12">
                                         <form action="/auditor/form-3/catatan-audit/negatif/hapus/<?= $catatan['uuid'] ?>" method="post" class="d-inline">
+                                            <?= csrf_field() ?>
                                             <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Apakah ingin menghapus?')">Hapus</button>
                                         </form>
                                     </div>
