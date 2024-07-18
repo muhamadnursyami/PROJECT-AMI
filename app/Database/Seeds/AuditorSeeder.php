@@ -15,7 +15,7 @@ class AuditorSeeder extends Seeder
             'id_prodi' => 1,
             'uuid' => service('uuid')->uuid4()->toString(),
             'kode_auditor' => uniqid(),
-            'nama' => 'auditor',
+            'nama' => 'NOLA RITHA, S.T., M.CS',
         ]);
 
         $this->db->table('auditor')->insert([
@@ -23,7 +23,7 @@ class AuditorSeeder extends Seeder
             'id_prodi' => 2,
             'uuid' => service('uuid')->uuid4()->toString(),
             'kode_auditor' => uniqid(),
-            'nama' => 'auditor2',
+            'nama' => 'Teddy Haryadi, SE., M.Ak',
         ]);
 
         $this->db->table('auditor')->insert([
@@ -31,7 +31,7 @@ class AuditorSeeder extends Seeder
             'id_prodi' => 8,
             'uuid' => service('uuid')->uuid4()->toString(),
             'kode_auditor' => uniqid(),
-            'nama' => 'auditor3',
+            'nama' => 'Yudi Umara, M.Pd',
         ]);
 
         

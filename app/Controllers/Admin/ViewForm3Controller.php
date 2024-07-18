@@ -81,7 +81,7 @@ class ViewForm3Controller extends BaseController
             'prodi_uuid' => $uuid
         ];
 
-        return view('admin/viewForm3/viewdetail', $data);
+        return view('admin/viewForm3/viewDetail', $data);
     }
 
 

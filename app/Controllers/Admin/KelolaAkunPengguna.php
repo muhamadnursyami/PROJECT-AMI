@@ -73,6 +73,13 @@ class KelolaAkunPengguna extends BaseController
             "role" => $this->request->getVar('role'),
         ];
 
+        if($this->request->getVar('role') == "auditor"){
+            $data = [
+                "id_prodi" => null,
+                "role" => $this->request->getVar('role'),
+            ];
+        }
+
         $this->user->set($data)->where('uuid', $uuid)->update();
         
         return redirect()->to("/admin/kelola-akun-pengguna")->withInput()->with('sukses', "Data berhasil disimpan");

@@ -49,13 +49,17 @@
                                         <td><?= $value['name']; ?></td>
                                         <td><?= $value['email']; ?></td>
                                         <td>
-                                            <?php if(isset($value['id_prodi']) && isset($value['role'])){ ?>
+                                            <?php if (isset($value['id_prodi']) && isset($value['role'])) { ?>
                                                 Sudah memiliki prodi <?= $value['id_prodi'] ?> dan role <?= $value['role']; ?>
-                                            <?php }else if(isset($value['id_prodi'])){ ?>
+                                            <?php } else if (isset($value['id_prodi'])) { ?>
                                                 Sudah memiliki prodi <?= $value['id_prodi']; ?>
-                                            <?php }else if(isset($value['role'])){ ?>
-                                                Sudah memiliki role <?= $value['role']; ?>, Namun belum memiliki prodi
-                                            <?php }else{ ?>
+                                            <?php } else if (isset($value['role'])) { ?>
+                                                <?php if ($value['role'] == "auditor") { ?>
+                                                    Sudah memiliki role <?= $value['role']; ?>
+                                                <?php } else { ?>
+                                                    Sudah memiliki role <?= $value['role']; ?>, Namun belum memiliki prodi
+                                                <?php } ?>
+                                            <?php } else { ?>
                                                 Belum memiliki role dan prodi
                                             <?php } ?>
                                         </td>

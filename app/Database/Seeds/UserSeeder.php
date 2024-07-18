@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
         // passwordnya 123
         $this->db->table('users')->insert([
             'uuid' => service('uuid')->uuid4()->toString(),
-            'name' => 'auditor',
+            'name' => 'NOLA RITHA, S.T., M.CS',
             'email' => 'auditor@gmail.com',
             'password' => password_hash('123', PASSWORD_BCRYPT),
             'role' => 'auditor'
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
 
         $this->db->table('users')->insert([
             'uuid' => service('uuid')->uuid4()->toString(),
-            'name' => 'auditor2',
+            'name' => 'Teddy Haryadi, SE., M.Ak',
             'email' => 'auditor2@gmail.com',
             'password' => password_hash('123', PASSWORD_BCRYPT),
             'role' => 'auditor'
@@ -85,7 +85,7 @@ class UserSeeder extends Seeder
 
         $this->db->table('users')->insert([
             'uuid' => service('uuid')->uuid4()->toString(),
-            'name' => 'auditor3',
+            'name' => 'Yudi Umara, M.Pd',
             'email' => 'auditor3@gmail.com',
             'password' => password_hash('123', PASSWORD_BCRYPT),
             'role' => 'auditor'
