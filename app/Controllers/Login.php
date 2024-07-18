@@ -101,6 +101,7 @@ class Login extends BaseController
                                 'role_id' => $cekEmail['role'],
                                 'name' => $cekEmail['name'],
                                 'uuid' => $cekEmail['uuid'],
+                                'user' => $cekEmail,
                             ];
 
                             $session->set($session_data);

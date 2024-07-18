@@ -42,6 +42,8 @@ class Filters extends BaseFilters
         'isAuditi' => \App\Filters\AuditFilter::class,
         'isAuditor' => \App\Filters\AuditorFilter::class,
         'isPimpinan' => \App\Filters\PimpinanFilter::class,
+        'checkPolicy' => \App\Filters\CheckPolicy::class,
+        'checkPolicyForm' => \App\Filters\CheckPolicyForm::class,
     ];
 
     /**

@@ -146,13 +146,13 @@ $routes->post('auditi/kelola-data', 'Auditi\KelolaAuditiController::savePassword
 // FITUR ROLE AUDITOR
 // lihat form ed
 $routes->get('auditor/form-ed/view', 'Auditor\ViewEDAuditorController::index');
-$routes->get('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::create/$1');
+$routes->get('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::create/$1', ['filter' => 'checkPolicy:create']);
 $routes->post('auditor/form-ed/view/(:segment)', 'Auditor\ViewEDAuditorController::createPost/$1');
 
 // FORM 1
 // kop kelengkapan dokumen
 $routes->get('auditor/form-1', 'Auditor\Form1::beranda');
-$routes->get('auditor/form-1/(:segment)', 'Auditor\Form1::index/$1');
+$routes->get('auditor/form-1/(:segment)', 'Auditor\Form1::index/$1', ['filter' => 'checkPolicyForm:create']);
 $routes->get('auditor/form-1/kop-kelengkapan-dokumen/(:segment)', 'Auditor\Form1::kopKelengkapanDokumen/$1');
 $routes->post('auditor/form-1/kop-kelengkapan-dokumen/tambah/(:segment)', 'Auditor\Form1::kopKelengkapanDokumenPost/$1');
 $routes->get('auditor/form-1/kop-kelengkapan-dokumen/ubah/(:segment)', 'Auditor\Form1::kopkelengkapanDokumenUpdate/$1');
@@ -170,7 +170,7 @@ $routes->post('auditor/form-1/kelengkapan-dokumen/hapus/(:segment)', 'Auditor\Fo
 $routes->get('auditor/form-2', 'Auditor\Form2::index');
 // FORM 3 - catatan audit
 $routes->get('auditor/form-3', 'Auditor\Form3::beranda');
-$routes->get('auditor/form-3/(:segment)', 'Auditor\Form3::index/$1');
+$routes->get('auditor/form-3/(:segment)', 'Auditor\Form3::index/$1', ['filter' => 'checkPolicyForm:create']);
 $routes->get('auditor/form-3/catatan-audit/tambah/positif/(:segment)', 'Auditor\Form3::createCatatanPositif/$1');
 $routes->get('auditor/form-3/catatan-audit/tambah/negatif/(:segment)', 'Auditor\Form3::createCatatanNegatif/$1');
 $routes->post('auditor/form-3/catatan-audit/tambah/positif/(:segment)', 'Auditor\Form3::createCatatanPositifPost/$1');
@@ -184,7 +184,7 @@ $routes->post('auditor/form-3/catatan-audit/negatif/hapus/(:segment)', 'Auditor\
 
 // FORM 4 ringkasan temuan
 $routes->get('auditor/form-4', 'Auditor\Form4::beranda');
-$routes->get('auditor/form-4/(:segment)', 'Auditor\Form4::index/$1');
+$routes->get('auditor/form-4/(:segment)', 'Auditor\Form4::index/$1', ['filter' => 'checkPolicyForm:create']);
 $routes->get('auditor/form-4/ringkasan-temuan/(:segment)', 'Auditor\Form4::ringkasanTemuan/$1');
 $routes->post('auditor/form-4/ringkasan-temuan/tambah/(:segment)', 'Auditor\Form4::ringkasanTemuanPost/$1');
 $routes->get('auditor/form-4/ringkasan-temuan/ubah/(:segment)/(:segment)', 'Auditor\Form4::ringkasanTemuanUpdate/$1/$2');
