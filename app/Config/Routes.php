@@ -54,6 +54,13 @@ $routes->get('admin/form3/view/(:segment)', 'Admin\ViewForm3Controller::view/$1'
 // admin delete FORM 3
 $routes->post('admin/form3/view/delete', 'Admin\ViewForm3Controller::delete');
 
+
+// lihat FORM 4 admin
+$routes->get('admin/form4/view', 'Admin\ViewForm4Controller::index');
+$routes->get('admin/form4/view/(:segment)', 'Admin\ViewForm4Controller::view/$1');
+
+
+
 // admin kelola standar
 $routes->get('admin/kriteria-ed/tambah/standar', 'Admin\StandarController::index');
 $routes->get('admin/kriteria-ed/tambah/standar/tambah', 'Admin\StandarController::create');
