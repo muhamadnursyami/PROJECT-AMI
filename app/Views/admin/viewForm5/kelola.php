@@ -1,4 +1,4 @@
-<?= $this->extend('auditor/layout') ?>
+<?= $this->extend('admin/layout') ?>
 <?= $this->section('content') ?>
 <?php if (isset($error)) : ?>
     <div class="alert bg-danger mt-3" role="alert">
@@ -15,7 +15,7 @@
                 <div class="card-header d-flex justify-content-between">
 
                     <h4 class="card-title">Form 5 - Kelola Deskripsi Temuan - <?= $prodi ?></h4>
-                    <a href="/auditor/form-5/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
+                    <a href="/admin/form5/view/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
                 </div>
                 <div class="card-body">
                     <div>

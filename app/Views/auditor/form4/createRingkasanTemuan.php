@@ -24,6 +24,7 @@
                                         <option value="<?= $item['id_kriteria']; ?>"><?= $item['kode_kriteria']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                                <small class="text-danger">* Kode kriteria hanya akan muncul jika kode kriteria pada kelengkapan dokumen form 1 sudah ditambahkan</small>
                             </div>
                             <div class="col-8">
                                 <label for="deskripsi" class="h6">Deskripsi Temuan</label>

@@ -60,6 +60,11 @@ $routes->get('admin/form4/view', 'Admin\ViewForm4Controller::index');
 $routes->get('admin/form4/view/(:segment)', 'Admin\ViewForm4Controller::view/$1');
 
 
+// Lihat form 5 admin
+$routes->get('admin/form5/view', 'Admin\ViewForm5Controller::index');
+$routes->get('admin/form5/view/(:segment)', 'Admin\ViewForm5Controller::view/$1');
+$routes->get('admin/form5/view/deskripsi-temuan/(:segment)', 'Admin\ViewForm5Controller::kelola/$1');
+$routes->get('admin/form5/view/deskripsi-temuan/(:segment)/(:segment)', 'Admin\ViewForm5Controller::viewDetail/$1/$2');
 
 // admin kelola standar
 $routes->get('admin/kriteria-ed/tambah/standar', 'Admin\StandarController::index');

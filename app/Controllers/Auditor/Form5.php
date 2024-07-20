@@ -242,7 +242,7 @@ class Form5 extends BaseController
 
     public function kelola($uuid)
     {
-        $deskripsiTemuan = $this->deskripsiTemuan->select('kode_kriteria, deskripsi_temuan.uuid as uuid')
+        $deskripsiTemuan = $this->deskripsiTemuan->select('kode_kriteria, deskripsi_temuan.uuid as uuid, prodi.nama as nama_prodi')
             ->join('ringkasan_temuan', 'ringkasan_temuan.id = deskripsi_temuan.id_ringkasan_temuan')
             ->join('penugasan_auditor', 'penugasan_auditor.id = ringkasan_temuan.id_penugasan_auditor')
             ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
@@ -255,6 +255,7 @@ class Form5 extends BaseController
             'title' => 'Form 5',
             'currentPage' => 'form-5',
             'uuid' => $uuid,
+            'prodi' => $deskripsiTemuan[0]['nama_prodi'],
             'deskripsiTemuan' => $deskripsiTemuan
         ];
 
@@ -273,7 +274,7 @@ class Form5 extends BaseController
             ->where('deskripsi_temuan.uuid', $uuid_deskripsi_temuan)
             ->first();
 
-
+        $prodi = $this->prodi->select('nama')->where('uuid', $uuid)->first();
         // dd($deskripsiTemuan);
 
 
@@ -281,6 +282,7 @@ class Form5 extends BaseController
             "title" => 'Form 5',
             'currentPage' => 'form-5',
             'uuid' => $uuid,
+            'prodi' => $prodi['nama'],
             'uuid_deskripsi_temuan' => $uuid_deskripsi_temuan,
             'deskripsiTemuan' => $deskripsiTemuan,
         ];

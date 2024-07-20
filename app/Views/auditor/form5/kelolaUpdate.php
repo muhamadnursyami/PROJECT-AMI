@@ -22,7 +22,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
 
-                    <h4 class="card-title">Form 5 - Kelola Edit Deskripsi Temuan - <?= $deskripsiTemuan['kode_kriteria'] ?></h4>
+                    <h4 class="card-title">Form 5 - Kelola Edit Deskripsi Temuan - <?= $deskripsiTemuan['kode_kriteria'] ?> - <?= $prodi ?></h4>
                     <a href="/auditor/form-5/kelola/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
 
                 </div>
@@ -39,32 +39,32 @@
                             <input type="text" name="pimpinanAuditi" value="<?= $deskripsiTemuan['pimpinan_auditi'] ?>" hidden>
 
                             <div class="form-group">
-                                <label for="deskripsiTemuan">Deskripsi Temuan</label>
+                                <label for="deskripsiTemuan"><b>Deskripsi Temuan</b></label>
                                 <div>
                                     <?= $deskripsiTemuan['deskripsi_temuan']; ?>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="kriteria">Kriteria</label>
+                                <label for="kriteria"><b>Kriteria</b></label>
                                 <div>
                                     <?= $deskripsiTemuan['kriteria'] ?>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="akibat">Akibat</label>
+                                <label for="akibat"><b>Akibat</b></label>
                                 <textarea class="form-control" id="akibat" name="akibat" rows="3" required><?= $deskripsiTemuan['akibat'] ?></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="akarPenyebab">Akar Penyebab/Masalah</label>
+                                <label for="akarPenyebab"><b>Akar Penyebab/Masalah</b></label>
                                 <textarea class="form-control" id="akarPenyebab" name="akarPenyebab" rows="3" required><?= $deskripsiTemuan['akar_penyebab'] ?></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="rekomendasiDisepakati">Rekomendasi disepakati dengan audit</label>
+                                <label for="rekomendasiDisepakati"><b>Rekomendasi disepakati dengan audit</b></label>
                                 <textarea class="form-control" id="rekomendasiDisepakati" name="rekomendasiDisepakati" rows="3" required><?= $deskripsiTemuan['rekomendasi']; ?></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="tanggapanAuditi">Tanggapan Auditi</label>
+                                <label for="tanggapanAuditi"><b>Tanggapan Auditi</b></label>
                                 <select id="dropdown" class="form-control" name="tanggapanAuditi" required>
                                     <option value="<?= $deskripsiTemuan['tanggapan_auditi']; ?>"><?= $deskripsiTemuan['tanggapan_auditi'] ?></option>
                                     <option value="Setuju">Setuju</option>
@@ -72,19 +72,19 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="rencanaPerbaikan">Rencana Perbaikan</label>
+                                <label for="rencanaPerbaikan"><b>Rencana Perbaikan</b></label>
                                 <textarea class="form-control" id="rencanaPerbaikan" name="rencanaPerbaikan" rows="3" required><?= $deskripsiTemuan['rencana_perbaikan']; ?></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="jadwalPerbaikan" id="jadwalPerbaikan">Jadwal Perbaikan</label>
+                                <label for="jadwalPerbaikan" id="jadwalPerbaikan"><b>Jadwal Perbaikan</b></label>
                                 <input type="date" class="form-control" id="jadwalPerbaikan" name="jadwalPerbaikan" value="<?= $deskripsiTemuan['jadwal_perbaikan'] ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="rencanaPencegahan" id="rencanaPencegahan">Rencana Pencegahan</label>
+                                <label for="rencanaPencegahan" id="rencanaPencegahan"><b>Rencana Pencegahan</b></label>
                                 <textarea class="form-control" id="rencanaPencegahan" rows="3" name="rencanaPencegahan" required><?= $deskripsiTemuan['rencana_pencegahan'] ?></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="jadwalPencegahan" id="jadwalPencegahan">Jadwal Pencegahan</label>
+                                <label for="jadwalPencegahan" id="jadwalPencegahan"><b>Jadwal Pencegahan</b></label>
                                 <input type="date" class="form-control" id="jadwalPencegahan" name="jadwalPencegahan" value="<?= $deskripsiTemuan['jadwal_pencegahan'] ?>" required>
                             </div>
                             <div class="text-center">

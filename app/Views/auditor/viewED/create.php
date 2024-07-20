@@ -46,8 +46,9 @@
                                 <table id="datatable" class="table data-table table-striped">
                                     <thead>
                                         <tr>
-
+                                            <th>#</th>
                                             <th>Standar</th>
+                                            <th>Kode Kriteria</th>
                                             <th>Kriteria</th>
                                             <th>Akar Penyebab</th>
                                             <th>Tautan Bukti</th>
@@ -60,7 +61,9 @@
                                         <?php $no = 1; ?>
                                         <?php for ($i = 0; $i < count($form_ed); $i++) { ?>
                                             <tr>
+                                                <td><?= $no ?></td>
                                                 <td style="width: 10%;"><?= $form_ed[$i]['standar']; ?></td>
+                                                <td><?= $form_ed[$i]['kode_kriteria'] ?></td>
                                                 <td style="width: 20%;"><?= $form_ed[$i]['kriteria']; ?></td>
                                                 <td style="width: 15%;">
                                                     <div class="col-12 col-lg-12 mt-auto">

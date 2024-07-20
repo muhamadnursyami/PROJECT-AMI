@@ -16,6 +16,7 @@ use App\Models\RingkasanTemuanModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Libraries\Pdf;
 use App\Libraries\MY_TCPDF as TCPDF;
+use App\Models\KelengkapanDokumenModel;
 
 class Form4 extends BaseController
 {
@@ -28,6 +29,8 @@ class Form4 extends BaseController
     protected $kriteria;
     protected $ringkasanTemuan;
     protected $kopkelengkapanDokumen;
+    private $kelengkapanDokumen;
+
     public function __construct()
     {
         $this->kriteriaProdi = new KriteriaProdiModel();
@@ -39,6 +42,7 @@ class Form4 extends BaseController
         $this->kriteria = new KriteriaModel();
         $this->kopkelengkapanDokumen = new KopKelengkapanDokumenModel();
         $this->ringkasanTemuan = new RingkasanTemuanModel();
+        $this->kelengkapanDokumen = new KelengkapanDokumenModel();
     }
 
     public function beranda()
@@ -172,14 +176,40 @@ class Form4 extends BaseController
             ->where('is_aktif', 1)
             ->findAll();
 
+        $dataKelengkapanDokumen = $this->kelengkapanDokumen
+            ->select('kode_kriteria')
+            ->join('penugasan_auditor', 'penugasan_auditor.id = id_penugasan_auditor')
+            ->join('kriteria', 'kriteria.id = id_kriteria')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('prodi.uuid', $uuid2)
+            ->findAll();
+
+        $form_edFilter = [];
+        $i = 0;
+        foreach ($form_ed as $key => $value) {
+            if(isset($dataKelengkapanDokumen[$i])){
+                foreach ($dataKelengkapanDokumen as $key2 => $valueKelengkapanDokumen) {
+                    if($value['kode_kriteria'] == $valueKelengkapanDokumen['kode_kriteria']){
+                        array_push($form_edFilter, $value);
+                        $i++;
+                        break;
+                    }
+                }
+
+            }
+        }
+        
+        $dataKelengkapanDokumen = [];
+        $form_ed = [];
 
         $data = [
             'title' => 'Form 4',
             'currentPage' => 'form-4',
-            'form_ed' => $form_ed,
+            'form_ed' => $form_edFilter,
             'id_penugasanAuditor' => $penugasan_auditor,
             'uuid2' => $uuid2,
-            'prodi' => $prodi
+            'prodi' => $prodi,
+            'dataKelengkapanDokumen' => $dataKelengkapanDokumen,
         ];
         return view("auditor/form4/createRingkasanTemuan", $data);
     }

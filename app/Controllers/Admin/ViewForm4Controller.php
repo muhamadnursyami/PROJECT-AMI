@@ -100,7 +100,7 @@ class ViewForm4Controller extends BaseController
 
         $data = [
             'title' => 'Form 4',
-            'currentPage' => 'form-4',
+            'currentPage' => 'lihat-form4',
             'uuid2' => $uuid2,
             'prodi' => $prodi,
             'dataKopKelengkapanDokumen' => $dataKopKelengkapanDokumen,
