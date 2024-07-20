@@ -77,19 +77,6 @@ class ViewForm5Controller extends BaseController
     public function view($uuid2)
     {
 
-        // $id_user = session()->get('id');
-        // $auditor = $this->auditor->where('id_user', $id_user)->first();
-        // if (!$auditor) {
-        //     throw new \CodeIgniter\Exceptions\PageNotFoundException("Auditor not found");
-        // }
-        // $prodiIds = $this->penugasanAuditor->select('id_prodi')
-        //     ->where('id_auditor', $auditor['id'])
-        //     ->findColumn('id_prodi');
-
-        // if (empty($prodiIds)) {
-        //     throw new \CodeIgniter\Exceptions\PageNotFoundException("No prodi found for the auditor");
-        // }
-
         $dataKopKelengkapanDokumen = $this->kopkelengkapanDokumen
             ->join('prodi', 'prodi.nama = lokasi')
             ->where('prodi.uuid', $uuid2)->first();
@@ -217,7 +204,7 @@ class ViewForm5Controller extends BaseController
     public function viewDetail($uuid, $uuid_deskripsi_temuan)
     {
 
-        $deskripsiTemuan = $this->deskripsiTemuan->select('kode_kriteria, deskripsi_temuan.uuid as uuid, deskripsi_temuan, deskripsi_temuan.id as id, id_ringkasan_temuan, deskripsi_temuan.kriteria as kriteria, deskripsi_temuan.akibat as akibat, deskripsi_temuan.akar_penyebab as akar_penyebab, deskripsi_temuan.rekomendasi as rekomendasi, deskripsi_temuan.tanggapan_auditi as tanggapan_auditi, deskripsi_temuan.rencana_perbaikan as rencana_perbaikan, jadwal_perbaikan, penanggung_jawab_perbaikan, rencana_pencegahan, jadwal_pencegahan, penanggung_jawab_pencegahan, pimpinan_auditi, deskripsi_temuan.reviewer as reviewer')
+        $deskripsiTemuan = $this->deskripsiTemuan->select('kode_kriteria, deskripsi_temuan.uuid as uuid, ringkasan_temuan.deskripsi as deskripsi_temuan, deskripsi_temuan.id as id, id_ringkasan_temuan, deskripsi_temuan.kriteria as kriteria, deskripsi_temuan.akibat as akibat, deskripsi_temuan.akar_penyebab as akar_penyebab, deskripsi_temuan.rekomendasi as rekomendasi, deskripsi_temuan.tanggapan_auditi as tanggapan_auditi, deskripsi_temuan.rencana_perbaikan as rencana_perbaikan, jadwal_perbaikan, penanggung_jawab_perbaikan, rencana_pencegahan, jadwal_pencegahan, penanggung_jawab_pencegahan, pimpinan_auditi, deskripsi_temuan.reviewer as reviewer')
             ->join('ringkasan_temuan', 'ringkasan_temuan.id = deskripsi_temuan.id_ringkasan_temuan')
             ->join('penugasan_auditor', 'penugasan_auditor.id = ringkasan_temuan.id_penugasan_auditor')
             ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
