@@ -15,6 +15,9 @@
         <a href="/auditor/form-3" class="btn btn-warning">Kembali</a>
 
     </div>
+    <div class="d-flex justify-content-end px-3 py-3">
+        <a href="/auditor/form-3/catatan-audit/pdf/<?= $uuid2 ?>" target="_blank" class="btn btn-primary"><i class="las la-file-download"></i>PDF</a>
+    </div>
     <div class="card-body">
 
         <div class="mb-3">

@@ -193,6 +193,8 @@ $routes->post('auditor/form-3/catatan-audit/ubah/positif/(:segment)', 'Auditor\F
 $routes->post('auditor/form-3/catatan-audit/ubah/negatif/(:segment)', 'Auditor\Form3::updateCatatanNegatifPost/$1');
 $routes->post('auditor/form-3/catatan-audit/positif/hapus/(:segment)', 'Auditor\Form3::catatanPositifDelete/$1');
 $routes->post('auditor/form-3/catatan-audit/negatif/hapus/(:segment)', 'Auditor\Form3::catatanNegatifDelete/$1');
+$routes->get('auditor/form-3/catatan-audit/pdf/(:segment)', 'Auditor\Form3::PDFCatatanAudit/$1');
+
 
 // FORM 4 ringkasan temuan
 $routes->get('auditor/form-4', 'Auditor\Form4::beranda');

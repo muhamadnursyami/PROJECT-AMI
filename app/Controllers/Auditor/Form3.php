@@ -16,6 +16,7 @@ use App\Models\KopKelengkapanDokumenModel;
 use App\Models\KriteriaModel;
 use App\Models\ProdiModel;
 use CodeIgniter\HTTP\ResponseInterface;
+use App\Libraries\MY_TCPDF as TCPDF;
 
 class Form3 extends BaseController
 {
@@ -47,7 +48,7 @@ class Form3 extends BaseController
     {
 
         $jadwalPeriode = $this->periode_Model->first();
-        if(is_null($jadwalPeriode) || !isset($jadwalPeriode)){
+        if (is_null($jadwalPeriode) || !isset($jadwalPeriode)) {
             return redirect()->to('auditor/dashboard')->with('gagal', 'Jadwal AMI Belum dibuat');;
         }
         $tanggalSelesai = $jadwalPeriode['tanggal_selesai'];
@@ -296,5 +297,112 @@ class Form3 extends BaseController
         $uuid_prodi = $penugasan_auditor['uuid_prodi'];
         $this->catatanAudit->where('uuid', $uuid)->delete();
         return redirect()->to("/auditor/form-3/$uuid_prodi")->with('sukses', 'Berhasil menghapus Catatan Audit Negatif');
+    }
+
+    public function PDFCatatanAudit($uuid2)
+    {
+        $id_user = session()->get('id');
+        $auditor = $this->auditor->where('id_user', $id_user)->first();
+        if (!$auditor) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Auditor not found");
+        }
+
+        $prodiIds = $this->penugasanAuditor->select('id_prodi')
+            ->where('id_auditor', $auditor['id'])
+            ->findColumn('id_prodi');
+
+        if (empty($prodiIds)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("No prodi found for the auditor");
+        }
+
+        $dataKopKelengkapanDokumen = $this->kopkelengkapanDokumen
+            ->join('prodi', 'prodi.nama = lokasi')
+            ->whereIn('prodi.id', $prodiIds)
+            ->where('prodi.uuid', $uuid2) // Pastikan $uuid2 sudah didefinisikan sebelumnya
+            ->first();
+
+        $auditorList = [];
+        if (!is_null($dataKopKelengkapanDokumen)) {
+            $auditorKetua = $dataKopKelengkapanDokumen['auditor_ketua'];
+            $auditorAnggota = $dataKopKelengkapanDokumen['auditor_anggota'];
+
+            // Menggabungkan ketua dan anggota menjadi satu string
+            $auditorString = $auditorKetua . ', ' . $auditorAnggota;
+
+            // Gunakan regex untuk memisahkan nama auditor
+            preg_match_all('/(?:[^,]+, [^,]+(?:, [^,]+)?)/', $auditorString, $matches);
+            $auditorList = $matches[0];
+        }
+
+        $penugasan_auditor = $this->penugasanAuditor
+            ->select('penugasan_auditor.*')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('prodi.uuid', $uuid2)
+            ->findAll();
+        $dataCatatanAuditPositifBerdasakanProdi = [];
+        $dataCatatanAuditNegatifBerdasakanProdi = [];
+        foreach ($penugasan_auditor as $penugasan) {
+            $catatanAudit = $this->catatanAudit->where('id_penugasan_auditor', $penugasan['id'])->findAll();
+            foreach ($catatanAudit as $catatan) {
+                if ($catatan['label'] === '+') {
+                    $dataCatatanAuditPositifBerdasakanProdi[] = $catatan;
+                } else if ($catatan['label'] === '-') {
+                    $dataCatatanAuditNegatifBerdasakanProdi[] = $catatan;
+                }
+            }
+        }
+
+        // dd($dataCatatanAuditPositifBerdasakanProdi, $dataCatatanAuditNegatifBerdasakanProdi);
+
+        // untuk nama file aja
+        $prodi = $this->prodi->where('uuid', $uuid2)->first();
+        $namaprodi = $prodi['nama'];
+
+
+
+        $imagePath = FCPATH . 'assets/images/logo-title.jpg';
+
+        $data = [
+            'title' => "catatan-audit-$namaprodi",
+            'uuid2' => $uuid2,
+            'lokasi' => $dataKopKelengkapanDokumen['lokasi'],
+            'tanggal_audit' => $dataKopKelengkapanDokumen['tanggal_audit'],
+            'auditor' => $auditorList,
+            'prodi' => $prodi,
+            'catatan_positif' => $dataCatatanAuditPositifBerdasakanProdi,
+            'catatan_negatif' => $dataCatatanAuditNegatifBerdasakanProdi,
+            'image_path' => $imagePath
+        ];
+        // ========================================================
+        // GENERATE PDFNYA 
+        $view = view('auditor/form3/PDFCatatanAudit', $data);
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT);
+
+        // Set document information
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('AMI UMRAH');
+        $pdf->SetTitle('Catatan Audit PDF');
+        $pdf->SetSubject('PDF Tutorial');
+        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+        // Remove default header/footer
+        $pdf->setPrintHeader(false);
+        $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
+        // Set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+        // Set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+        // set auto page breaks
+        $customBottomMargin = 34; // Ganti dengan nilai margin bawah yang Anda inginkan
+        $pdf->SetAutoPageBreak(TRUE, $customBottomMargin);
+        // set image scale factor
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        // Add a callback for the footer
+
+        $pdf->AddPage();
+        $pdf->writeHTML($view);
+        $this->response->setContentType('application/pdf');
+        $pdf->Output("catatan-audit-$namaprodi.pdf", "I");
     }
 }
