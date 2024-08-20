@@ -58,6 +58,7 @@ $routes->post('admin/form3/view/delete', 'Admin\ViewForm3Controller::delete');
 // lihat FORM 4 admin
 $routes->get('admin/form4/view', 'Admin\ViewForm4Controller::index');
 $routes->get('admin/form4/view/(:segment)', 'Admin\ViewForm4Controller::view/$1');
+$routes->get('admin/form4/view/form-4/ringkasan-temuan/pdf/(:segment)', 'Admin\ViewForm4Controller::PDFRingkasanTemuan/$1');
 
 
 // Lihat form 5 admin

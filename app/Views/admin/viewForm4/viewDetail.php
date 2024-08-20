@@ -10,6 +10,7 @@
                     </div>
                 </div>
                 <div class="card-body">
+                <a href="/admin/form4/view/form-4/ringkasan-temuan/pdf/<?= $uuid2 ?>" target="_blank" class="btn btn-primary"><i class="las la-file-download"></i>PDF</a>
                     <a href="/admin/form4/view" class="btn bg-warning">Kembali</a>
                     <div class="row text-center">
                         <table id="datatable" class="table table-striped">
