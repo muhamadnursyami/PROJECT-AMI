@@ -323,6 +323,10 @@ class Form4 extends BaseController
             ->join('prodi', 'prodi.nama = lokasi')
             ->where('prodi.uuid', $uuid2)->first();
 
+        if(is_null($dataKopKelengkapanDokumen)){
+            return redirect()->back()->withInput()->with('gagal', "Data kop kelengkapan dokumen belum ada, silahkan isi data kop kelengkapan dokumen pada Form 1");
+        }
+
         $anggota = [];
         if (!is_null($dataKopKelengkapanDokumen)) {
             $anggota = $dataKopKelengkapanDokumen['auditor_anggota'];

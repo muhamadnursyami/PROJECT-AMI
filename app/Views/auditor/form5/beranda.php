@@ -11,7 +11,7 @@
     <p></p>
 <?php else : ?>
     <?php if (isset($error)) : ?>
-        <div class="alert bg-danger mt-3" role="alert">
+        <div class="alert bg-warning mt-3" role="alert">
             <div class="iq-alert-text"> <small> <?= $error; ?> </small></div>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <i class="ri-close-line"></i>

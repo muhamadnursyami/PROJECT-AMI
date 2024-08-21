@@ -153,7 +153,7 @@ class Form5 extends BaseController
                 "title" => "Form 5",
                 "currentPage" => "form-5",
                 'penugasan_auditor' => $penugasan_auditor,
-                'error' => "Form 4 - Ringkasan Temuan Audit pada prodi " . $prodi['nama'] . " belum dibuat, silahkan buat terlebih dahulu",
+                'error' => "Form 4 - Ringkasan Temuan Audit pada prodi " . $prodi['nama'] . " belum dibuat atau tidak ada ringkasan temuan yang memiliki kategori KTS",
                 'formTerkunci' => false
             ];
 

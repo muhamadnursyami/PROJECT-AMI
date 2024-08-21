@@ -42,18 +42,32 @@ class ViewForm4Controller extends BaseController
         $dataProdi = [];
         $dataAuditor = [];
         $uuidProdi = [];
+        $cekAuditor = null;
+        $cekProdi = null;
 
-        foreach ($ringkasaTemuan as $ringkasan) {
-            $dataProdi[] = $ringkasan['nama_prodi'];
-            $uuidProdi[] = $ringkasan['uuid_prodi'];
-            $dataAuditor[] = $ringkasan['nama_auditor'];
+        foreach ($ringkasaTemuan as $key => $ringkasan) {
+            
+            
+            if($key == 0){
+                $dataAuditor[$key] = $ringkasan['nama_auditor'];
+                $dataProdi[$key] = $ringkasan['nama_prodi'];
+                $uuidProdi[$key] = $ringkasan['uuid_prodi'];
+                continue;
+            }
+
+            $cekAuditor = $ringkasaTemuan[$key - 1]["nama_auditor"];
+            $cekProdi = $ringkasaTemuan[$key - 1]["nama_prodi"];
+            
+            if($cekAuditor != $ringkasan['nama_auditor'] && $cekProdi != $ringkasan['nama_prodi']){
+
+                $dataAuditor[$key] = $ringkasan['nama_auditor'];
+                $dataProdi[$key] = $ringkasan['nama_prodi'];
+                $uuidProdi[$key] = $ringkasan['uuid_prodi'];
+
+            }
+            
         }
-
-        $dataAuditor = array_unique($dataAuditor);
-        $dataProdi = array_unique($dataProdi);
-        $uuidProdi = array_unique($uuidProdi);
-
-        // dd($dataProdi, $dataAuditor, $uuidProdi);
+        
 
         $data = [
             "title" => "Lihat Form 4",
@@ -71,6 +85,11 @@ class ViewForm4Controller extends BaseController
         $dataKopKelengkapanDokumen = $this->kopkelengkapanDokumen
             ->join('prodi', 'prodi.nama = lokasi')
             ->where('prodi.uuid', $uuid2)->first();
+
+        // $dataKopKelengkapanDokumen = $this->kopkelengkapanDokumen->findAll();
+        if(is_null($dataKopKelengkapanDokumen)){
+            return redirect()->back()->withInput()->with('gagal', "Data kop kelengkapan dokumen belum diisi auditor");
+        }
 
         $anggota = [];
         if (!is_null($dataKopKelengkapanDokumen)) {

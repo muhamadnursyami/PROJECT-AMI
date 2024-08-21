@@ -51,16 +51,28 @@ class ViewForm5Controller extends BaseController
         $dataAuditor = [];
         $uuidProdi = [];
 
-        foreach ($ringkasaTemuan as $ringkasan) {
-            $dataProdi[] = $ringkasan['nama_prodi'];
-            $uuidProdi[] = $ringkasan['uuid_prodi'];
-            $dataAuditor[] = $ringkasan['nama_auditor'];
+        foreach ($ringkasaTemuan as $key => $ringkasan) {
+            
+            
+            if($key == 0){
+                $dataAuditor[$key] = $ringkasan['nama_auditor'];
+                $dataProdi[$key] = $ringkasan['nama_prodi'];
+                $uuidProdi[$key] = $ringkasan['uuid_prodi'];
+                continue;
+            }
+
+            $cekAuditor = $ringkasaTemuan[$key - 1]["nama_auditor"];
+            $cekProdi = $ringkasaTemuan[$key - 1]["nama_prodi"];
+            
+            if($cekAuditor != $ringkasan['nama_auditor'] && $cekProdi != $ringkasan['nama_prodi']){
+
+                $dataAuditor[$key] = $ringkasan['nama_auditor'];
+                $dataProdi[$key] = $ringkasan['nama_prodi'];
+                $uuidProdi[$key] = $ringkasan['uuid_prodi'];
+
+            }
+            
         }
-
-        $dataAuditor = array_unique($dataAuditor);
-        $dataProdi = array_unique($dataProdi);
-        $uuidProdi = array_unique($uuidProdi);
-
         // dd($dataProdi, $dataAuditor, $uuidProdi);
 
         $data = [
@@ -112,6 +124,10 @@ class ViewForm5Controller extends BaseController
 
         if (count($ringkasanTemuan) == 0) {
 
+            if(!isset($uuid2['id'])){
+                return redirect()->back()->withInput()->with('gagal', "Data kop kelengkapam dokumen belum diisi");
+            }
+
             $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id,penugasan_auditor.uuid, prodi.uuid as uuid_prodi, ketua, auditor.nama as nama_auditor, fakultas, kode_auditor, prodi.nama as nama_prodi')
                 ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
                 ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
@@ -121,7 +137,7 @@ class ViewForm5Controller extends BaseController
                 "title" => "Form 5",
                 "currentPage" => "form-5",
                 'penugasan_auditor' => $penugasan_auditor,
-                'error' => "Form 4 - Ringkasan Temuan Audit pada prodi " . $prodi['nama'] . " belum dibuat, silahkan buat terlebih dahulu",
+                'error' => "Form 4 - Ringkasan Temuan Audit pada prodi " . $prodi['nama'] . " belum dibuat, silahkan buat terlebih dahulu atau pastikan data tersebut memiliki kategori KTS",
                 'formTerkunci' => false
             ];
 
@@ -187,6 +203,12 @@ class ViewForm5Controller extends BaseController
             ->join('kriteria', 'kriteria.id = id_kriteria')
             ->where('prodi.uuid', $uuid)
             ->findAll();
+
+        // dd($deskripsiTemuan);
+        if(count($deskripsiTemuan) == 0){
+
+            return redirect()->back()->withInput()->with('gagal', "Data deskripsi temuan belum ada");
+        }
 
         $data = [
             'title' => 'Form 5',

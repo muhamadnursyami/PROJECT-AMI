@@ -8,6 +8,14 @@
         </button>
     </div>
 <?php endif ?>
+<?php if (!empty(session()->getFlashdata('gagal'))) : ?>
+    <div class="alert bg-danger" role="alert">
+        <div class="iq-alert-text"> <small><?= session()->getFlashdata('gagal') ?> </small></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+<?php endif ?>
 <div class="card">
     <div class="card-header d-flex justify-content-between">
         <h4 class="card-title">Form 4 - Ringkasan Temuan <?= $prodi['nama'] ?></h4>
