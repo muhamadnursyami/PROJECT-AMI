@@ -42,7 +42,13 @@
                     <?php foreach ($dataCatatanAuditPositifBerdasakanProdi as $catatan) : ?>
                         <div class="row">
                             <div class="col-12 col-lg-11">
-                                <textarea class="form-control" disabled rows="10"><?= $catatan['catatan_audit'] ?></textarea>
+                                <div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p class="card-text"><?= $catatan['catatan_audit'] ?></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -76,7 +82,11 @@
                     <?php foreach ($dataCatatanAuditNegatifBerdasakanProdi as $catatan) : ?>
                         <div class="row">
                             <div class="col-12 col-lg-11">
-                                <textarea class="form-control" disabled rows="10"><?= $catatan['catatan_audit'] ?></textarea>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="card-text"><?= $catatan['catatan_audit'] ?></p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-12 col-lg-1 mt-3 mt-lg-0 d-flex justify-content-center align-items-center">

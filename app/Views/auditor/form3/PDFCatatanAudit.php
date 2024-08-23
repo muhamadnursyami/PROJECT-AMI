@@ -155,7 +155,7 @@
                             <span style="font-weight: bold;">Positif :</span>
                             <?php foreach ($catatan_positif as $catatan) : ?>
                                 <div>
-                                    <span><?= htmlspecialchars($catatan['catatan_audit']) ?></span>
+                                    <span><?= $catatan['catatan_audit'] ?></span>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -168,7 +168,7 @@
                             <span style="font-weight: bold;">Negatif :</span>
                             <?php foreach ($catatan_negatif as $catatan) : ?>
                                 <div>
-                                    <span><?= htmlspecialchars($catatan['catatan_audit']) ?></span>
+                                    <span><?= $catatan['catatan_audit'] ?></span>
                                 </div>
                             <?php endforeach; ?>
                         </div>

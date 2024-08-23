@@ -14,11 +14,10 @@
                     <form action="/auditor/form-3/catatan-audit/ubah/negatif/<?= $uuid ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row">
-                            <div class="col-12">
-                                <div class="col-12 mt-3">
-                                    <label for="catatan_audit" class="h6">Catatan Audit </label>
-                                    <textarea class="form-control" required id="catatan_audit" rows="10" name="catatan_audit"><?= old('catatan_audit', $catatanNegatif['catatan_audit']); ?></textarea>
-                                </div>
+                            <div class="col-12 mt-3">
+                                <label for="catatan_audit" class="form-label">Catatan Audit Negatif</label>
+                                <input id="catatan_audit" type="hidden" name="catatan_audit" value="<?= old('catatan_audit', $catatanNegatif['catatan_audit']); ?>">
+                                <trix-editor input="catatan_audit"></trix-editor>
                             </div>
                         </div>
                         <div class="row justify-content-center mt-5">
