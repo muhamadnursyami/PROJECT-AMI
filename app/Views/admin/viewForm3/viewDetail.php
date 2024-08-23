@@ -24,7 +24,11 @@
                                 <hr>
                                 <?php foreach ($positifNotes as $item) : ?>
                                     <div class="mb-4">
-                                        <textarea class="form-control" disabled rows="10"><?= $item['catatan_audit'] ?></textarea>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p class="card-text"><?= $item['catatan_audit'] ?></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -33,7 +37,11 @@
                                 <hr>
                                 <?php foreach ($negatifNotes as $item) : ?>
                                     <div class="mb-4">
-                                        <textarea class="form-control" disabled rows="10"><?= $item['catatan_audit'] ?></textarea>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p class="card-text"><?= $item['catatan_audit'] ?></p>
+                                        </div>
+                                    </div>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
