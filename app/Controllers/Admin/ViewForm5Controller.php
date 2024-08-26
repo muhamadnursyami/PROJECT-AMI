@@ -127,6 +127,10 @@ class ViewForm5Controller extends BaseController
 
         if (count($ringkasanTemuan) == 0) {
 
+            if(!isset($uuid2['id'])){
+                return redirect()->back()->withInput()->with('gagal', "Data kop kelengkapam dokumen belum diisi");
+            }
+
             $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id,penugasan_auditor.uuid, prodi.uuid as uuid_prodi, ketua, auditor.nama as nama_auditor, fakultas, kode_auditor, prodi.nama as nama_prodi')
                 ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
                 ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
