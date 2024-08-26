@@ -32,15 +32,27 @@ class ViewForm3Controller extends BaseController
         $dataAuditi = [];
         $uuidProdi = [];
 
-        foreach ($catatanAudit as $audit) {
-            $dataProdi[] = $audit['nama_prodi'];
-            $uuidProdi[] = $audit['uuid_prodi'];
-            $dataAuditi[] = $audit['nama_auditor'];
+        foreach ($catatanAudit as $key => $audit) {
+
+            if($key == 0){
+                $dataAuditi[$key] = $audit['nama_auditor'];
+                $dataProdi[$key] = $audit['nama_prodi'];
+                $uuidProdi[$key] = $audit['uuid_prodi'];
+                continue;
+            }
+
+            $cekAuditor = $catatanAudit[$key - 1]["nama_auditor"];
+            $cekProdi = $catatanAudit[$key - 1]["nama_prodi"];
+            
+            if($cekAuditor != $audit['nama_auditor'] && $cekProdi != $audit['nama_prodi']){
+
+                $dataAuditi[$key] = $audit['nama_auditor'];
+                $dataProdi[$key] = $audit['nama_prodi'];
+                $uuidProdi[$key] = $audit['uuid_prodi'];
+
+            }
         }
 
-        $dataAuditi = array_unique($dataAuditi);
-        $dataProdi = array_unique($dataProdi);
-        $uuidProdi = array_unique($uuidProdi);
 
         $data = [
             "title" => "Lihat Form 3",
