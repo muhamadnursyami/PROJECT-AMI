@@ -42,8 +42,7 @@ class DeskripsiTemuan extends Migration
                 'null' => true,
             ],
             'rekomendasi' => [
-                'type' => 'VARCHAR',
-                'constraint' => 250,
+                'type' => 'TEXT',
                 'null' => true,
             ],
             'tanggapan_auditi' => [
@@ -52,8 +51,7 @@ class DeskripsiTemuan extends Migration
                 'null' => true,
             ],
             'rencana_perbaikan' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
+                'type' => 'TEXT',
                 'null' => true,
             ],
             'jadwal_perbaikan' => [
@@ -67,8 +65,7 @@ class DeskripsiTemuan extends Migration
                 'null' => true,
             ],
             'rencana_pencegahan' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
+                'type' => 'TEXT',
                 'null' => true,
             ],
             'jadwal_pencegahan' => [
