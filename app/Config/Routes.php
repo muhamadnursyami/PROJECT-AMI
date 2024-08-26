@@ -64,8 +64,8 @@ $routes->get('admin/form4/view/form-4/ringkasan-temuan/pdf/(:segment)', 'Admin\V
 // Lihat form 5 admin
 $routes->get('admin/form5/view', 'Admin\ViewForm5Controller::index');
 $routes->get('admin/form5/view/(:segment)', 'Admin\ViewForm5Controller::view/$1');
-$routes->get('admin/form5/view/deskripsi-temuan/(:segment)', 'Admin\ViewForm5Controller::kelola/$1');
 $routes->get('admin/form5/view/deskripsi-temuan/(:segment)/(:segment)', 'Admin\ViewForm5Controller::viewDetail/$1/$2');
+$routes->get('admin/form-5/deskripsi-temuan/pdf/(:segment)', 'Admin\ViewForm5Controller::PDFDeskripsiTemuan/$1');
 
 // admin kelola standar
 $routes->get('admin/kriteria-ed/tambah/standar', 'Admin\StandarController::index');

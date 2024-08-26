@@ -23,7 +23,7 @@
                 <div class="card-header d-flex justify-content-between">
 
                     <h4 class="card-title">Form 5 - Kelola Edit Deskripsi Temuan - <?= $deskripsiTemuan['kode_kriteria'] ?> - <?= $prodi ?></h4>
-                    <a href="/admin/form5/view/deskripsi-temuan/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
+                    <a href="/admin/form5/view/<?= $uuid ?>" class="btn btn-warning mb-3">Kembali</a>
 
                 </div>
                 <div class="card-body">
