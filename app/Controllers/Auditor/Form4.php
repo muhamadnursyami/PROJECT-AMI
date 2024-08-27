@@ -16,6 +16,7 @@ use App\Models\RingkasanTemuanModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Libraries\Pdf;
 use App\Libraries\MY_TCPDF as TCPDF;
+use App\Models\DeskripsiTemuanModel;
 use App\Models\KelengkapanDokumenModel;
 
 class Form4 extends BaseController
@@ -30,6 +31,7 @@ class Form4 extends BaseController
     protected $ringkasanTemuan;
     protected $kopkelengkapanDokumen;
     private $kelengkapanDokumen;
+    private $deskripsi_temuan;
 
     public function __construct()
     {
@@ -43,6 +45,7 @@ class Form4 extends BaseController
         $this->kopkelengkapanDokumen = new KopKelengkapanDokumenModel();
         $this->ringkasanTemuan = new RingkasanTemuanModel();
         $this->kelengkapanDokumen = new KelengkapanDokumenModel();
+        $this->deskripsi_temuan = new DeskripsiTemuanModel();
     }
 
     public function beranda()
@@ -284,11 +287,18 @@ class Form4 extends BaseController
         ];
         $this->ringkasanTemuan->set($data)->where('uuid', $uuid)->update();
 
+        
         $ringkasanTemuan = $this->ringkasanTemuan->where('uuid', $uuid)->first();
         $penugasan_auditor = $this->penugasanAuditor->select('penugasan_auditor.id as id, id_prodi, prodi.uuid as uuid_prodi')
             ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
             ->where('penugasan_auditor.id', $ringkasanTemuan['id_penugasan_auditor'])->first();
         $uuid_prodi = $penugasan_auditor['uuid_prodi'];
+        
+        $deskripsi_temuanData = [
+            'deskripsi_temuan' => $this->request->getPost('deskripsi')
+        ];
+
+        $this->deskripsi_temuan->set($deskripsi_temuanData)->where('id_ringkasan_temuan', $ringkasanTemuan['id'])->update();
 
         return redirect()->to("/auditor/form-4/$uuid_prodi")->with('sukses', 'Berhasil mengedit data  ringkasan temuan');
     }

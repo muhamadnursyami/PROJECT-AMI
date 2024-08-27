@@ -66,7 +66,7 @@
                             <option value="">--Pilih Kode Kriteria--</option>
                             <?php foreach ($ringkasanTemuan as $key => $value) { ?>
                                 <?php $uniqueKey = $value['kode_kriteria'] . '-' . $value['id']; ?>
-                                <option value="<?= $uniqueKey ?>"><?= $value['kode_kriteria']; ?></option>
+                                <option value="<?= $uniqueKey ?>"><?= $value['kode_kriteria']; ?> - <?= ($value['sudah_terisi']) ? 'Sudah diisi' : 'Belum diisi' ?></option>
                             <?php } ?>
                         </select>
                         <!--  -->

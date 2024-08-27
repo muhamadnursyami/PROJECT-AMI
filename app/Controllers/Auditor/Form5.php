@@ -160,7 +160,7 @@ class Form5 extends BaseController
             return view('auditor/form5/beranda', $data);
         }
 
-        $deskripsiTemuan = $this->deskripsiTemuan->select('kode_kriteria')
+        $deskripsiTemuan = $this->deskripsiTemuan->select()
             ->join('ringkasan_temuan', 'ringkasan_temuan.id = deskripsi_temuan.id_ringkasan_temuan')
             ->join('penugasan_auditor', 'penugasan_auditor.id = ringkasan_temuan.id_penugasan_auditor')
             ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
@@ -178,6 +178,7 @@ class Form5 extends BaseController
                 ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
                 ->where('id_auditor', $auditor['id'])->findAll();
 
+
             $data = [
                 "title" => "Form 5",
                 "currentPage" => "form-5",
@@ -189,7 +190,26 @@ class Form5 extends BaseController
             return view('auditor/form5/beranda', $data);
         }
 
-        // dd(count($deskripsiTemuan));
+        // d($ringkasanTemuan);
+        // dd($deskripsiTemuan);
+
+        foreach ($ringkasanTemuan as $keyRingkasan => $valueRingkasan) {
+
+            foreach ($deskripsiTemuan as $keyDeskripsi => $valueDeskripsi) {
+                // d($deskripsiTemuan[$key]);
+                
+                if ($valueRingkasan['deskripsi'] === $valueDeskripsi['deskripsi_temuan']) {
+                    // echo $valueRingkasan['kriteria'] . "==" . $valueDeskripsi['kriteria'] . "endl<br>";
+                    $ringkasanTemuan[$keyRingkasan]['sudah_terisi'] = true;
+                    break;
+                }else{
+                    $ringkasanTemuan[$keyRingkasan]['sudah_terisi'] = false;
+                }
+            }
+
+        }
+        // d($deskripsiTemuan);
+        // dd($ringkasanTemuan);
 
         $data = [
             'title' => 'Form 5',
