@@ -195,6 +195,11 @@ class Form5 extends BaseController
 
         foreach ($ringkasanTemuan as $keyRingkasan => $valueRingkasan) {
 
+            if(count($deskripsiTemuan) == 0){
+                $ringkasanTemuan[$keyRingkasan]['sudah_terisi'] = false;
+                continue;
+            }
+
             foreach ($deskripsiTemuan as $keyDeskripsi => $valueDeskripsi) {
                 // d($deskripsiTemuan[$key]);
                 
@@ -270,12 +275,13 @@ class Form5 extends BaseController
             ->where('prodi.uuid', $uuid)
             ->findAll();
 
+        $prodi = $this->prodi->where('uuid', $uuid)->first();
 
         $data = [
             'title' => 'Form 5',
             'currentPage' => 'form-5',
             'uuid' => $uuid,
-            'prodi' => $deskripsiTemuan[0]['nama_prodi'],
+            'prodi' => $prodi['nama'],
             'deskripsiTemuan' => $deskripsiTemuan
         ];
 
