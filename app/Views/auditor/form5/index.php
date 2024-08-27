@@ -55,7 +55,7 @@
             </table>
         </div>
         <hr>
-        <div class="row text-center">
+        <div class="row ">
             <div class="card-body">
                 <div class="container">
                     <h4 class="text-left">Tambah Deskripsi Temuan</h4>
@@ -78,7 +78,7 @@
 
                             <?php if ($value['sudah_terisi'] == true) { ?>
                                 <p>Deskripsi temuan pada <b>"<?= $value['deskripsi'] ?>"</b> pada kode kriteria <b><?= $value['kode_kriteria'] ?></b> sudah diisi, silakan cek pada <b>Kelola Deskripsi Temuan</b></p>
-                            <?php }else { ?>
+                            <?php } else { ?>
                                 <form class="row text-center" action="/auditor/form-5/<?= $uuid2 ?>" method="post">
                                     <?= csrf_field() ?>
                                     <input type="text" name="id_ringkasan_temuan" value="<?= $value['id'] ?>" hidden>
@@ -96,16 +96,25 @@
                                         <textarea class="form-control hidden-textarea" id="kriteria-<?= $uniqueKey ?>" name="kriteria" rows="3" style="display: none;"></textarea>
                                     </div>
                                     <div class="col-12 col-lg-6 form-group">
-                                        <label for="akibat">Akibat</label>
-                                        <textarea class="form-control" id="akibat" name="akibat" rows="3" required></textarea>
+                                        <!-- <label for="akibat">Akibat</label>
+                                        <textarea class="form-control" id="akibat" name="akibat" rows="3" required></textarea> -->
+                                        <label for="akibat" class="form-label">Akibat</label>
+                                        <input id="akibat" type="hidden" name="akibat">
+                                        <trix-editor input="akibat"></trix-editor>
                                     </div>
                                     <div class="col-12 col-lg-6 form-group">
-                                        <label for="akarPenyebab">Akar Penyebab/Masalah</label>
-                                        <textarea class="form-control" id="akarPenyebab" name="akarPenyebab" rows="3" required></textarea>
+                                        <!-- <label for="akarPenyebab">Akar Penyebab/Masalah</label>
+                                        <textarea class="form-control" id="akarPenyebab" name="akarPenyebab" rows="3" required></textarea> -->
+                                        <label for="akarPenyebab" class="form-label">Akar Penyebab</label>
+                                        <input id="akarPenyebab" type="hidden" name="akarPenyebab">
+                                        <trix-editor input="akarPenyebab"></trix-editor>
                                     </div>
                                     <div class="col-12 col-lg-6 form-group">
-                                        <label for="rekomendasiDisepakati">Rekomendasi disepakati dengan audit</label>
-                                        <textarea class="form-control" id="rekomendasiDisepakati" name="rekomendasiDisepakati" rows="3" required></textarea>
+                                        <!-- <label for="rekomendasiDisepakati">Rekomendasi disepakati dengan audit</label>
+                                        <textarea class="form-control" id="rekomendasiDisepakati" name="rekomendasiDisepakati" rows="3" required></textarea> -->
+                                        <label for="rekomendasiDisepakati" class="form-label">Rekomendasi disepakati dengan audit</label>
+                                        <input id="rekomendasiDisepakati" type="hidden" name="rekomendasiDisepakati">
+                                        <trix-editor input="rekomendasiDisepakati"></trix-editor>
                                     </div>
                                     <div class="col-12 col-lg-6 form-group">
                                         <label for="tanggapanAuditi">Tanggapan Auditi</label>
@@ -116,16 +125,22 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-lg-6 form-group">
-                                        <label for="rencanaPerbaikan">Rencana Perbaikan</label>
-                                        <textarea class="form-control" id="rencanaPerbaikan" name="rencanaPerbaikan" rows="3" required></textarea>
+                                        <!-- <label for="rencanaPerbaikan">Rencana Perbaikan</label>
+                                        <textarea class="form-control" id="rencanaPerbaikan" name="rencanaPerbaikan" rows="3" required></textarea> -->
+                                        <label for="rencanaPerbaikan" class="form-label">Rencana Perbaikan</label>
+                                        <input id="rencanaPerbaikan" type="hidden" name="rencanaPerbaikan">
+                                        <trix-editor input="rencanaPerbaikan"></trix-editor>
                                     </div>
                                     <div class="col-12 col-lg-6 form-group">
                                         <label for="jadwalPerbaikan" id="jadwalPerbaikan">Jadwal Perbaikan</label>
                                         <input type="date" class="form-control" id="jadwalPerbaikan" name="jadwalPerbaikan" required>
                                     </div>
                                     <div class="col-12 col-lg-6 form-group">
-                                        <label for="rencanaPencegahan" id="rencanaPencegahan">Rencana Pencegahan</label>
-                                        <textarea class="form-control" id="rencanaPencegahan" rows="3" name="rencanaPencegahan" required></textarea>
+                                        <!-- <label for="rencanaPencegahan" id="rencanaPencegahan">Rencana Pencegahan</label>
+                                        <textarea class="form-control" id="rencanaPencegahan" rows="3" name="rencanaPencegahan" required></textarea> -->
+                                        <label for="rencanaPencegahan" class="form-label">Rencana Pencegahan</label>
+                                        <input id="rencanaPencegahan" type="hidden" name="rencanaPencegahan">
+                                        <trix-editor input="rencanaPencegahan"></trix-editor>
                                     </div>
                                     <div class="col-12 col-lg-6 form-group">
                                         <label for="jadwalPencegahan" id="jadwalPencegahan">Jadwal Pencegahan</label>
@@ -193,6 +208,13 @@
         background: #f1f1f1;
         border-radius: 5px;
         height: auto;
+    }
+
+    trix-toolbar {
+        display: none;
+    }
+    trix-editor {
+        text-align: left;
     }
 </style>
 <?= $this->endSection() ?>

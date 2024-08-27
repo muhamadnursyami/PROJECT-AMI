@@ -52,16 +52,19 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="akibat"><b>Akibat</b></label>
-                                <textarea class="form-control" id="akibat" name="akibat" rows="3" required><?= $deskripsiTemuan['akibat'] ?></textarea>
+                                <label for="akibat" class="form-label"><b>Akibat</b></label>
+                                <input id="akibat" type="hidden" name="akibat" value="<?= $deskripsiTemuan['akibat'] ?>">
+                                <trix-editor input="akibat"></trix-editor>
                             </div>
                             <div class="form-group">
-                                <label for="akarPenyebab"><b>Akar Penyebab/Masalah</b></label>
-                                <textarea class="form-control" id="akarPenyebab" name="akarPenyebab" rows="3" required><?= $deskripsiTemuan['akar_penyebab'] ?></textarea>
+                                <label for="akarPenyebab" class="form-label"><b>Akar Penyebab</b></label>
+                                <input id="akarPenyebab" type="hidden" name="akarPenyebab" value="<?= $deskripsiTemuan['akar_penyebab'] ?>">
+                                <trix-editor input="akarPenyebab"></trix-editor>
                             </div>
                             <div class="form-group">
-                                <label for="rekomendasiDisepakati"><b>Rekomendasi disepakati dengan audit</b></label>
-                                <textarea class="form-control" id="rekomendasiDisepakati" name="rekomendasiDisepakati" rows="3" required><?= $deskripsiTemuan['rekomendasi']; ?></textarea>
+                                <label for="rekomendasiDisepakati" class="form-label"><b>Rekomendasi disepakati dengan audit</b></label>
+                                <input id="rekomendasiDisepakati" type="hidden" name="rekomendasiDisepakati" value="<?= $deskripsiTemuan['rekomendasi'] ?>">
+                                <trix-editor input="rekomendasiDisepakati"></trix-editor>
                             </div>
                             <div class="form-group">
                                 <label for="tanggapanAuditi"><b>Tanggapan Auditi</b></label>
@@ -72,16 +75,18 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="rencanaPerbaikan"><b>Rencana Perbaikan</b></label>
-                                <textarea class="form-control" id="rencanaPerbaikan" name="rencanaPerbaikan" rows="3" required><?= $deskripsiTemuan['rencana_perbaikan']; ?></textarea>
+                                <label for="rencanaPerbaikan" class="form-label"><b>Rencana Perbaikan</b></label>
+                                <input id="rencanaPerbaikan" type="hidden" name="rencanaPerbaikan" value="<?= $deskripsiTemuan['rencana_perbaikan'] ?>">
+                                <trix-editor input="rencanaPerbaikan"></trix-editor>
                             </div>
                             <div class="form-group">
                                 <label for="jadwalPerbaikan" id="jadwalPerbaikan"><b>Jadwal Perbaikan</b></label>
                                 <input type="date" class="form-control" id="jadwalPerbaikan" name="jadwalPerbaikan" value="<?= $deskripsiTemuan['jadwal_perbaikan'] ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="rencanaPencegahan" id="rencanaPencegahan"><b>Rencana Pencegahan</b></label>
-                                <textarea class="form-control" id="rencanaPencegahan" rows="3" name="rencanaPencegahan" required><?= $deskripsiTemuan['rencana_pencegahan'] ?></textarea>
+                                <label for="rencanaPencegahan" class="form-label"><b>Rencana Pencegahan</b></label>
+                                <input id="rencanaPencegahan" type="hidden" name="rencanaPencegahan" value="<?= $deskripsiTemuan['rencana_pencegahan'] ?>">
+                                <trix-editor input="rencanaPencegahan"></trix-editor>
                             </div>
                             <div class="form-group">
                                 <label for="jadwalPencegahan" id="jadwalPencegahan"><b>Jadwal Pencegahan</b></label>
@@ -102,4 +107,9 @@
         </div>
     </div>
 
+    <style>
+        trix-toolbar {
+            display: none;
+        }
+    </style>
     <?= $this->endSection() ?>
