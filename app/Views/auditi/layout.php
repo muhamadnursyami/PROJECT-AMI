@@ -148,7 +148,7 @@
     <footer class="iq-footer">
         <div class="container-fluid">
 
-            <p class="text-center">Copyright © UMRAH 2024 </p>
+            <p class="text-center">Copyright © LPMPP UMRAH 2024 </p>
 
         </div>
     </footer>

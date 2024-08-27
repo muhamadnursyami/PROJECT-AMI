@@ -31,11 +31,11 @@
                             <tbody>
                                 <?php $no = 1; ?>
                                 <?php $i = 0; ?>
-                                <?php foreach ($nama_prodi as $key => $value) { ?>
+                                <?php foreach ($penugasan_auditor as $key => $value) { ?>
                                     <tr>
                                         <td><?= $no; ?></td>
-                                        <td><?= $nama_auditor[$key] ?></td>
-                                        <td><a href="/admin/form5/view/<?= $uuid_prodi[$key] ?>" class="btn btn-primary"><?= $nama_prodi[$key] ?></a></td>
+                                        <td><?= $value['nama_auditor'] ?></td>
+                                        <td><a href="/admin/form5/view/<?= $value['uuid_prodi'] ?>" class="btn btn-primary"><?= $value['nama_prodi'] ?></a></td>
                                     </tr>
                                 <?php $no++;
                                     $i++;

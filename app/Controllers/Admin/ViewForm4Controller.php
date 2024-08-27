@@ -10,6 +10,7 @@ use App\Models\KriteriaProdiModel;
 use App\Models\ProdiModel;
 use App\Models\KopKelengkapanDokumenModel;
 use App\Libraries\MY_TCPDF as TCPDF;
+use App\Models\PenugasanAuditorModel;
 
 class ViewForm4Controller extends BaseController
 {
@@ -19,6 +20,7 @@ class ViewForm4Controller extends BaseController
     private $prodi;
     private $kriteriaProdi;
     private $ringkasanTemuan;
+    private $penugasanAuditorModel;
 
     public function __construct()
     {
@@ -29,52 +31,22 @@ class ViewForm4Controller extends BaseController
         $this->prodi = new ProdiModel();
         $this->kopkelengkapanDokumen = new KopKelengkapanDokumenModel();
         $this->ringkasanTemuan = new RingkasanTemuanModel();
+        $this->penugasanAuditorModel = new PenugasanAuditorModel();
     }
 
     public function index()
     {
-        $ringkasaTemuan = $this->ringkasanTemuanModel->select('ringkasan_temuan.*, prodi.nama as nama_prodi, prodi.uuid as uuid_prodi, auditor.nama as nama_auditor')
-            ->join('penugasan_auditor', 'penugasan_auditor.id = ringkasan_temuan.id_penugasan_auditor')
-            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
-            ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
-            ->findAll();
-
-        $dataProdi = [];
-        $dataAuditor = [];
-        $uuidProdi = [];
-        $cekAuditor = null;
-        $cekProdi = null;
-
-        foreach ($ringkasaTemuan as $key => $ringkasan) {
-            
-            
-            if($key == 0){
-                $dataAuditor[$key] = $ringkasan['nama_auditor'];
-                $dataProdi[$key] = $ringkasan['nama_prodi'];
-                $uuidProdi[$key] = $ringkasan['uuid_prodi'];
-                continue;
-            }
-
-            $cekAuditor = $ringkasaTemuan[$key - 1]["nama_auditor"];
-            $cekProdi = $ringkasaTemuan[$key - 1]["nama_prodi"];
-            
-            if($cekAuditor != $ringkasan['nama_auditor'] && $cekProdi != $ringkasan['nama_prodi']){
-
-                $dataAuditor[$key] = $ringkasan['nama_auditor'];
-                $dataProdi[$key] = $ringkasan['nama_prodi'];
-                $uuidProdi[$key] = $ringkasan['uuid_prodi'];
-
-            }
-            
-        }
         
+        $penugasanAuditor = $this->penugasanAuditorModel->select('penugasan_auditor.id as id, prodi.uuid as uuid_prodi, auditor.nama as nama_auditor, prodi.nama as nama_prodi')
+            ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('penugasan_auditor.ketua', "1")
+            ->findAll();
 
         $data = [
             "title" => "Lihat Form 4",
             "currentPage" => "lihat-form4",
-            'nama_prodi' => $dataProdi,
-            'nama_auditor' => $dataAuditor,
-            'uuid_prodi' => $uuidProdi,
+            'penugasan_auditor' => $penugasanAuditor
         ];
 
         return view('admin/viewForm4/index', $data);

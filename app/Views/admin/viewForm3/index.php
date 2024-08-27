@@ -1,6 +1,14 @@
 <?= $this->extend('admin/layout') ?>
 <?= $this->section('content') ?>
 <div class="container-fluid">
+    <?php if (!empty(session()->getFlashdata('gagal'))) : ?>
+        <div class="alert bg-danger" role="alert">
+            <div class="iq-alert-text"> <small><?= session()->getFlashdata('gagal') ?> </small></div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+    <?php endif ?>
     <div class="row">
         <div class="col-sm-12 col-lg-12">
             <div class="card">
@@ -23,11 +31,11 @@
                             <tbody>
                                 <?php $no = 1; ?>
                                 <?php $i = 0; ?>
-                                <?php foreach ($nama_prodi as $key => $value) { ?>
+                                <?php foreach ($penugasan_auditor as $key => $value) { ?>
                                     <tr>
                                         <td><?= $no; ?></td>
-                                        <td><?= $nama_auditi[$key] ?></td>
-                                        <td><a href="/admin/form3/view/<?= $uuid_prodi[$key] ?>" class="btn btn-primary"><?= $nama_prodi[$key] ?></a></td>
+                                        <td><?= $value['nama_auditor'] ?></td>
+                                        <td><a href="/admin/form3/view/<?= $value['uuid_prodi'] ?>" class="btn btn-primary"><?= $value['nama_prodi'] ?></a></td>
                                     </tr>
                                 <?php $no++;
                                     $i++;

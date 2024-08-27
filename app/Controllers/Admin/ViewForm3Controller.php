@@ -22,44 +22,18 @@ class ViewForm3Controller extends BaseController
 
     public function index()
     {
-        $catatanAudit = $this->catatanAuditModel->select('catatan_audit.*, prodi.nama as nama_prodi, prodi.uuid as uuid_prodi, auditor.nama as nama_auditor')
-            ->join('penugasan_auditor', 'penugasan_auditor.id = catatan_audit.id_penugasan_auditor')
-            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+
+        $penugasanAuditor = $this->penugasanAuditorModel->select('penugasan_auditor.id as id, prodi.uuid as uuid_prodi, auditor.nama as nama_auditor, prodi.nama as nama_prodi')
             ->join('auditor', 'auditor.id = penugasan_auditor.id_auditor')
+            ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
+            ->where('penugasan_auditor.ketua', "1")
             ->findAll();
-
-        $dataProdi = [];
-        $dataAuditi = [];
-        $uuidProdi = [];
-
-        foreach ($catatanAudit as $key => $audit) {
-
-            if($key == 0){
-                $dataAuditi[$key] = $audit['nama_auditor'];
-                $dataProdi[$key] = $audit['nama_prodi'];
-                $uuidProdi[$key] = $audit['uuid_prodi'];
-                continue;
-            }
-
-            $cekAuditor = $catatanAudit[$key - 1]["nama_auditor"];
-            $cekProdi = $catatanAudit[$key - 1]["nama_prodi"];
-            
-            if($cekAuditor != $audit['nama_auditor'] && $cekProdi != $audit['nama_prodi']){
-
-                $dataAuditi[$key] = $audit['nama_auditor'];
-                $dataProdi[$key] = $audit['nama_prodi'];
-                $uuidProdi[$key] = $audit['uuid_prodi'];
-
-            }
-        }
 
 
         $data = [
             "title" => "Lihat Form 3",
             "currentPage" => "lihat-form3",
-            'nama_prodi' => $dataProdi,
-            'nama_auditi' => $dataAuditi,
-            'uuid_prodi' => $uuidProdi,
+            'penugasan_auditor' => $penugasanAuditor,
         ];
 
         return view('admin/viewForm3/index', $data);
@@ -72,6 +46,10 @@ class ViewForm3Controller extends BaseController
             ->join('prodi', 'prodi.id = penugasan_auditor.id_prodi')
             ->where('prodi.uuid', $uuid)
             ->findAll();
+        
+        if(count($catatanAuditDetail) == 0){
+            return redirect()->back()->withInput()->with('gagal', "Data form 3 belum diisi auditor");
+        }
 
         $positifNotes = [];
         $negatifNotes = [];
@@ -83,7 +61,7 @@ class ViewForm3Controller extends BaseController
                 $negatifNotes[] = $item;
             }
         }
-        // dd($catatanAuditDetail[0]['id_penugasan_auditor']);
+        
         $data = [
             'title' => 'Lihat Detail Form 3',
             'currentPage' => 'lihat-form3',
