@@ -51,9 +51,9 @@ $routes->post('admin/kriteria-ed/view/delete', 'Admin\ViewEDController::delete')
 // lihat FORM 3 admin
 $routes->get('admin/form3/view', 'Admin\ViewForm3Controller::index');
 $routes->get('admin/form3/view/(:segment)', 'Admin\ViewForm3Controller::view/$1');
+$routes->get('admin/form3/view/form-3/catatan-audit/pdf/(:segment)', 'Admin\ViewForm3Controller::PDFCatatanAudit/$1');
 // admin delete FORM 3
 $routes->post('admin/form3/view/delete', 'Admin\ViewForm3Controller::delete');
-
 
 // lihat FORM 4 admin
 $routes->get('admin/form4/view', 'Admin\ViewForm4Controller::index');

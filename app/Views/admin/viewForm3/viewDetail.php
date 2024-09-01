@@ -11,6 +11,7 @@
                 </div>
 
                 <div class="card-body">
+                <a href="/admin/form3/view/form-3/catatan-audit/pdf/<?= $prodi_uuid ?>" target="_blank" class="btn btn-primary"><i class="las la-file-download"></i>PDF</a>
                     <a href="/admin/form3/view" class="btn bg-warning">Kembali</a>
                     <form action="/admin/form3/view/delete" method="post">
                         <?= csrf_field() ?>
