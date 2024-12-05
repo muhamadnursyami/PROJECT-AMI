@@ -197,11 +197,11 @@ $routes->group('auditi', static function($routes){
     
     
     // lihat berkas AUDIII
-    $routes->get('auditi/lihat-berkas', 'Auditi\LihatBerkas::index');
+    $routes->get('lihat-berkas', 'Auditi\LihatBerkas::index');
     
     // Kelola data auditi
-    $routes->get('auditi/kelola-data', 'Auditi\KelolaAuditiController::index');
-    $routes->post('auditi/kelola-data', 'Auditi\KelolaAuditiController::savePassword');
+    $routes->get('kelola-data', 'Auditi\KelolaAuditiController::index');
+    $routes->post('kelola-data', 'Auditi\KelolaAuditiController::savePassword');
 
 });
 
